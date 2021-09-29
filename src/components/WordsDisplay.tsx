@@ -6,10 +6,16 @@ interface WordsDisplayProps {}
 
 const WordsDisplay: React.FC<WordsDisplayProps> = () => {
   const [words, setWords] = React.useState({
-    currentWords: [{ word: '', correct: null, idx: 0 }],
-    nextWords: [{ word: '', correct: null, idx: 0 }],
+    currentWords: [],
+    nextWords: [],
   })
-  socket.on('sendWords', ({ currentWords, nextWords }) => setWords({ currentWords, nextWords }))
+
+  const [wordIndex, setWordIndex] = React.useState(0)
+
+  React.useEffect(() => {
+    socket.on('sendWords', ({ currentWords, nextWords }) => setWords({ currentWords, nextWords }))
+    socket.on('sendWordIndex', ({ wordIndex }) => setWordIndex(wordIndex))
+  }, [])
 
   return (
     <Flex
@@ -23,16 +29,23 @@ const WordsDisplay: React.FC<WordsDisplayProps> = () => {
       borderRadius="md"
     >
       <Flex w="100%" fontSize="xl">
-        {words.currentWords?.map(x => (
-          <Text p="0.2rem" h="min-content" mx="0.1rem" my="0.1rem" w="max-content">
-            {x.word}
+        {words.currentWords?.map((x, idx) => (
+          <Text
+            border={idx === wordIndex ? '1px solid yellow' : undefined}
+            p="0.2rem"
+            h="min-content"
+            mx="0.1rem"
+            my="0.1rem"
+            w="max-content"
+          >
+            {x}
           </Text>
         ))}
       </Flex>
       <Flex w="100%" fontSize="xl">
         {words.nextWords?.map(x => (
           <Text p="0.2rem" h="min-content" mx="0.1rem" my="0.1rem" w="max-content">
-            {x.word}
+            {x}
           </Text>
         ))}
       </Flex>
