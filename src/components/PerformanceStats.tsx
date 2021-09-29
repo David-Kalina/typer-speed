@@ -1,0 +1,28 @@
+import { Flex, Box } from '@chakra-ui/layout'
+import * as React from 'react'
+
+interface PerformanceStatsProps {
+  wordsPerMinute?: React.ReactNode | null
+  timer?: React.ReactNode | null
+  accuracy?: React.ReactNode | null
+}
+
+const PerformanceStats: React.FC<PerformanceStatsProps> = ({ wordsPerMinute, timer, accuracy }) => {
+  return (
+    <Flex bg="#2c323d" borderRadius="md" p="2rem" align="center" justifyContent="space-between">
+      <Box textAlign="center" h="100px" w="100px">
+        {wordsPerMinute}
+      </Box>
+
+      <Box bg="#2c323d" borderRadius="md" h="100px" w="100px" textAlign="center">
+        {timer}
+      </Box>
+
+      <Box textAlign="center" h="100px" w="100px">
+        {accuracy}
+      </Box>
+    </Flex>
+  )
+}
+
+export default PerformanceStats
