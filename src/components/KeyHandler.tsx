@@ -6,8 +6,19 @@ interface KeyHandlerProps {}
 
 const KeyHandler: React.FC<KeyHandlerProps> = () => {
   const [typedWord, setTypedWord] = React.useState('')
+  const [startedTimer, setStartedTimer] = React.useState(false)
 
-  socket.on('typedWord', typedWord => setTypedWord(typedWord))
+  React.useEffect(() => {
+    socket.on('typedWord', typedWord => setTypedWord(typedWord))
+  }, [])
+
+  React.useEffect(() => {
+    socket.on('resetTypedWord', () => setTypedWord(''))
+  }, [])
+
+  React.useEffect(() => {
+    console.log(typedWord)
+  }, [typedWord])
 
   return (
     <Input
@@ -19,6 +30,11 @@ const KeyHandler: React.FC<KeyHandlerProps> = () => {
       autoFocus
       //@ts-ignore
       onKeyDown={(e: KeyboardEvent) => {
+        if (!startedTimer) {
+          socket.emit('startTimer')
+          setStartedTimer(true)
+        }
+
         if (e.code === 'Space') {
           socket.emit('updateWordIndex', { key: e.key })
         }
