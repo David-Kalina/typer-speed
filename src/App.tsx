@@ -5,6 +5,7 @@ import NewTest from './components/NewTest'
 import PerformanceStats from './components/PerformanceStats'
 import Timer from './components/Timer'
 import WordsDisplay from './components/WordsDisplay'
+import WordsPerMinute from './components/WordsPerMinute'
 import { socket, SocketContext } from './contexts/SocketContext'
 
 export const App = () => {
@@ -13,7 +14,7 @@ export const App = () => {
       <SocketContext.Provider value={socket}>
         <Box w="1000px" mx="auto" mt="6rem">
           <VStack spacing={2} align="stretch">
-            <PerformanceStats timer={<Timer />} />
+            <PerformanceStats timer={<Timer />} wordsPerMinute={<WordsPerMinute />} />
             <WordsDisplay />
             <KeyHandler />
             <NewTest />

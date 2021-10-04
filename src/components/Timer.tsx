@@ -8,6 +8,7 @@ const Timer: React.FC<TimerProps> = () => {
   const [time, setTime] = React.useState(60)
 
   React.useEffect(() => {
+    console.log('Insane')
     socket.on('timerTick', time => setTime(time))
   }, [])
 

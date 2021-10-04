@@ -20,6 +20,10 @@ const KeyHandler: React.FC<KeyHandlerProps> = () => {
     console.log(typedWord)
   }, [typedWord])
 
+  React.useEffect(() => {
+    socket.on('resetTimer', () => setStartedTimer(false))
+  }, [])
+
   return (
     <Input
       bg="#2c323d"
