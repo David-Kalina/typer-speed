@@ -11,6 +11,10 @@ const WordsPerMinute: React.FC<WordsPerMinuteProps> = () => {
     socket.on('wpm', wpm => setWpm(wpm))
   }, [])
 
+  React.useEffect(() => {
+    socket.on('resetWPM', () => setWpm(0))
+  }, [])
+
   const determineColor = React.useCallback(wpm => {
     if (wpm <= 10) {
       return '#ff6700'
