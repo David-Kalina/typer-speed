@@ -11,7 +11,6 @@ import {
 import * as React from 'react'
 import { Legend, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts'
 import { socket } from '../contexts/SocketContext'
-import StarTest from './NewTest'
 
 interface StatChartProps {}
 
