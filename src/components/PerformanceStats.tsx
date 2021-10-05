@@ -16,11 +16,15 @@ const PerformanceStats: React.FC<PerformanceStatsProps> = ({ wordsPerMinute, tim
         {wordsPerMinute}
       </Box>
 
-      <Box bg="#2c323d" borderRadius="md" h="100px" w="100px" textAlign="center">
-        {timer}
-      </Box>
+      <Flex bg="#2c323d" borderRadius="md" h="100px" w="100px" align="center" justify="center">
+        <Box textAlign="center">
+          <Text fontSize="lg">Time</Text>
+          {timer}
+        </Box>
+      </Flex>
 
       <Box textAlign="center" h="100px" w="100px">
+        <Text>Accuracy</Text>
         {accuracy}
       </Box>
     </Flex>

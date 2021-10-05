@@ -1,4 +1,4 @@
-import { Box, ChakraProvider, extendTheme, VStack } from '@chakra-ui/react'
+import { Box, ChakraProvider, extendTheme, Flex, VStack } from '@chakra-ui/react'
 import * as React from 'react'
 import KeyHandler from './components/KeyHandler'
 import NewTest from './components/NewTest'
@@ -6,6 +6,7 @@ import PerformanceStats from './components/PerformanceStats'
 import Timer from './components/Timer'
 import WordsDisplay from './components/WordsDisplay'
 import WordsPerMinute from './components/WordsPerMinute'
+import Accuracy from './components/Accuracy'
 import { socket, SocketContext } from './contexts/SocketContext'
 
 const config = {
@@ -21,11 +22,17 @@ export const App = () => {
       <SocketContext.Provider value={socket}>
         <Box w="1000px" mx="auto" mt="6rem">
           <VStack spacing={2} align="stretch">
-            <PerformanceStats timer={<Timer />} wordsPerMinute={<WordsPerMinute />} />
+            <PerformanceStats
+              timer={<Timer />}
+              wordsPerMinute={<WordsPerMinute />}
+              accuracy={<Accuracy />}
+            />
             <WordsDisplay />
             <KeyHandler />
-            <NewTest />
           </VStack>
+          <Flex>
+            <NewTest />
+          </Flex>
         </Box>
       </SocketContext.Provider>
     </ChakraProvider>

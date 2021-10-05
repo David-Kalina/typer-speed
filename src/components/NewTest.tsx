@@ -5,7 +5,11 @@ import { socket } from '../contexts/SocketContext'
 interface StarTestProps {}
 
 const StarTest: React.FC<StarTestProps> = () => {
-  return <Button onClick={() => socket.emit('init')}>Start Test</Button>
+  return (
+    <Button w="200px" onClick={() => socket.emit('init')} mt="1rem" mx="auto">
+      New Test
+    </Button>
+  )
 }
 
 export default StarTest
