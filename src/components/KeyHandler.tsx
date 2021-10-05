@@ -9,16 +9,8 @@ const KeyHandler: React.FC<KeyHandlerProps> = () => {
   const [startedTimer, setStartedTimer] = React.useState(false)
 
   React.useEffect(() => {
-    socket.on('typedWord', typedWord => setTypedWord(typedWord))
-  }, [])
-
-  React.useEffect(() => {
     socket.on('resetTypedWord', () => setTypedWord(''))
   }, [])
-
-  React.useEffect(() => {
-    console.log(typedWord)
-  }, [typedWord])
 
   React.useEffect(() => {
     socket.on('resetTimer', () => setStartedTimer(false))
@@ -45,6 +37,13 @@ const KeyHandler: React.FC<KeyHandlerProps> = () => {
         if (e.ctrlKey || e.metaKey || e.altKey) {
           e.preventDefault()
         } else {
+          if (e.key !== 'Shift' && e.key !== 'Backspace') {
+            setTypedWord(prev => prev + e.key)
+          }
+          if (e.key === 'Backspace') {
+            setTypedWord(prev => prev.slice(0, prev.length - 1))
+          }
+
           socket.emit('updateCharacterIndex', { key: e.code === 'Space' ? e.code : e.key })
         }
       }}
