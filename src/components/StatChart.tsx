@@ -22,6 +22,13 @@ const StatChart: React.FC<StatChartProps> = () => {
     socket.on('sendData', data => setData(data))
   }, [])
 
+  window.addEventListener('keydown', function (e) {
+    console.log(e.code)
+    if (e.code === 'Space' && showData) {
+      e.preventDefault()
+    }
+  })
+
   React.useEffect(() => {
     socket.on('showData', () => setShowData(true))
   }, [])
