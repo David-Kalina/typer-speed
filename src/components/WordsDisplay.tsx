@@ -57,10 +57,6 @@ const WordsDisplay: React.FC<WordsDisplayProps> = () => {
   }, [])
 
   React.useEffect(() => {
-    socket.on('resetAccuracyWords', () => setAccuracyWords({ correctWords: [], errorWords: [] }))
-  }, [])
-
-  React.useEffect(() => {
     socket.on('sendWords', ({ currentWords, nextWords }) => setWords({ currentWords, nextWords }))
   }, [])
 
@@ -69,10 +65,6 @@ const WordsDisplay: React.FC<WordsDisplayProps> = () => {
       setCurrentWordCorrect(currentWordCorrect)
     )
   }, [])
-
-  React.useEffect(() => {
-    console.log(currentWordCorrect)
-  }, [currentWordCorrect])
 
   const returnStyle = (idx: number) => {
     if (accuracyWords.correctWords.includes(idx)) {
@@ -101,25 +93,29 @@ const WordsDisplay: React.FC<WordsDisplayProps> = () => {
       borderRadius="md"
     >
       <Flex w="100%" fontSize="xl">
-        {words.currentWords?.map((x, idx) => (
-          <Text
-            borderRadius="sm"
-            p="0.2rem"
-            bg={returnStyle(idx)?.bg}
-            animation={returnStyle(idx)?.animation}
-            color={returnStyle(idx)?.color}
-            h="min-content"
-            mx="0.1rem"
-            my="0.1rem"
-            w="max-content"
-          >
-            {x}
-          </Text>
-        ))}
+        {words.currentWords?.map((x, idx) => {
+          const style = returnStyle(idx)
+          return (
+            <Text
+              key={idx}
+              borderRadius="sm"
+              p="0.2rem"
+              bg={style?.bg}
+              animation={style?.animation}
+              color={style?.color}
+              h="min-content"
+              mx="0.1rem"
+              my="0.1rem"
+              w="max-content"
+            >
+              {x}
+            </Text>
+          )
+        })}
       </Flex>
       <Flex w="100%" fontSize="xl">
         {words.nextWords?.map(x => (
-          <Text p="0.2rem" h="min-content" mx="0.1rem" my="0.1rem" w="max-content">
+          <Text key={x} p="0.2rem" h="min-content" mx="0.1rem" my="0.1rem" w="max-content">
             {x}
           </Text>
         ))}

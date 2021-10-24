@@ -18,16 +18,24 @@ const StatChart: React.FC<StatChartProps> = () => {
   const [data, setData] = React.useState([])
   const [showData, setShowData] = React.useState(false)
 
+  const preventDefault = React.useCallback(
+    e => {
+      if (e.code === 'Space' && showData) {
+        e.preventDefault()
+      }
+    },
+    [showData]
+  )
+
   React.useEffect(() => {
     socket.on('sendData', data => setData(data))
   }, [])
 
-  window.addEventListener('keydown', function (e) {
-    console.log(e.code)
-    if (e.code === 'Space' && showData) {
-      e.preventDefault()
-    }
-  })
+  if (showData) {
+    window.addEventListener('keydown', e => preventDefault(e))
+  } else {
+    window.removeEventListener('keydown', e => preventDefault(e))
+  }
 
   React.useEffect(() => {
     socket.on('showData', () => setShowData(true))

@@ -1,6 +1,6 @@
 import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react'
-import { socket } from '../contexts/SocketContext'
 import * as React from 'react'
+import { socket } from '../contexts/SocketContext'
 
 interface AccuracyProps {}
 
