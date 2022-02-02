@@ -84,15 +84,8 @@ const WordsDisplay: React.FC<WordsDisplayProps> = () => {
   }
 
   return (
-    <Flex
-      h="max"
-      overflow="hidden"
-      wrap="wrap"
-      // bg="#2c323d"
-      justifyContent="flex-start"
-      borderRadius="md"
-    >
-      <Box h="20px" w="20px">
+    <Flex h="max" wrap="wrap" justifyContent="flex-start" borderRadius="md">
+      <Box h="22px" w={['100%', '100%', '22px']} textAlign="center">
         <Timer />
       </Box>
       <Flex w="100%" fontSize={['lg', 'lg', 'xl']} wrap="wrap">

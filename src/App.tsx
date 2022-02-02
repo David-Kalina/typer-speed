@@ -10,7 +10,6 @@ const config = {
   initialColorMode: 'dark',
   useSystemColorMode: false,
 }
-// 3. extend the theme
 const theme = extendTheme({ config } as any)
 
 export const App = () => {
@@ -24,12 +23,14 @@ export const App = () => {
           w="100vw"
           overflow="hidden"
         >
-          <Box w={['100%', '100%', '1000px']} mx="auto" p={[2, 2, 2, 0]} maxW="1000px">
-            {/* <PerformanceStats
-                timer={<Timer />}
-                wordsPerMinute={<WordsPerMinute />}
-                accuracy={<Accuracy />}
-              /> */}
+          <Box
+            w={['100%', '100%', '1000px']}
+            mx="auto"
+            p={[2, 2, 2, 0]}
+            maxW="1000px"
+            h={['100%', '100%', 'unset']}
+            overflow="hidden"
+          >
             <WordsDisplay />
             <KeyHandler />
             <Flex>
