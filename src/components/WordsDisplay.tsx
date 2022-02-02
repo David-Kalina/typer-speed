@@ -88,11 +88,18 @@ const WordsDisplay: React.FC<WordsDisplayProps> = () => {
       <Box h="22px" w={['100%', '100%', '22px']} textAlign="center">
         <Timer />
       </Box>
-      <Flex w="100%" fontSize={['lg', 'lg', 'xl']} wrap="wrap">
+      <Flex
+        mt={['2', '2', 'unset']}
+        w={['80%', '80%', '100%']}
+        mx="auto"
+        fontSize={['lg', 'lg', 'xl']}
+        wrap="wrap"
+      >
         {words?.currentWords?.map((x, idx) => {
           const style = returnStyle(idx)
           return (
             <Text
+              noOfLines={1}
               key={idx}
               borderRadius="sm"
               p="0.2rem"
@@ -109,7 +116,7 @@ const WordsDisplay: React.FC<WordsDisplayProps> = () => {
           )
         })}
       </Flex>
-      <Flex w="100%" fontSize={['lg', 'lg', 'xl']} wrap="wrap" textOverflow="clip">
+      <Flex w={['80%', '80%', '100%']} mx="auto" fontSize={['lg', 'lg', 'xl']} wrap="wrap">
         {words.nextWords?.map(x => (
           <Text key={x} p="0.2rem" h="min-content" mx="0.1rem" my="0.1rem" w="max-content">
             {x}
