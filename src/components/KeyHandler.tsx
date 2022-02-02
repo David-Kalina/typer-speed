@@ -1,4 +1,5 @@
 import { Input } from '@chakra-ui/input'
+import { useColorMode, useColorModePreference } from '@chakra-ui/react'
 import * as React from 'react'
 import { socket } from '../contexts/SocketContext'
 import { useSocketEvent } from '../hooks/useSocketEvent'
@@ -17,8 +18,16 @@ const KeyHandler: React.FC<KeyHandlerProps> = () => {
     ref.current?.focus()
   })
 
+  // detect color mode change
+  const { colorMode } = useColorMode()
+
+  React.useEffect(() => {
+    ref.current?.focus()
+  }, [colorMode])
+
   return (
     <Input
+      // bg="#2c323d"
       ref={ref}
       mt="4"
       display="hidden"
