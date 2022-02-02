@@ -5,7 +5,7 @@ import { socket } from '../contexts/SocketContext'
 interface TimerProps {}
 
 const Timer: React.FC<TimerProps> = () => {
-  const [time, setTime] = React.useState(60)
+  const [time, setTime] = React.useState(30)
   const [isRunning, setIsRunning] = React.useState(false)
 
   React.useEffect(() => {
@@ -17,7 +17,7 @@ const Timer: React.FC<TimerProps> = () => {
 
   React.useEffect(() => {
     socket.on('resetTimer', () => {
-      setTime(60)
+      setTime(30)
       setIsRunning(false)
     })
   }, [])
