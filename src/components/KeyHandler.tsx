@@ -10,6 +10,10 @@ const KeyHandler: React.FC<KeyHandlerProps> = () => {
   const ref = React.useRef<HTMLInputElement>(null)
 
   React.useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
+  React.useEffect(() => {
     socket.on('resetTypedWord', () => setTypedWord(''))
   }, [])
 
