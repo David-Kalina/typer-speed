@@ -23,7 +23,7 @@ const Timer: React.FC<TimerProps> = () => {
   }, [])
 
   if (isRunning) {
-    return <Text fontSize="sm">{time}</Text>
+    return <Text fontSize="md">{time}</Text>
   } else {
     return null
   }

@@ -94,7 +94,7 @@ const WordsDisplay: React.FC<WordsDisplayProps> = () => {
       <Box h="20px" w="20px">
         <Timer />
       </Box>
-      <Flex w="100%" fontSize="xl">
+      <Flex w="100%" fontSize={['lg', 'lg', 'xl']} wrap="wrap">
         {words?.currentWords?.map((x, idx) => {
           const style = returnStyle(idx)
           return (
@@ -115,7 +115,7 @@ const WordsDisplay: React.FC<WordsDisplayProps> = () => {
           )
         })}
       </Flex>
-      <Flex w="100%" fontSize="xl">
+      <Flex w="100%" fontSize={['lg', 'lg', 'xl']} wrap="wrap" wordBreak="break-all">
         {words.nextWords?.map(x => (
           <Text key={x} p="0.2rem" h="min-content" mx="0.1rem" my="0.1rem" w="max-content">
             {x}
