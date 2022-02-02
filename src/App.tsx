@@ -24,12 +24,13 @@ export const App = () => {
           overflow="hidden"
         >
           <Box
-            w={['100%', '100%', '1000px']}
+            w={['100%', '100%', '900px']}
             mx="auto"
             p={[2, 2, 2, 0]}
             maxW="1000px"
             h={['100%', '100%', 'unset']}
             overflow="hidden"
+            mb={['auto', 'auto', 'unset']}
           >
             <WordsDisplay />
             <KeyHandler />

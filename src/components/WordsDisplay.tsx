@@ -109,7 +109,7 @@ const WordsDisplay: React.FC<WordsDisplayProps> = () => {
           )
         })}
       </Flex>
-      <Flex w="100%" fontSize={['lg', 'lg', 'xl']} wrap="wrap" wordBreak="break-all">
+      <Flex w="100%" fontSize={['lg', 'lg', 'xl']} wrap="wrap" textOverflow="clip">
         {words.nextWords?.map(x => (
           <Text key={x} p="0.2rem" h="min-content" mx="0.1rem" my="0.1rem" w="max-content">
             {x}
