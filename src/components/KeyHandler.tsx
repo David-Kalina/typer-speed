@@ -1,5 +1,5 @@
 import { Input } from '@chakra-ui/input'
-import { useColorMode, useColorModePreference } from '@chakra-ui/react'
+import { useColorMode } from '@chakra-ui/react'
 import * as React from 'react'
 import { socket } from '../contexts/SocketContext'
 import { useSocketEvent } from '../hooks/useSocketEvent'
