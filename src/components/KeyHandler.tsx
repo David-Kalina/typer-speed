@@ -7,22 +7,28 @@ interface KeyHandlerProps {}
 const KeyHandler: React.FC<KeyHandlerProps> = () => {
   const [typedWord, setTypedWord] = React.useState('')
   const [startedTimer, setStartedTimer] = React.useState(false)
+  const ref = React.useRef<HTMLInputElement>(null)
 
   React.useEffect(() => {
     socket.on('resetTypedWord', () => setTypedWord(''))
   }, [])
 
   React.useEffect(() => {
-    socket.on('resetTimer', () => setStartedTimer(false))
+    socket.on('resetTimer', () => {
+      setStartedTimer(false)
+      ref.current?.focus()
+    })
   }, [])
 
   return (
     <Input
-      bg="#2c323d"
-      boxShadow="lg"
+      // bg="#2c323d"
+      ref={ref}
+      mt="4"
+      display="hidden"
       value={typedWord}
       _focus={{ border: '1px solid #313641' }}
-      height="80px"
+      height="50px"
       autoFocus
       //@ts-ignore
       onKeyDown={(e: KeyboardEvent) => {

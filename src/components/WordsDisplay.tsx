@@ -3,6 +3,8 @@ import * as React from 'react'
 import { socket } from '../contexts/SocketContext'
 import { shakeAnimation } from '../animations/shake'
 import { bounceAnimation } from '../animations/bounce'
+import Timer from './Timer'
+import { Box } from '@chakra-ui/react'
 
 interface WordsDisplayProps {}
 
@@ -25,8 +27,6 @@ const WordsDisplay: React.FC<WordsDisplayProps> = () => {
   const [wordIndex, setWordIndex] = React.useState(0)
 
   React.useEffect(() => {
-    console.log('Accuracy')
-
     socket.on('sendAccuracyWords', ({ errorWords, correctWords }) =>
       setAccuracyWords(prev => ({
         correctWords: [...prev.correctWords, correctWords],
@@ -57,7 +57,9 @@ const WordsDisplay: React.FC<WordsDisplayProps> = () => {
   }, [])
 
   React.useEffect(() => {
-    socket.on('sendWords', ({ currentWords, nextWords }) => setWords({ currentWords, nextWords }))
+    socket.on('sendWords', ({ currentWords, nextWords }) => {
+      setWords({ currentWords, nextWords })
+    })
   }, [])
 
   React.useEffect(() => {
@@ -84,16 +86,16 @@ const WordsDisplay: React.FC<WordsDisplayProps> = () => {
   return (
     <Flex
       h="max"
-      p="2rem"
-      pb="3rem"
-      boxShadow="lg"
       wrap="wrap"
-      bg="#2c323d"
+      // bg="#2c323d"
       justifyContent="flex-start"
       borderRadius="md"
     >
+      <Box h="20px" w="20px">
+        <Timer />
+      </Box>
       <Flex w="100%" fontSize="xl">
-        {words.currentWords?.map((x, idx) => {
+        {words?.currentWords?.map((x, idx) => {
           const style = returnStyle(idx)
           return (
             <Text
