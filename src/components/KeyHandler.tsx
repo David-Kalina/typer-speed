@@ -1,6 +1,7 @@
 import { Input } from '@chakra-ui/input'
 import * as React from 'react'
 import { socket } from '../contexts/SocketContext'
+import { useSocketEvent } from '../hooks/useSocketEvent'
 
 interface KeyHandlerProps {}
 
@@ -9,26 +10,15 @@ const KeyHandler: React.FC<KeyHandlerProps> = () => {
   const [startedTimer, setStartedTimer] = React.useState(false)
   const ref = React.useRef<HTMLInputElement>(null)
 
-  React.useEffect(() => {
-    if (ref?.current === document.activeElement) {
-      window.scrollTo(0, 0)
-    }
-  }, [])
+  useSocketEvent('resetTypedWord', () => setTypedWord(''))
 
-  React.useEffect(() => {
-    socket.on('resetTypedWord', () => setTypedWord(''))
-  }, [])
-
-  React.useEffect(() => {
-    socket.on('resetTimer', () => {
-      setStartedTimer(false)
-      ref.current?.focus()
-    })
-  }, [])
+  useSocketEvent('resetTimer', () => {
+    setStartedTimer(false)
+    ref.current?.focus()
+  })
 
   return (
     <Input
-      // bg="#2c323d"
       ref={ref}
       mt="4"
       display="hidden"
