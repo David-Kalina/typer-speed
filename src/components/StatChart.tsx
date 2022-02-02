@@ -12,6 +12,7 @@ import {
 import * as React from 'react'
 import { Legend, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts'
 import { socket } from '../contexts/SocketContext'
+import { useSocketEvent } from '../hooks/useSocketEvent'
 
 interface StatChartProps {}
 
@@ -29,19 +30,15 @@ const StatChart: React.FC<StatChartProps> = () => {
     [showData]
   )
 
-  React.useEffect(() => {
-    socket.on('sendData', data => setData(data))
-  }, [])
+  useSocketEvent('sendData', data => setData(data))
+
+  useSocketEvent('showData', () => setShowData(true))
 
   if (showData) {
     window.addEventListener('keydown', e => preventDefault(e))
   } else {
     window.removeEventListener('keydown', e => preventDefault(e))
   }
-
-  React.useEffect(() => {
-    socket.on('showData', () => setShowData(true))
-  }, [])
 
   if (breakpoint === 'md' || breakpoint === 'lg' || breakpoint === 'xl' || breakpoint === '2xl') {
     return (
