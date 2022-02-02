@@ -128,7 +128,7 @@ const WordsDisplay: React.FC<WordsDisplayProps> = () => {
     )
   } else {
     return (
-      <Flex>
+      <Flex h="102px">
         <Spinner mx="auto" />
       </Flex>
     )
