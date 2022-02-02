@@ -4,7 +4,7 @@ import { socket } from '../contexts/SocketContext'
 import { shakeAnimation } from '../animations/shake'
 import { bounceAnimation } from '../animations/bounce'
 import Timer from './Timer'
-import { Box } from '@chakra-ui/react'
+import { Box, Spinner } from '@chakra-ui/react'
 
 interface WordsDisplayProps {}
 
@@ -83,48 +83,56 @@ const WordsDisplay: React.FC<WordsDisplayProps> = () => {
     }
   }
 
-  return (
-    <Flex h="max" wrap="wrap" justifyContent="flex-start" borderRadius="md">
-      <Box h="22px" w={['100%', '100%', '22px']} textAlign="center">
-        <Timer />
-      </Box>
-      <Flex
-        mt={['2', '2', 'unset']}
-        w={['80%', '80%', '100%']}
-        mx="auto"
-        fontSize={['lg', 'lg', 'xl']}
-        wrap="wrap"
-      >
-        {words?.currentWords?.map((x, idx) => {
-          const style = returnStyle(idx)
-          return (
-            <Text
-              noOfLines={1}
-              key={idx}
-              borderRadius="sm"
-              p="0.2rem"
-              bg={style?.bg}
-              animation={style?.animation}
-              color={style?.color}
-              h="min-content"
-              mx="0.1rem"
-              my="0.1rem"
-              w="max-content"
-            >
+  if (words.currentWords.length && words.nextWords.length) {
+    return (
+      <Flex h="max" wrap="wrap" justifyContent="flex-start" borderRadius="md">
+        <Box h="22px" w={['100%', '100%', '22px']} textAlign="center">
+          <Timer />
+        </Box>
+        <Flex
+          mt={['2', '2', 'unset']}
+          w={['80%', '80%', '100%']}
+          mx="auto"
+          fontSize={['lg', 'lg', 'xl']}
+          wrap="wrap"
+        >
+          {words?.currentWords?.map((x, idx) => {
+            const style = returnStyle(idx)
+            return (
+              <Text
+                noOfLines={1}
+                key={idx}
+                borderRadius="sm"
+                p="0.2rem"
+                bg={style?.bg}
+                animation={style?.animation}
+                color={style?.color}
+                h="min-content"
+                mx="0.1rem"
+                my="0.1rem"
+                w="max-content"
+              >
+                {x}
+              </Text>
+            )
+          })}
+        </Flex>
+        <Flex w={['80%', '80%', '100%']} mx="auto" fontSize={['lg', 'lg', 'xl']} wrap="wrap">
+          {words.nextWords?.map(x => (
+            <Text key={x} p="0.2rem" h="min-content" mx="0.1rem" my="0.1rem" w="max-content">
               {x}
             </Text>
-          )
-        })}
+          ))}
+        </Flex>
       </Flex>
-      <Flex w={['80%', '80%', '100%']} mx="auto" fontSize={['lg', 'lg', 'xl']} wrap="wrap">
-        {words.nextWords?.map(x => (
-          <Text key={x} p="0.2rem" h="min-content" mx="0.1rem" my="0.1rem" w="max-content">
-            {x}
-          </Text>
-        ))}
+    )
+  } else {
+    return (
+      <Flex>
+        <Spinner mx="auto" />
       </Flex>
-    </Flex>
-  )
+    )
+  }
 }
 
 export default WordsDisplay
