@@ -24,7 +24,7 @@ export const App = () => {
           overflow="hidden"
         >
           <Box
-            w={['100%', '100%', '900px']}
+            w={['100%', '100%', '1000px']}
             mx="auto"
             p={[2, 2, 2, 0]}
             maxW="1000px"
