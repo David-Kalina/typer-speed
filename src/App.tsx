@@ -17,7 +17,13 @@ export const App = () => {
   return (
     <ChakraProvider theme={theme}>
       <SocketContext.Provider value={socket}>
-        <Flex align="center" justify="center" h="100vh" w="100vw">
+        <Flex
+          align={['start', 'start', 'center']}
+          justify="center"
+          h="100vh"
+          w="100vw"
+          overflow="hidden"
+        >
           <Box w={['100%', '100%', '1000px']} mx="auto" p={[2, 2, 2, 0]}>
             {/* <PerformanceStats
                 timer={<Timer />}
