@@ -86,6 +86,7 @@ const WordsDisplay: React.FC<WordsDisplayProps> = () => {
   return (
     <Flex
       h="max"
+      overflow="hidden"
       wrap="wrap"
       // bg="#2c323d"
       justifyContent="flex-start"
