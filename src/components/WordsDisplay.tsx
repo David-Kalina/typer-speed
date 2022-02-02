@@ -1,14 +1,12 @@
 import { Flex, Text } from '@chakra-ui/layout'
-import * as React from 'react'
-import { socket } from '../contexts/SocketContext'
-import { shakeAnimation } from '../animations/shake'
-import { bounceAnimation } from '../animations/bounce'
-import Timer from './Timer'
 import { Box, Spinner } from '@chakra-ui/react'
+import * as React from 'react'
+import { useSocketEvent } from '../hooks/useSocketEvent'
+import { styleWordsDisplay } from '../utils/styleWordsDisplay'
+import Timer from './Timer'
+import Word from './Word'
 
-interface WordsDisplayProps {}
-
-const WordsDisplay: React.FC<WordsDisplayProps> = () => {
+const WordsDisplay: React.FC = () => {
   const [words, setWords] = React.useState({
     currentWords: [],
     nextWords: [],
@@ -26,62 +24,39 @@ const WordsDisplay: React.FC<WordsDisplayProps> = () => {
 
   const [wordIndex, setWordIndex] = React.useState(0)
 
-  React.useEffect(() => {
-    socket.on('sendAccuracyWords', ({ errorWords, correctWords }) =>
-      setAccuracyWords(prev => ({
-        correctWords: [...prev.correctWords, correctWords],
-        errorWords: [...prev.errorWords, errorWords],
-      }))
-    )
-  }, [])
+  useSocketEvent('sendAccuracyWords', ({ errorWords, correctWords }) => {
+    setAccuracyWords(prev => ({
+      correctWords: [...prev.correctWords, correctWords],
+      errorWords: [...prev.errorWords, errorWords],
+    }))
+  })
 
-  React.useEffect(() => {
-    socket.on('defaultStyle', wordIndex => {
-      setAccuracyWords(prev => ({
-        correctWords: prev.correctWords,
-        errorWords: prev.errorWords.filter(x => x !== wordIndex),
-      }))
-    })
-  }, [])
+  useSocketEvent('defaultStyle', wordIndex => {
+    setAccuracyWords(prev => ({
+      correctWords: prev.correctWords,
+      errorWords: prev.errorWords.filter(x => x !== wordIndex),
+    }))
+  })
 
-  React.useEffect(() => {
-    socket.on('resetAccuracyWords', () => setAccuracyWords({ errorWords: [], correctWords: [] }))
-  }, [])
+  useSocketEvent('resetAccuracyWords', () => {
+    setAccuracyWords({ errorWords: [], correctWords: [] })
+  })
 
-  React.useEffect(() => {
-    socket.on('sendWordIndex', ({ wordIndex }) => setWordIndex(wordIndex))
-  }, [])
+  useSocketEvent('sendWordIndex', ({ wordIndex }) => {
+    setWordIndex(wordIndex)
+  })
 
-  React.useEffect(() => {
-    socket.on('resetWordIndex', () => setWordIndex(0))
-  }, [])
+  useSocketEvent('resetWordIndex', () => {
+    setWordIndex(0)
+  })
 
-  React.useEffect(() => {
-    socket.on('sendWords', ({ currentWords, nextWords }) => {
-      setWords({ currentWords, nextWords })
-    })
-  }, [])
+  useSocketEvent('sendWords', ({ currentWords, nextWords }) => {
+    setWords({ currentWords, nextWords })
+  })
 
-  React.useEffect(() => {
-    socket.on('sendCurrentWordCorrect', currentWordCorrect =>
-      setCurrentWordCorrect(currentWordCorrect)
-    )
-  }, [])
-
-  const returnStyle = (idx: number) => {
-    if (accuracyWords.correctWords.includes(idx)) {
-      return { color: 'black', animation: bounceAnimation, bg: '#9ae6b4' }
-    }
-    if (accuracyWords.errorWords.includes(idx)) {
-      return { color: 'black', animation: shakeAnimation, bg: '#feb2b2' }
-    }
-    if (currentWordCorrect === false && wordIndex === idx) {
-      return { color: 'black', animation: shakeAnimation, bg: '#feb2b2' }
-    }
-    if (wordIndex === idx) {
-      return { color: 'black', animation: undefined, bg: '#faf089' }
-    }
-  }
+  useSocketEvent('sendCurrentWordCorrect', currentWordCorrect =>
+    setCurrentWordCorrect(currentWordCorrect)
+  )
 
   if (words.currentWords.length && words.nextWords.length) {
     return (
@@ -97,24 +72,8 @@ const WordsDisplay: React.FC<WordsDisplayProps> = () => {
           wrap="wrap"
         >
           {words?.currentWords?.map((x, idx) => {
-            const style = returnStyle(idx)
-            return (
-              <Text
-                noOfLines={1}
-                key={idx}
-                borderRadius="sm"
-                p="0.2rem"
-                bg={style?.bg}
-                animation={style?.animation}
-                color={style?.color}
-                h="min-content"
-                mx="0.1rem"
-                my="0.1rem"
-                w="max-content"
-              >
-                {x}
-              </Text>
-            )
+            const style = styleWordsDisplay(idx, accuracyWords, currentWordCorrect, wordIndex)
+            return <Word key={idx} style={style as any} text={x} idx={idx} />
           })}
         </Flex>
         <Flex w={['80%', '80%', '100%']} mx="auto" fontSize={['lg', 'lg', 'xl']} wrap="wrap">

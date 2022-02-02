@@ -1,28 +1,16 @@
 import { useEffect, useMemo, useState } from 'react'
 import { socket } from '../contexts/SocketContext'
 
-export const useSocketEvents = (
-  events: { name: string; callback: (...args: any[]) => void; disconnect: boolean }[]
-) => {
-  const [socketEvents, setSocketEvents] = useState(useMemo(() => events, [events]))
+export const useSocketEvent = (eventName: string, eventHandler: (data: any) => void) => {
+  const [event] = useState<any>(null)
 
   useEffect(() => {
-    for (const { name, callback, disconnect } of socketEvents) {
-      socket.on(name, (...args: any) => callback(args))
-      if (!disconnect) {
-        return () => {
-          socket.off(name)
-        }
-      }
-    }
-  }, [socketEvents])
-}
+    socket.on(eventName, eventHandler)
 
-export const useSocketEvent = (event: string, callback: (...args: any[]) => void) => {
-  useEffect(() => {
-    socket.on(event, (...args) => callback(args))
     return () => {
-      socket.off(event)
+      socket.off(eventName, eventHandler)
     }
-  }, [callback, event])
+  }, [eventName, eventHandler])
+
+  return useMemo(() => event, [event])
 }
