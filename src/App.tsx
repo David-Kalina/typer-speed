@@ -1,4 +1,4 @@
-import { Box, ChakraProvider, extendTheme, Flex, VStack } from '@chakra-ui/react'
+import { Box, ChakraProvider, extendTheme, Flex } from '@chakra-ui/react'
 import * as React from 'react'
 import KeyHandler from './components/KeyHandler'
 import NewTest from './components/NewTest'
