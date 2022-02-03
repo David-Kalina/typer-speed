@@ -1,6 +1,5 @@
-import { HStack, Flex, Text, Box } from '@chakra-ui/react'
+import { Box, Flex, HStack, Text } from '@chakra-ui/react'
 import React from 'react'
-import { FiSettings } from 'react-icons/fi'
 import { GiSpeedometer } from 'react-icons/gi'
 import { ColorModeSwitcher } from '../ColorModeSwitcher'
 
@@ -12,7 +11,6 @@ function Header() {
           <GiSpeedometer />
           <Text ml="4px">Typer Speed</Text>
         </Flex>
-        <FiSettings />
       </HStack>
 
       <Box>
