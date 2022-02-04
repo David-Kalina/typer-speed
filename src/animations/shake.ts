@@ -1,6 +1,3 @@
-
-
-
 import { keyframes } from '@chakra-ui/react'
 
 const shake = keyframes`
@@ -21,4 +18,4 @@ const shake = keyframes`
   }
 `
 
-export const shakeAnimation = `${shake} 1s linear`
+export const shakeAnimation = `${shake} 0.8s linear`

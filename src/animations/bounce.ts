@@ -6,4 +6,4 @@ const bounce = keyframes`
    60% {transform: translateY(-5px);} 
  `
 
-export const bounceAnimation = `${bounce} 1s linear`
+export const bounceAnimation = `${bounce} 0.8s linear`
