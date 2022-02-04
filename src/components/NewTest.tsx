@@ -3,15 +3,16 @@ import * as React from 'react'
 import { VscDebugRestart } from 'react-icons/vsc'
 import { socket } from '../contexts/SocketContext'
 
-interface StartTestProps {}
 
-const StartTest: React.FC<StartTestProps> = () => {
+const StartTest: React.FC = () => {
   return (
     <Icon
       as={VscDebugRestart}
       w="200px"
       fontSize="lg"
-      onClick={() => socket.emit('init')}
+      onClick={() => {
+        socket.emit('init')
+      }}
       mt="1rem"
       mx="auto"
     />

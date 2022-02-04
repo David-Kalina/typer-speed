@@ -20,6 +20,8 @@ export const useSocketEvent = (
 
 export const useEmitSocketEvent = (eventName: string, eventData?: any) => {
   useEffect(() => {
+    console.log('useSocketEvent', eventName)
+
     socket.emit(eventName, eventData)
   }, [eventName, eventData])
 }
