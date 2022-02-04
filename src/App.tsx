@@ -28,7 +28,7 @@ export const App = () => {
           h="100vh"
           flexDir="column"
           overflow="hidden"
-          w={['100%', '100%', '950px']}
+          w={['100%', '100%', '900px']}
         >
           <Header />
 
