@@ -12,6 +12,7 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import * as React from 'react'
+import { VscDebugRestart } from 'react-icons/vsc'
 import { Legend, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts'
 import { socket } from '../contexts/SocketContext'
 import { useSocketEvent } from '../hooks/useSocketEvent'
@@ -95,7 +96,7 @@ const StatChart: React.FC<StatChartProps> = () => {
               mt="1rem"
               mx="auto"
             >
-              New Test
+              <VscDebugRestart />
             </Button>
           </ModalFooter>
         </ModalContent>
@@ -138,7 +139,7 @@ const StatChart: React.FC<StatChartProps> = () => {
               mt="1rem"
               mx="auto"
             >
-              New Test
+              <VscDebugRestart />
             </Button>
           </ModalFooter>
         </ModalContent>

@@ -3,11 +3,9 @@ import { useColorMode } from '@chakra-ui/react'
 import * as React from 'react'
 import { socket } from '../contexts/SocketContext'
 import { useSocketEvent } from '../hooks/useSocketEvent'
-import { forbiddenKeys } from '../contants/forbiddenKeys'
+import { forbiddenKeys } from '../constants/forbiddenKeys'
 
-interface KeyHandlerProps {}
-
-const KeyHandler: React.FC<KeyHandlerProps> = () => {
+const KeyHandler: React.FC = () => {
   const [typedWord, setTypedWord] = React.useState('')
   const [startedTimer, setStartedTimer] = React.useState(false)
   const ref = React.useRef<HTMLInputElement>(null)

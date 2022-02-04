@@ -3,9 +3,9 @@ import * as React from 'react'
 import { VscDebugRestart } from 'react-icons/vsc'
 import { socket } from '../contexts/SocketContext'
 
-interface StarTestProps {}
+interface StartTestProps {}
 
-const StarTest: React.FC<StarTestProps> = () => {
+const StartTest: React.FC<StartTestProps> = () => {
   return (
     <Icon
       as={VscDebugRestart}
@@ -18,4 +18,4 @@ const StarTest: React.FC<StarTestProps> = () => {
   )
 }
 
-export default StarTest
+export default StartTest
