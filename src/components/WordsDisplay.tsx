@@ -60,7 +60,7 @@ const WordsDisplay: React.FC = () => {
 
   if (words.currentWords.length && words.nextWords.length) {
     return (
-      <Flex h="max" wrap="wrap" justifyContent="flex-start" borderRadius="md">
+      <Flex h="max" wrap="wrap" justifyContent="flex-start">
         <Box h="22px" w={['100%', '100%', '22px']} textAlign="center">
           <Timer />
         </Box>
@@ -69,7 +69,6 @@ const WordsDisplay: React.FC = () => {
           w={['80%', '80%', '100%']}
           mx="auto"
           fontSize={['lg', 'xl', '2xl']}
-          wrap="wrap"
         >
           {words?.currentWords?.map((x, idx) => {
             const style = styleWordsDisplay(
@@ -87,9 +86,9 @@ const WordsDisplay: React.FC = () => {
           fontSize={['lg', 'xl', '2xl']}
           wrap="wrap"
         >
-          {words.nextWords?.map(x => (
+          {words.nextWords?.map((x, idx) => (
             <Text
-              key={x}
+              key={idx}
               p="0.2rem"
               h="min-content"
               mx="0.1rem"

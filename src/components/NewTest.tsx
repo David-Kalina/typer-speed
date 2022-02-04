@@ -3,9 +3,7 @@ import * as React from 'react'
 import { VscDebugRestart } from 'react-icons/vsc'
 import { socket } from '../contexts/SocketContext'
 
-interface StartTestProps {}
-
-const StartTest: React.FC<StartTestProps> = () => {
+const StartTest: React.FC = () => {
   return (
     <Icon
       as={VscDebugRestart}
