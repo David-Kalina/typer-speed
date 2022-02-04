@@ -8,6 +8,8 @@ import {
   ModalHeader,
   ModalOverlay,
   useBreakpoint,
+  Text,
+  VStack,
 } from '@chakra-ui/react'
 import * as React from 'react'
 import { Legend, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts'
@@ -19,7 +21,9 @@ interface StatChartProps {}
 const StatChart: React.FC<StatChartProps> = () => {
   const breakpoint = useBreakpoint()
   const [data, setData] = React.useState([])
+  const [averageWPM, setAverageWPM] = React.useState(0)
   const [showData, setShowData] = React.useState(false)
+  const [accuracy, setAccuracy] = React.useState(0)
 
   const preventDefault = React.useCallback(
     e => {
@@ -30,7 +34,11 @@ const StatChart: React.FC<StatChartProps> = () => {
     [showData]
   )
 
-  useSocketEvent('sendData', data => setData(data))
+  useSocketEvent('sendData', ({ overtime, averageWPM, accuracy }) => {
+    setData(overtime)
+    setAverageWPM(averageWPM)
+    setAccuracy(accuracy)
+  })
 
   useSocketEvent('showData', () => setShowData(true))
 
@@ -40,7 +48,12 @@ const StatChart: React.FC<StatChartProps> = () => {
     window.removeEventListener('keydown', e => preventDefault(e))
   }
 
-  if (breakpoint === 'md' || breakpoint === 'lg' || breakpoint === 'xl' || breakpoint === '2xl') {
+  if (
+    breakpoint === 'md' ||
+    breakpoint === 'lg' ||
+    breakpoint === 'xl' ||
+    breakpoint === '2xl'
+  ) {
     return (
       <Modal
         motionPreset="slideInBottom"
@@ -58,8 +71,18 @@ const StatChart: React.FC<StatChartProps> = () => {
               <YAxis dataKey="wpm" />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="wpm" stroke="#82ca9d" animationDuration={10000} />
+              <Line
+                type="monotone"
+                dataKey="wpm"
+                stroke="#82ca9d"
+                animationDuration={5000}
+              />
             </LineChart>
+
+            <VStack align="stretch">
+              <Text>Average WPM: {averageWPM}</Text>
+              <Text>Accuracy: {accuracy}%</Text>
+            </VStack>
           </ModalBody>
           <ModalFooter>
             <Button
@@ -96,7 +119,12 @@ const StatChart: React.FC<StatChartProps> = () => {
               <YAxis dataKey="wpm" />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="wpm" stroke="#82ca9d" animationDuration={10000} />
+              <Line
+                type="monotone"
+                dataKey="wpm"
+                stroke="#82ca9d"
+                animationDuration={10000}
+              />
             </LineChart>
           </ModalBody>
           <ModalFooter>

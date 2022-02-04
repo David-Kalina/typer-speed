@@ -1,7 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
 import { socket } from '../contexts/SocketContext'
 
-export const useSocketEvent = (eventName: string, eventHandler: (data: any) => void) => {
+export const useSocketEvent = (
+  eventName: string,
+  eventHandler: (data: any) => void
+) => {
   const [event] = useState<any>(null)
 
   useEffect(() => {
@@ -13,4 +16,10 @@ export const useSocketEvent = (eventName: string, eventHandler: (data: any) => v
   }, [eventName, eventHandler])
 
   return useMemo(() => event, [event])
+}
+
+export const useEmitSocketEvent = (eventName: string, eventData?: any) => {
+  useEffect(() => {
+    socket.emit(eventName, eventData)
+  }, [eventName, eventData])
 }

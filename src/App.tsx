@@ -7,6 +7,7 @@ import NewTest from './components/NewTest'
 import StatChart from './components/StatChart'
 import WordsDisplay from './components/WordsDisplay'
 import { socket, SocketContext } from './contexts/SocketContext'
+import { useEmitSocketEvent } from './hooks/useSocketEvent'
 
 const config = {
   initialColorMode: 'dark',
@@ -15,6 +16,8 @@ const config = {
 const theme = extendTheme({ config } as any)
 
 export const App = () => {
+  useEmitSocketEvent('init')
+
   return (
     <ChakraProvider theme={theme}>
       <SocketContext.Provider value={socket}>

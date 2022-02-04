@@ -72,13 +72,30 @@ const WordsDisplay: React.FC = () => {
           wrap="wrap"
         >
           {words?.currentWords?.map((x, idx) => {
-            const style = styleWordsDisplay(idx, accuracyWords, currentWordCorrect, wordIndex)
+            const style = styleWordsDisplay(
+              idx,
+              accuracyWords,
+              currentWordCorrect,
+              wordIndex
+            )
             return <Word key={idx} style={style as any} text={x} idx={idx} />
           })}
         </Flex>
-        <Flex w={['80%', '80%', '100%']} mx="auto" fontSize={['lg', 'xl', '2xl']} wrap="wrap">
+        <Flex
+          w={['80%', '80%', '100%']}
+          mx="auto"
+          fontSize={['lg', 'xl', '2xl']}
+          wrap="wrap"
+        >
           {words.nextWords?.map(x => (
-            <Text key={x} p="0.2rem" h="min-content" mx="0.1rem" my="0.1rem" w="max-content">
+            <Text
+              key={x}
+              p="0.2rem"
+              h="min-content"
+              mx="0.1rem"
+              my="0.1rem"
+              w="max-content"
+            >
               {x}
             </Text>
           ))}

@@ -18,6 +18,10 @@ const KeyHandler: React.FC<KeyHandlerProps> = () => {
     ref.current?.focus()
   })
 
+  useSocketEvent('focus', () => {
+    ref.current?.focus()
+  })
+
   // detect color mode change
   const { colorMode } = useColorMode()
 
@@ -55,7 +59,9 @@ const KeyHandler: React.FC<KeyHandlerProps> = () => {
             setTypedWord(prev => prev.slice(0, prev.length - 1))
           }
 
-          socket.emit('updateCharacterIndex', { key: e.code === 'Space' ? e.code : e.key })
+          socket.emit('key', {
+            key: e.code === 'Space' || e.code === 'Backspace' ? e.code : e.key,
+          })
         }
       }}
     />
