@@ -2,9 +2,7 @@ import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react'
 import { socket } from '../contexts/SocketContext'
 import * as React from 'react'
 
-interface WordsPerMinuteProps {}
-
-const WordsPerMinute: React.FC<WordsPerMinuteProps> = () => {
+const WordsPerMinute: React.FC = () => {
   const [wpm, setWpm] = React.useState(0)
 
   React.useEffect(() => {
