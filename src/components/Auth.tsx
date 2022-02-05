@@ -1,4 +1,4 @@
-import { Flex } from '@chakra-ui/react'
+import { Flex, Stack } from '@chakra-ui/react'
 import React from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { useRedirect } from '../hooks/useRedirect'
@@ -10,16 +10,18 @@ function Auth() {
   useRedirect(user?.email, '/')
 
   return (
-    <Flex
+    <Stack
+      spacing={10}
       w="80%"
-      flexDir={['column', 'column', 'row']}
+      direction={['column', 'column', 'row', 'row']}
       mx="auto"
       h="100%"
-      justifyContent="space-between"
+      align={['center', 'center', 'stretch', 'stretch']}
+      justifyContent={['center', 'center', 'space-between', 'space-between']}
     >
       <Register />
       <Login />
-    </Flex>
+    </Stack>
   )
 }
 
