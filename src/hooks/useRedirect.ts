@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-location'
 
 export const useRedirect = (
-  condition: any,
+  condition: unknown,
   pathName: string,
   replace = true
 ) => {
@@ -15,6 +15,5 @@ export const useRedirect = (
 
     return undefined
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [condition])
 }

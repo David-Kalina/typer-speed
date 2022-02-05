@@ -2,9 +2,7 @@ import { Text } from '@chakra-ui/react'
 import * as React from 'react'
 import { useSocketEvent } from '../hooks/useSocketEvent'
 
-interface TimerProps {}
-
-const Timer: React.FC<TimerProps> = () => {
+const Timer: React.FC = () => {
   const [time, setTime] = React.useState(30)
   const [isRunning, setIsRunning] = React.useState(false)
 
