@@ -28,12 +28,12 @@ function MobileHeader() {
 
   return (
     <Flex
-      w="100%"
+      w="80%"
+      mx="auto"
       zIndex={999}
       align="center"
       justify="space-between"
-      px={[4, 4, 0]}
-      py={['4', '4', 0]}
+      p={[4, 4, 4, 0]}
     >
       <Link to="/">
         <Flex align="center" cursor="pointer" fontSize="lg">

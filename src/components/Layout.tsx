@@ -18,13 +18,13 @@ function Layout({
         align="start"
         h="100vh"
         flexDir="column"
-        w={['100%', '100%', '900px']}
+        w={['100%', '100%', '100%', '900px']}
       >
         <Header />
 
         <Box
           mx="auto"
-          p={[4, 4, 2, 0]}
+          p={[4, 4, 4, 0]}
           minH={['100vh', '100vh', 'unset']}
           h={['100%', '100%', height]}
           mb={['auto', 'auto', 'unset']}
