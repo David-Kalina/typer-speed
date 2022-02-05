@@ -4,7 +4,13 @@ import * as React from 'react'
 type ColorModeSwitcherProps = Omit<IconButtonProps, 'aria-label'>
 
 export const ColorModeSwitcher: React.FC<ColorModeSwitcherProps> = props => {
-  const { toggleColorMode } = useColorMode()
+  const { toggleColorMode, colorMode } = useColorMode()
 
-  return <Switch size="lg" onChange={toggleColorMode} />
+  return (
+    <Switch
+      size="sm"
+      defaultChecked={colorMode === 'dark' ? false : true}
+      onChange={toggleColorMode}
+    />
+  )
 }
