@@ -38,7 +38,6 @@ const KeyHandler: React.FC = () => {
       autoFocus
       onChange={() => null}
       onKeyDown={(e: React.KeyboardEvent) => {
-        console.log(e.key, e.code, e.keyCode)
         if (forbiddenKeys.includes(e.key)) {
           e.preventDefault()
           return
