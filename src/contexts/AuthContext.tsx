@@ -25,9 +25,9 @@ export interface SignInData {
 
 const AuthContext = createContext<{
   user: User | null
-  signUp: (data: SignUpData) => Promise<UserCredential>
-  signIn: (data: SignInData) => Promise<UserCredential>
-  signInWithGoogle: () => Promise<UserCredential>
+  signUp: (data: SignUpData) => Promise<UserCredential> | Promise<unknown>
+  signIn: (data: SignInData) => Promise<UserCredential> | Promise<unknown>
+  signInWithGoogle: () => Promise<UserCredential> | Promise<unknown>
   signOutUser: () => Promise<void>
 }>(null as any)
 
@@ -40,18 +40,18 @@ export const AuthProvider = ({
 }) => {
   const [user, setUser] = useState<User | null>(null)
 
-  const signUp = ({
+  const signUp = async ({
     email,
     password,
     verifyEmail,
     verifyPassword,
   }: SignUpData) => {
     if (password !== verifyPassword) {
-      throw new Error('Passwords do not match')
+      throw "Passwords don't match"
     }
 
     if (email !== verifyEmail) {
-      throw new Error('Emails do not match')
+      throw "Emails don't match"
     }
 
     const statsRef = doc(db, 'stats', email)
@@ -62,37 +62,46 @@ export const AuthProvider = ({
       timeTyping: 0,
     })
 
-    return createUserWithEmailAndPassword(auth, email, password)
+    return await createUserWithEmailAndPassword(auth, email, password)
+      .then(credential => credential)
+      .catch(() => {
+        throw 'User already exists'
+      })
   }
 
-  const signIn = ({ email, password }: SignInData) => {
+  const signIn = async ({ email, password }: SignInData) => {
     return signInWithEmailAndPassword(auth, email, password)
+      .then(credential => credential)
+      .catch(() => {
+        throw 'Invalid email or password'
+      })
   }
 
   const signInWithGoogle = async () => {
     const credential = await signInWithPopup(auth, provider)
     const statsRef = doc(db, 'stats', credential.user.email as string)
-
-    return getDoc(statsRef).then(doc => {
-      if (doc.exists()) {
-        return credential
-      } else {
-        setDoc(statsRef, {
-          testsTaken: 0,
-          testsCompleted: 0,
-          timeTyping: 0,
-        })
-        return credential
-      }
-    })
+    return getDoc(statsRef)
+      .then(doc => {
+        if (doc.exists()) {
+          return credential
+        } else {
+          setDoc(statsRef, {
+            testsTaken: 0,
+            testsCompleted: 0,
+            timeTyping: 0,
+          })
+          return credential
+        }
+      })
+      .catch(() => {
+        throw "Couldn't sign in with Google"
+      })
   }
 
   const signOutUser = async () => {
-    try {
-      return signOut(auth)
-    } catch (error) {
-      console.log(error)
-    }
+    return signOut(auth)
+      .then(() => setUser(null))
+      .catch(error => error)
   }
 
   useEffect(() => {

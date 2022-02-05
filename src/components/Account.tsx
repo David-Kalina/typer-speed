@@ -24,7 +24,7 @@ function Account() {
 
         <Flex mx="auto" w="100%" justify="center">
           <Link to="/">
-            <Button>Take Another Test</Button>
+            <Button>Take a test</Button>
           </Link>
         </Flex>
       </VStack>
