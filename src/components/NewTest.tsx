@@ -6,6 +6,7 @@ import { socket } from '../contexts/SocketContext'
 const StartTest: React.FC = () => {
   return (
     <Icon
+      cursor="pointer"
       as={VscDebugRestart}
       w="200px"
       fontSize="lg"

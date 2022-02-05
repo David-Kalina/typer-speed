@@ -1,13 +1,10 @@
-import { Box, ChakraProvider, extendTheme, Flex } from '@chakra-ui/react'
+import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import * as React from 'react'
-import Footer from './components/Footer'
-import Header from './components/Header'
-import KeyHandler from './components/KeyHandler'
-import NewTest from './components/NewTest'
-import StatChart from './components/StatChart'
-import WordsDisplay from './components/WordsDisplay'
+import { Router, ReactLocation } from 'react-location'
 import { socket, SocketContext } from './contexts/SocketContext'
 import { useEmitSocketEvent } from './hooks/useSocketEvent'
+import { routes } from './constants/routes'
+import { AuthProvider } from './contexts/AuthContext'
 
 const config = {
   initialColorMode: 'dark',
@@ -15,40 +12,16 @@ const config = {
 }
 const theme = extendTheme({ config } as any)
 
+const location = new ReactLocation()
+
 export const App = () => {
-  useEmitSocketEvent('init')
 
   return (
     <ChakraProvider theme={theme}>
       <SocketContext.Provider value={socket}>
-        <Flex
-          mx="auto"
-          justify={['start', 'start', 'space-between', 'space-between']}
-          align="center"
-          h="100vh"
-          flexDir="column"
-          overflow="hidden"
-          w={['100%', '100%', '900px']}
-        >
-          <Header />
-
-          <Box
-            mx="auto"
-            p={[2, 2, 2, 0]}
-            h={['100%', '100%', 'unset']}
-            overflow="hidden"
-            mb={['auto', 'auto', 'unset']}
-          >
-            <WordsDisplay />
-            <KeyHandler />
-            <Flex>
-              <NewTest />
-            </Flex>
-          </Box>
-
-          <Footer />
-        </Flex>
-        <StatChart />
+        <AuthProvider>
+          <Router routes={routes} location={location} />
+        </AuthProvider>
       </SocketContext.Provider>
     </ChakraProvider>
   )
