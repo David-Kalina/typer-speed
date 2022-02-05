@@ -39,7 +39,6 @@ export const AuthProvider = ({
   children: React.ReactNode | React.ReactNode[]
 }) => {
   const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState(true)
 
   const signUp = ({
     email,
@@ -99,7 +98,6 @@ export const AuthProvider = ({
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, user => {
       setUser(user)
-      setLoading(false)
     })
 
     return unsubscribe

@@ -1,12 +1,11 @@
-import { Badge, Box, Flex, HStack, Text } from '@chakra-ui/react'
+import { Flex, HStack, Text } from '@chakra-ui/react'
 import React from 'react'
-import { FiLogOut } from 'react-icons/fi'
 import { FaKeyboard, FaUser } from 'react-icons/fa'
+import { FiLogOut } from 'react-icons/fi'
 import { GiSpeedometer } from 'react-icons/gi'
-import { Link } from 'react-location'
+import { Link, useLocation } from 'react-location'
 import { ColorModeSwitcher } from '../ColorModeSwitcher'
 import { useAuth } from '../contexts/AuthContext'
-import { useLocation } from 'react-location'
 
 function Header() {
   const { user, signOutUser } = useAuth()
