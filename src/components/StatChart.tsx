@@ -131,7 +131,10 @@ const StatChart: React.FC = () => {
     return (
       <Modal
         motionPreset="slideInBottom"
-        onClose={() => setShowData(false)}
+        onClose={() => {
+          socket.emit('init')
+          setShowData(false)
+        }}
         isOpen={showData}
         size="full"
       >
