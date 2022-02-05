@@ -1,4 +1,4 @@
-import { Flex, Stack } from '@chakra-ui/react'
+import { Stack } from '@chakra-ui/react'
 import React from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { useRedirect } from '../hooks/useRedirect'
