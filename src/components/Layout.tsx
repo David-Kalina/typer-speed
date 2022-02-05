@@ -18,16 +18,15 @@ function Layout({
         align="start"
         h="100vh"
         flexDir="column"
-        overflow="hidden"
         w={['100%', '100%', '900px']}
       >
         <Header />
 
         <Box
           mx="auto"
-          p={[2, 2, 2, 0]}
+          p={[4, 4, 2, 0]}
+          minH={['100vh', '100vh', 'unset']}
           h={['100%', '100%', height]}
-          overflow="hidden"
           mb={['auto', 'auto', 'unset']}
           w="100%"
         >

@@ -9,6 +9,7 @@ import {
   Th,
   Thead,
   Tr,
+  useBreakpoint,
 } from '@chakra-ui/react'
 import { getDocs, limit, orderBy, query, where } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
@@ -34,6 +35,8 @@ function TypingTestsTable() {
   const [loading, setLoading] = useState(true)
 
   const [filter, setFilter] = useState('date')
+
+  const breakpoint = useBreakpoint()
 
   const toggleFilter = (filter: string) => {
     setFilter(filter)
@@ -70,6 +73,7 @@ function TypingTestsTable() {
     <Flex flexDir="column" justify="center" h="100%">
       <Flex alignSelf="flex-end">
         <Button
+          fontSize={['sm', 'sm', 'md']}
           _focus={{ border: 'none' }}
           onClick={() => toggleFilter('wpm')}
           borderRightRadius="none"
@@ -78,6 +82,7 @@ function TypingTestsTable() {
           WPM
         </Button>
         <Button
+          fontSize={['sm', 'md', 'lg']}
           _focus={{ border: 'none' }}
           onClick={() => toggleFilter('date')}
           borderLeftRadius="none"
@@ -88,8 +93,11 @@ function TypingTestsTable() {
       </Flex>
 
       {!loading && tableRows ? (
-        <Table variant="striped">
-          <TableCaption textAlign="left" p={0} placement="top">
+        <Table
+          variant="striped"
+          size={breakpoint === 'base' || breakpoint === 'sm' ? 'sm' : 'lg'}
+        >
+          <TableCaption textAlign="left" p={0} placement="top" mb="2">
             Recent Typing Tests
           </TableCaption>
           <Thead>

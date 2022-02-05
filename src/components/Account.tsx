@@ -15,7 +15,7 @@ function Account() {
     return (
       <VStack w="100%" h="100%" align="stretch" spacing={8}>
         <AccountStats />
-        <Text textAlign="center">
+        <Text textAlign="center" fontSize={['sm', 'md', 'lg', 'xl']}>
           Account created {user?.metadata.creationTime}
         </Text>
         <Box>
