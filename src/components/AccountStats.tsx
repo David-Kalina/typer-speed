@@ -1,4 +1,4 @@
-import { Box, HStack, Text } from '@chakra-ui/react'
+import { Box, HStack, Stack, Text } from '@chakra-ui/react'
 import { doc, getDoc } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
@@ -38,27 +38,32 @@ function AccountStats() {
   }, [user?.email])
 
   return (
-    <HStack justify="space-between" w="100%">
+    <Stack
+      justify="space-between"
+      direction={['column', 'row']}
+      w={['80%', '80%', '100%']}
+      wrap="wrap"
+    >
       {!loading && statData ? (
         <>
           <Box>
             <Text>tests taken</Text>
-            <Text fontSize="5xl">{statData.testsTaken}</Text>
+            <Text fontSize={['5xl']}>{statData.testsTaken}</Text>
           </Box>
           <Box>
             <Text>tests completed</Text>
-            <Text fontSize="5xl">{statData.testsCompleted}</Text>
+            <Text fontSize={['5xl']}>{statData.testsCompleted}</Text>
           </Box>
           <Box>
             <Text>time typing</Text>
-            <Text fontSize="5xl">{statData.timeTyping}s</Text>
+            <Text fontSize={['5xl']}>{statData.timeTyping}s</Text>
           </Box>
         </>
       ) : (
         <Text>Loading...</Text>
       )}
       )
-    </HStack>
+    </Stack>
   )
 }
 

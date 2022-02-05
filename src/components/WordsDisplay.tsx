@@ -69,6 +69,7 @@ const WordsDisplay: React.FC = () => {
           w={['80%', '80%', '100%']}
           mx="auto"
           fontSize={['lg', 'xl', '2xl']}
+          wrap="wrap"
         >
           {words?.currentWords?.map((x, idx) => {
             const style = styleWordsDisplay(

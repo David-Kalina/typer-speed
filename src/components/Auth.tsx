@@ -7,11 +7,16 @@ import Register from './Register'
 function Auth() {
   const { user } = useAuth()
 
-  
   useRedirect(user?.email, '/')
 
   return (
-    <Flex w="80%" mx="auto" h="100%" justifyContent="space-between">
+    <Flex
+      w="80%"
+      flexDir={['column', 'column', 'row']}
+      mx="auto"
+      h="100%"
+      justifyContent="space-between"
+    >
       <Register />
       <Login />
     </Flex>
