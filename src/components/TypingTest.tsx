@@ -1,12 +1,10 @@
+import { Flex } from '@chakra-ui/react'
 import React from 'react'
-import { Flex, Box } from '@chakra-ui/react'
-import Header from './Header'
-import Footer from './Footer'
+import { useEmitSocketEvent } from '../hooks/useSocketEvent'
 import KeyHandler from './KeyHandler'
 import NewTest from './NewTest'
 import StatChart from './StatChart'
 import WordsDisplay from './WordsDisplay'
-import { useEmitSocketEvent } from '../hooks/useSocketEvent'
 
 function TypingTest() {
   useEmitSocketEvent('init')
