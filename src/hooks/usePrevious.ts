@@ -5,5 +5,9 @@ export function usePrevious(value: any) {
   useEffect(() => {
     ref.current = value
   })
+
+  useEffect(() => {
+    console.log(ref.current)
+  }, [ref.current])
   return ref.current
 }

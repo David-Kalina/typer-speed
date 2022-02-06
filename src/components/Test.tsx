@@ -1,68 +1,102 @@
-import { Box, Flex, Input } from '@chakra-ui/react'
+import { Box, Flex, Input, Text } from '@chakra-ui/react'
 import React, { useEffect } from 'react'
 
-function Test() {
-  const text = `dirtbag scum clown insane revolutionary this is an insane typing test where you type as fast as you can. I am your host and you are your opponent. You can type in the text box below and I will tell you how fast you type.`
+interface TestProps {
+  fontSize: number
+  margin: number
+  text: string
+}
 
+function Test({ fontSize, margin, text }: TestProps) {
   const [words, setWords] = React.useState(text.split(' '))
-
   const [activeWordIndex, setActiveWordIndex] = React.useState(0)
-
   const [activeCharacterIndex, setActiveCharacterIndex] = React.useState(0)
-
-  const [nodeRefWidth, setNodeRefWidth] = React.useState(0)
-
+  const [previousNodeRefWidth, setPreviousNodeRefWidth] = React.useState(0)
+  const [currentNodeRefWidth, setCurrentNodeRefWidth] = React.useState(0)
+  const [totalWidth, setTotalWidth] = React.useState(0)
+  const [nextNodeRefWidth, setNextNodeRefWidth] = React.useState(0)
   const [nodeRefHeight, setNodeRefHeight] = React.useState(0)
-
-  const [margin, setMargin] = React.useState(1)
-
-  const [fontSize, setFontSize] = React.useState(32)
-
-  const [caret, setCaret] = React.useState({
-    top: 6,
-  })
-
   const nodeRef = React.useRef<HTMLSpanElement>(null)
-
   const caretRef = React.useRef<HTMLDivElement>(null)
-
-  const rowRef = React.useRef<HTMLDivElement>(null)
-
-  const containerRef = React.useRef<HTMLDivElement>(null)
+  const wordRef = React.useRef<HTMLDivElement>(null)
 
   const onKeyDown = (e: React.KeyboardEvent) => {
     const { current: node } = nodeRef
 
-    if (e.code === 'Space') {
-      setNodeRefWidth(prev => prev + margin * 8)
-      setActiveCharacterIndex(0)
-
-      setActiveWordIndex(activeWordIndex + 1)
+    if (e.code === 'Backspace') {
+      if (activeCharacterIndex === 0) return
+      const newActiveCharacterIndex = activeCharacterIndex - 1
+      setActiveCharacterIndex(newActiveCharacterIndex)
+      node ? setTotalWidth(prev => prev - previousNodeRefWidth) : setTotalWidth(prev => prev - currentNodeRefWidth)
     } else {
-      if (node) {
-        setNodeRefWidth(prev => prev + node.getClientRects()[0].width)
+      if (e.code === 'Space') {
+        setTotalWidth(prev => prev + margin * 8)
+        setActiveCharacterIndex(0)
+        setActiveWordIndex(activeWordIndex + 1)
       } else {
-        console.log('no ref')
+        if (node) setTotalWidth(prev => prev + currentNodeRefWidth || node.getClientRects()[0].width)
+
+        setActiveCharacterIndex(prev => prev + 1)
       }
-      setActiveCharacterIndex(prev => prev + 1)
     }
   }
 
   useEffect(() => {
     const { current: node } = nodeRef
-
-    if (node) {
-      setNodeRefHeight(node.getClientRects()[0].height)
-    }
+    if (node) setNodeRefHeight(node.getClientRects()[0].height)
   }, [])
+
+  const assignRef = (ownIndex: number, wordIndex: number, activeCharacterIndex: number, activeWordIndex: number) => {
+    if (activeWordIndex === wordIndex) {
+      if (activeCharacterIndex === ownIndex) return nodeRef
+    }
+  }
+
+  useEffect(() => {
+    const { current: node } = nodeRef
+    if (node && node.previousElementSibling) {
+      const lastWidth = node.previousElementSibling.getClientRects()[0].width
+      const lastInnerHTML = node.previousElementSibling.innerHTML
+      const currentWidth = node.getClientRects()[0].width
+      const currentInnerHTML = node.innerHTML
+      const nextWidth = node.nextElementSibling?.getClientRects()[0].width || 0
+      const nextInnerHTML = node.nextElementSibling?.innerHTML || ''
+      console.log(
+        `${lastInnerHTML}: ${lastWidth}, ${currentInnerHTML}: ${currentWidth}, ${nextInnerHTML}: ${nextWidth}`
+      )
+
+      setCurrentNodeRefWidth(currentWidth)
+      setPreviousNodeRefWidth(lastWidth)
+      setNextNodeRefWidth(nextWidth)
+    } else if (node) {
+      const currentWidth = node.getClientRects()[0].width
+      const nextWidth = node.nextElementSibling?.getClientRects()[0].width || 0
+      console.log(`currentWidth: ${currentWidth}, nextWidth: ${nextWidth}`)
+
+      setCurrentNodeRefWidth(currentWidth)
+      setNextNodeRefWidth(nextWidth)
+    }
+  }, [activeCharacterIndex])
+
+  useEffect(() => {
+    const { current: caret } = caretRef
+    const { current: word } = wordRef
+    if (caret && word) {
+      if (caret.offsetTop !== word.offsetTop) {
+        caret.style.top = `${word.offsetTop}px`
+        setTotalWidth(0)
+      }
+    }
+  }, [activeWordIndex])
 
   return (
     <>
       <Input autoFocus onKeyDown={e => onKeyDown(e)} />
+
+      <Text></Text>
       <Flex
         wrap="wrap"
-        maxH="175px"
-        ref={containerRef}
+        maxH="130px"
         overflow="hidden"
         position="relative"
         w="200px"
@@ -72,10 +106,10 @@ function Test() {
         <Box
           ref={caretRef}
           position="absolute"
-          transform={`translateX(${nodeRefWidth - fontSize * 0.1}px)`}
-          transition="transform 0.05s linear"
-          top={`${margin * 4 + fontSize * 0.1}px`}
-          left={`${margin * 4 + fontSize * 0.1}px`}
+          transform={`translateX(${totalWidth}px)`}
+          transition="transform 0.1s ease-in-out"
+          top={`${margin * 4}px`}
+          left={`${margin * 4}px`}
           bg="green.300"
           h={`${nodeRefHeight}px`}
           borderRadius="sm"
@@ -84,7 +118,7 @@ function Test() {
         {words.map((word, wordIndex) => {
           return (
             <Box
-              ref={activeWordIndex === wordIndex ? rowRef : null}
+              ref={activeWordIndex === wordIndex ? wordRef : null}
               fontSize={fontSize}
               m={margin}
               key={wordIndex}
@@ -92,15 +126,7 @@ function Test() {
             >
               {word.split('').map((node, index) => {
                 return (
-                  <span
-                    ref={
-                      activeCharacterIndex === index &&
-                      activeWordIndex === wordIndex
-                        ? nodeRef
-                        : undefined
-                    }
-                    key={index}
-                  >
+                  <span ref={assignRef(index, wordIndex, activeCharacterIndex, activeWordIndex)} key={index}>
                     {node}
                   </span>
                 )
