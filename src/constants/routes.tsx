@@ -4,6 +4,7 @@ import Login from '../components/Auth'
 import Layout from '../components/Layout'
 import React from 'react'
 import Account from '../components/Account'
+import Test from '../components/Test'
 export const routes: Route<DefaultGenerics>[] = [
   {
     path: '/',
@@ -26,6 +27,14 @@ export const routes: Route<DefaultGenerics>[] = [
     element: (
       <Layout>
         <Account />
+      </Layout>
+    ),
+  },
+  {
+    path: '/test',
+    element: (
+      <Layout>
+        <Test />
       </Layout>
     ),
   },
