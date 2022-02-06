@@ -26,7 +26,7 @@ function Layout({
           mx="auto"
           p={[4, 4, 4, 0]}
           minH={['100vh', '100vh', 'unset']}
-          h={['100%', '100%', height]}
+          h="max-content"
           mb={['auto', 'auto', 'unset']}
           w="100%"
         >
