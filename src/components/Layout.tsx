@@ -5,10 +5,8 @@ import Footer from './Footer'
 
 function Layout({
   children,
-  height = 'unset',
 }: {
   children: React.ReactNode[] | React.ReactNode
-  height?: '100%' | 'unset'
 }) {
   return (
     <>

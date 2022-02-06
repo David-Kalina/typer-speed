@@ -24,7 +24,7 @@ export const routes: Route<DefaultGenerics>[] = [
   {
     path: '/account',
     element: (
-      <Layout height="100%">
+      <Layout>
         <Account />
       </Layout>
     ),
