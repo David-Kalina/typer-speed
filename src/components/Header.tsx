@@ -32,7 +32,7 @@ function Header() {
             <Flex align="center" cursor="pointer" pos="relative">
               <FiUser />
               <Text ml="4px" fontSize="xs">
-                {user?.email} {!user?.email ? 'sign in' : 'null'}
+                {user?.email} {!user?.email ? 'sign in' : null}
               </Text>
             </Flex>
           </Link>
