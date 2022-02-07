@@ -1,5 +1,3 @@
-import { useEffect } from 'react'
-
 // interface TestProps {
 //   fontSize: number
 //   margin: number
