@@ -1,16 +1,4 @@
-import {
-  Button,
-  Flex,
-  Spinner,
-  Table,
-  TableCaption,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
-  useBreakpoint,
-} from '@chakra-ui/react'
+import { Button, Flex, Spinner, Table, TableCaption, Tbody, Td, Th, Thead, Tr, useBreakpoint } from '@chakra-ui/react'
 import { getDocs, limit, orderBy, query, where } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import { colorMap } from '../constants/wpmColorMap'
@@ -43,12 +31,7 @@ function TypingTestsTable() {
   }
 
   useEffect(() => {
-    const q = query(
-      testsRef,
-      where('email', '==', user?.email),
-      orderBy(filter),
-      limit(10)
-    )
+    const q = query(testsRef, where('email', '==', user?.email), orderBy(filter), limit(10))
 
     getDocs(q)
       .then(snapshot => {
@@ -73,30 +56,37 @@ function TypingTestsTable() {
     <Flex flexDir="column" justify="center" h="100%">
       <Flex alignSelf="flex-end">
         <Button
-          fontSize={['sm', 'sm', 'md']}
+          fontSize="sm"
           _focus={{ border: 'none' }}
           onClick={() => toggleFilter('wpm')}
           borderRightRadius="none"
-          variant={filter === 'date' ? 'ghost' : undefined}
+          variant={filter !== 'wpm' ? 'ghost' : undefined}
         >
           WPM
         </Button>
         <Button
-          fontSize={['sm', 'md', 'lg']}
+          fontSize="sm"
           _focus={{ border: 'none' }}
           onClick={() => toggleFilter('date')}
           borderLeftRadius="none"
-          variant={filter === 'wpm' ? 'ghost' : undefined}
+          borderRightRadius="none"
+          variant={filter !== 'date' ? 'ghost' : undefined}
         >
           Date
+        </Button>
+        <Button
+          fontSize="sm"
+          _focus={{ border: 'none' }}
+          onClick={() => toggleFilter('accuracy')}
+          borderLeftRadius="none"
+          variant={filter !== 'accuracy' ? 'ghost' : undefined}
+        >
+          Acc
         </Button>
       </Flex>
 
       {!loading && tableRows ? (
-        <Table
-          variant="striped"
-          size={breakpoint === 'base' || breakpoint === 'sm' ? 'sm' : 'lg'}
-        >
+        <Table variant="striped" size={breakpoint === 'base' || breakpoint === 'sm' ? 'sm' : 'lg'}>
           <TableCaption textAlign="left" p={0} placement="top" mb="2">
             Recent Typing Tests
           </TableCaption>

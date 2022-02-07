@@ -4,31 +4,45 @@ import React, { useEffect } from 'react'
 interface TestProps {
   fontSize: number
   margin: number
-  text: string
+  text: any
 }
 
 function Test({ fontSize, margin, text }: TestProps) {
-  const [words, setWords] = React.useState(text.split(' '))
   const [activeWordIndex, setActiveWordIndex] = React.useState(0)
   const [activeCharacterIndex, setActiveCharacterIndex] = React.useState(0)
   const [previousNodeRefWidth, setPreviousNodeRefWidth] = React.useState(0)
   const [currentNodeRefWidth, setCurrentNodeRefWidth] = React.useState(0)
   const [totalWidth, setTotalWidth] = React.useState(0)
-  const [nextNodeRefWidth, setNextNodeRefWidth] = React.useState(0)
+  // const [nextNodeRefWidth, setNextNodeRefWidth] = React.useState(0)
   const [nodeRefHeight, setNodeRefHeight] = React.useState(0)
+  const [typed, setTyped] = React.useState('')
+  const [currentTyped, setCurrentTyped] = React.useState('')
   const nodeRef = React.useRef<HTMLSpanElement>(null)
   const caretRef = React.useRef<HTMLDivElement>(null)
   const wordRef = React.useRef<HTMLDivElement>(null)
 
+  const [previousSibling, setPreviousSibling] = React.useState(null)
+
+  // const [correctCharacters, setCorrectCharacters] = React.useState<string[]>([])
+
+
   const onKeyDown = (e: React.KeyboardEvent) => {
     const { current: node } = nodeRef
 
+    setCurrentTyped(e.key)
+
+    // setCurrentTyped({
+    //   index: `${activeWordIndex}-${activeCharacterIndex}`,
+    //   value: e.key,
+    // })
     if (e.code === 'Backspace') {
+      setTyped(typed.slice(0, -1))
       if (activeCharacterIndex === 0) return
       const newActiveCharacterIndex = activeCharacterIndex - 1
       setActiveCharacterIndex(newActiveCharacterIndex)
       node ? setTotalWidth(prev => prev - previousNodeRefWidth) : setTotalWidth(prev => prev - currentNodeRefWidth)
     } else {
+      setTyped(typed + e.key)
       if (e.code === 'Space') {
         setTotalWidth(prev => prev + margin * 8)
         setActiveCharacterIndex(0)
@@ -46,6 +60,23 @@ function Test({ fontSize, margin, text }: TestProps) {
     if (node) setNodeRefHeight(node.getClientRects()[0].height)
   }, [])
 
+  useEffect(() => {
+    const { current: node } = nodeRef
+
+    console.log(previousSibling)
+
+    if (text[activeWordIndex].characters[activeCharacterIndex - 1]) {
+      currentTyped === text[activeWordIndex].characters[activeCharacterIndex - 1].text
+        ? (text[activeWordIndex].characters[activeCharacterIndex - 1].className = 'correct')
+        : (text[activeWordIndex].characters[activeCharacterIndex - 1].className = 'incorrect')
+    } else {
+      text[activeWordIndex].characters[activeCharacterIndex - 1] = {
+        text: '',
+        className: 'default',
+      }
+    }
+  })
+
   const assignRef = (ownIndex: number, wordIndex: number, activeCharacterIndex: number, activeWordIndex: number) => {
     if (activeWordIndex === wordIndex) {
       if (activeCharacterIndex === ownIndex) return nodeRef
@@ -55,26 +86,22 @@ function Test({ fontSize, margin, text }: TestProps) {
   useEffect(() => {
     const { current: node } = nodeRef
     if (node && node.previousElementSibling) {
+      setPreviousSibling(node.previousElementSibling.innerHTML as any)
       const lastWidth = node.previousElementSibling.getClientRects()[0].width
-      const lastInnerHTML = node.previousElementSibling.innerHTML
       const currentWidth = node.getClientRects()[0].width
-      const currentInnerHTML = node.innerHTML
       const nextWidth = node.nextElementSibling?.getClientRects()[0].width || 0
-      const nextInnerHTML = node.nextElementSibling?.innerHTML || ''
-      console.log(
-        `${lastInnerHTML}: ${lastWidth}, ${currentInnerHTML}: ${currentWidth}, ${nextInnerHTML}: ${nextWidth}`
-      )
 
       setCurrentNodeRefWidth(currentWidth)
       setPreviousNodeRefWidth(lastWidth)
-      setNextNodeRefWidth(nextWidth)
+      // setNextNodeRefWidth(nextWidth)
     } else if (node) {
+      setPreviousNodeRefWidth(node.previousElementSibling?.innerHTML as any)
       const currentWidth = node.getClientRects()[0].width
-      const nextWidth = node.nextElementSibling?.getClientRects()[0].width || 0
-      console.log(`currentWidth: ${currentWidth}, nextWidth: ${nextWidth}`)
+      // const nextWidth = node.nextElementSibling?.getClientRects()[0].width || 0
+      // console.log(`currentWidth: ${currentWidth}, nextWidth: ${nextWidth}`)
 
       setCurrentNodeRefWidth(currentWidth)
-      setNextNodeRefWidth(nextWidth)
+      // setNextNodeRefWidth(nextWidth)
     }
   }, [activeCharacterIndex])
 
@@ -93,7 +120,7 @@ function Test({ fontSize, margin, text }: TestProps) {
     <>
       <Input autoFocus onKeyDown={e => onKeyDown(e)} />
 
-      <Text></Text>
+      {/* <Text>{typed}</Text> */}
       <Flex
         wrap="wrap"
         maxH="130px"
@@ -115,7 +142,7 @@ function Test({ fontSize, margin, text }: TestProps) {
           borderRadius="sm"
           w={`${fontSize * 0.1}px`}
         />
-        {words.map((word, wordIndex) => {
+        {Object.values(text).map((x: any, wordIndex) => {
           return (
             <Box
               ref={activeWordIndex === wordIndex ? wordRef : null}
@@ -124,10 +151,14 @@ function Test({ fontSize, margin, text }: TestProps) {
               key={wordIndex}
               border={activeWordIndex === wordIndex ? '1px solid red' : 'none'}
             >
-              {word.split('').map((node, index) => {
+              {x.characters.map((node: any, index: number) => {
                 return (
-                  <span ref={assignRef(index, wordIndex, activeCharacterIndex, activeWordIndex)} key={index}>
-                    {node}
+                  <span
+                    ref={assignRef(index, wordIndex, activeCharacterIndex, activeWordIndex)}
+                    key={index}
+                    className={node.className}
+                  >
+                    {node.text}
                   </span>
                 )
               })}

@@ -7,39 +7,37 @@ import Timer from './Timer'
 import Word from './Word'
 
 const WordsDisplay: React.FC = () => {
+  const [correctWords, setCorrectWords] = React.useState<number[]>([])
+  const [incorrectWords, setIncorrectWords] = React.useState<number[]>([])
+  const [currentWordCorrect, setCurrentWordCorrect] = React.useState(true)
+  const [wordIndex, setWordIndex] = React.useState(0)
   const [words, setWords] = React.useState({
     currentWords: [],
     nextWords: [],
   })
 
-  const [accuracyWords, setAccuracyWords] = React.useState<{
-    correctWords: number[]
-    errorWords: number[]
-  }>({
-    errorWords: [],
-    correctWords: [],
+  useSocketEvent('correctWords', (data: number[]) => {
+    setCorrectWords(data)
   })
 
-  const [currentWordCorrect, setCurrentWordCorrect] = React.useState(true)
-
-  const [wordIndex, setWordIndex] = React.useState(0)
-
-  useSocketEvent('sendAccuracyWords', ({ errorWords, correctWords }) => {
-    setAccuracyWords(prev => ({
-      correctWords: [...prev.correctWords, correctWords],
-      errorWords: [...prev.errorWords, errorWords],
-    }))
+  useSocketEvent('incorrectWords', (data: number[]) => {
+    setIncorrectWords(data)
   })
 
   useSocketEvent('defaultStyle', wordIndex => {
-    setAccuracyWords(prev => ({
-      correctWords: prev.correctWords,
-      errorWords: prev.errorWords.filter(x => x !== wordIndex),
-    }))
+    setCorrectWords(prev => [...prev])
   })
 
-  useSocketEvent('resetAccuracyWords', () => {
-    setAccuracyWords({ errorWords: [], correctWords: [] })
+  useSocketEvent('defaultStyle', wordIndex => {
+    setIncorrectWords(prev => [...prev.filter(x => x !== wordIndex)])
+  })
+
+  useSocketEvent('resetCorrectWords', () => {
+    setCorrectWords([])
+  })
+
+  useSocketEvent('resetIncorrectWords', () => {
+    setIncorrectWords([])
   })
 
   useSocketEvent('sendWordIndex', ({ wordIndex }) => {
@@ -54,48 +52,23 @@ const WordsDisplay: React.FC = () => {
     setWords({ currentWords, nextWords })
   })
 
-  useSocketEvent('sendCurrentWordCorrect', currentWordCorrect =>
-    setCurrentWordCorrect(currentWordCorrect)
-  )
+  useSocketEvent('sendCurrentWordCorrect', currentWordCorrect => setCurrentWordCorrect(currentWordCorrect))
 
   if (words.currentWords.length && words.nextWords.length) {
     return (
       <Flex h="max" wrap="wrap" justifyContent="flex-start">
-        <Box h="22px" w={['100%', '100%', '22px']} textAlign="center">
+        <Box h="30px" w={['100%', '100%', '30px']} textAlign="center">
           <Timer />
         </Box>
-        <Flex
-          mt={['2', '2', 'unset']}
-          w={['80%', '80%', '100%']}
-          mx="auto"
-          fontSize={['lg', 'xl', '2xl']}
-          wrap="wrap"
-        >
+        <Flex mt={['2', '2', 'unset']} w={['80%', '80%', '100%']} mx="auto" fontSize={['lg', 'xl', '2xl']} wrap="wrap">
           {words?.currentWords?.map((x, idx) => {
-            const style = styleWordsDisplay(
-              idx,
-              accuracyWords,
-              currentWordCorrect,
-              wordIndex
-            )
+            const style = styleWordsDisplay(idx, correctWords, incorrectWords, currentWordCorrect, wordIndex)
             return <Word key={idx} style={style as any} text={x} idx={idx} />
           })}
         </Flex>
-        <Flex
-          w={['80%', '80%', '100%']}
-          mx="auto"
-          fontSize={['lg', 'xl', '2xl']}
-          wrap="wrap"
-        >
+        <Flex w={['80%', '80%', '100%']} mx="auto" fontSize={['lg', 'xl', '2xl']} wrap="wrap">
           {words.nextWords?.map((x, idx) => (
-            <Text
-              key={idx}
-              p="0.2rem"
-              h="min-content"
-              mx="0.1rem"
-              my="0.1rem"
-              w="max-content"
-            >
+            <Text key={idx} p="0.2rem" h="min-content" mx="0.1rem" my="0.1rem" w="max-content">
               {x}
             </Text>
           ))}
