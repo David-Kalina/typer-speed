@@ -1,6 +1,5 @@
-import { Badge, Flex, HStack, Text, useBreakpoint } from '@chakra-ui/react'
+import { Flex, HStack, Text, useBreakpoint } from '@chakra-ui/react'
 import React from 'react'
-import { FaKeyboard, FaUser, FaUserAlt } from 'react-icons/fa'
 import { FiLogOut, FiUser } from 'react-icons/fi'
 import { GiSpeedometer } from 'react-icons/gi'
 import { Link, useLocation } from 'react-location'
