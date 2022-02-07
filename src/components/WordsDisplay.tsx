@@ -24,7 +24,7 @@ const WordsDisplay: React.FC = () => {
     setIncorrectWords(data)
   })
 
-  useSocketEvent('defaultStyle', wordIndex => {
+  useSocketEvent('defaultStyle', () => {
     setCorrectWords(prev => [...prev])
   })
 
