@@ -17,6 +17,7 @@ import { VscDebugRestart } from 'react-icons/vsc'
 import { Legend, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts'
 import { useAuth } from '../contexts/AuthContext'
 import { socket } from '../contexts/SocketContext'
+import { useTime } from '../contexts/TimeContext'
 import { db, testsRef } from '../firebase'
 import { useSocketEvent } from '../hooks/useSocketEvent'
 
@@ -27,6 +28,7 @@ const StatChart: React.FC = () => {
   const [averageWPM, setAverageWPM] = React.useState(0)
   const [showData, setShowData] = React.useState(false)
   const [accuracy, setAccuracy] = React.useState(0)
+  const [time] = useTime()
 
   const preventDefault = React.useCallback(
     e => {
@@ -46,7 +48,7 @@ const StatChart: React.FC = () => {
         email: user?.email,
         wpm: averageWPM,
         accuracy,
-        seconds: 30,
+        seconds: time,
         date: {
           seconds: Date.now() / 1000,
           nanoseconds: Date.now() % 1000,
@@ -59,7 +61,7 @@ const StatChart: React.FC = () => {
         {
           testsTaken: increment(1),
           testsCompleted: increment(1),
-          timeTyping: increment(30),
+          timeTyping: increment(time),
         },
         { merge: true }
       )
@@ -74,12 +76,7 @@ const StatChart: React.FC = () => {
     window.removeEventListener('keydown', e => preventDefault(e))
   }
 
-  if (
-    breakpoint === 'md' ||
-    breakpoint === 'lg' ||
-    breakpoint === 'xl' ||
-    breakpoint === '2xl'
-  ) {
+  if (breakpoint === 'md' || breakpoint === 'lg' || breakpoint === 'xl' || breakpoint === '2xl') {
     return (
       <Modal
         motionPreset="slideInBottom"
@@ -100,12 +97,7 @@ const StatChart: React.FC = () => {
               <YAxis dataKey="wpm" />
               <Tooltip />
               <Legend />
-              <Line
-                type="monotone"
-                dataKey="wpm"
-                stroke="#82ca9d"
-                animationDuration={5000}
-              />
+              <Line type="monotone" dataKey="wpm" stroke="#82ca9d" animationDuration={5000} />
             </LineChart>
 
             <VStack align="stretch">
@@ -119,7 +111,7 @@ const StatChart: React.FC = () => {
               onClick={() => {
                 setData([])
                 setShowData(false)
-                socket.emit('init')
+                socket.emit('init', time)
               }}
               mt="1rem"
               mx="auto"
@@ -151,12 +143,7 @@ const StatChart: React.FC = () => {
               <YAxis dataKey="wpm" />
               <Tooltip />
               <Legend />
-              <Line
-                type="monotone"
-                dataKey="wpm"
-                stroke="#82ca9d"
-                animationDuration={10000}
-              />
+              <Line type="monotone" dataKey="wpm" stroke="#82ca9d" animationDuration={10000} />
             </LineChart>
           </ModalBody>
           <ModalFooter>

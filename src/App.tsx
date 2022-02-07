@@ -4,6 +4,8 @@ import { ReactLocation, Router } from 'react-location'
 import { routes } from './constants/routes'
 import { AuthProvider } from './contexts/AuthContext'
 import { socket, SocketContext } from './contexts/SocketContext'
+import { TimeProvider } from './contexts/TimeContext'
+import './styles.css'
 
 const config = {
   initialColorMode: 'dark',
@@ -18,7 +20,9 @@ export const App = () => {
     <ChakraProvider theme={theme}>
       <SocketContext.Provider value={socket}>
         <AuthProvider>
-          <Router routes={routes} location={location} />
+          <TimeProvider>
+            <Router routes={routes} location={location} />
+          </TimeProvider>
         </AuthProvider>
       </SocketContext.Provider>
     </ChakraProvider>
