@@ -25,14 +25,7 @@ function Index({ characters, id }: Word) {
   })
 
   return (
-    <Flex
-      ref={wordIndex === id ? ref : undefined}
-      h="35px"
-      m="8px"
-      fontSize="32px"
-      borderBottom="2px solid red"
-      lineHeight="32px"
-    >
+    <Flex ref={wordIndex === id ? ref : undefined} m="0.25em" borderBottom="2px solid transparent" lineHeight="1em">
       {renderCharacters}
     </Flex>
   )

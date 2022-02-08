@@ -7,6 +7,7 @@ import Account from '../components/Account'
 import WordManager from '../components/WordManager'
 import { WordManagerProps } from '../types'
 import { testWords } from './testWords'
+import WordManagerWrapper from '../components/WordManagerWrapper'
 
 export const routes: Route<DefaultGenerics>[] = [
   {
@@ -45,7 +46,9 @@ export const routes: Route<DefaultGenerics>[] = [
     path: '/refactor',
     element: (
       <Layout>
-        <WordManager words={testWords} />
+        <WordManagerWrapper fontSize={1.5}>
+          <WordManager words={testWords} />
+        </WordManagerWrapper>
       </Layout>
     ),
   },

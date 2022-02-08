@@ -3,14 +3,14 @@ import { useAtom } from 'jotai'
 import React, { useEffect, useState } from 'react'
 import { characterIndexAtom, wordOffsetAtom } from '../../store'
 
-function Index() {
+function Index({ fontSize }: { fontSize: number }) {
   const [wordOffset] = useAtom(wordOffsetAtom)
   const [characterIndex] = useAtom(characterIndexAtom)
   const [offset, setOffset] = useState(0)
   const [delay, setDelay] = useState(100)
 
   useEffect(() => {
-    setOffset(characterIndex * 19.3)
+    setOffset(characterIndex * 16 * fontSize * 0.6)
   }, [characterIndex])
 
   useEffect(() => {

@@ -6,7 +6,7 @@ function Index({ value }: Character) {
   
 
   return (
-    <Box display="inline-block" lineHeight="32px" borderBottom="1px solid red">
+    <Box display="inline-block" lineHeight="1em" borderBottom=".05em solid transparent">
       {value}
     </Box>
   )

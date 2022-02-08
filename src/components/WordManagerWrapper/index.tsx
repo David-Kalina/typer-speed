@@ -1,13 +1,21 @@
-import { Flex } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
 import React from 'react'
 import Caret from '../Caret'
+import KeyManager from '../KeyManager'
 
-function Index({ children }: { children: React.ReactNode | React.ReactNode[] }) {
+function Index({ children, fontSize }: { children: React.ReactNode | React.ReactNode[]; fontSize: number }) {
   return (
-    <Flex position="relative" overflow="hidden" fontFamily="Roboto Mono, Roboto Mono">
-      <Caret />
+    <Box
+      position="relative"
+      overflow="hidden"
+      fontFamily="Roboto Mono, Roboto Mono"
+      fontSize={`${fontSize}em`}
+      boxSizing="border-box"
+    >
+      <Caret fontSize={fontSize} />
       {children}
-    </Flex>
+      <KeyManager />
+    </Box>
   )
 }
 
