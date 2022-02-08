@@ -5,6 +5,7 @@ import { routes } from './constants/routes'
 import { AuthProvider } from './contexts/AuthContext'
 import { socket, SocketContext } from './contexts/SocketContext'
 import { TimeProvider } from './contexts/TimeContext'
+import { Provider } from 'jotai'
 import './styles.css'
 
 const config = {
@@ -18,13 +19,15 @@ const location = new ReactLocation()
 export const App = () => {
   return (
     <ChakraProvider theme={theme}>
-      <SocketContext.Provider value={socket}>
-        <AuthProvider>
-          <TimeProvider>
-            <Router routes={routes} location={location} />
-          </TimeProvider>
-        </AuthProvider>
-      </SocketContext.Provider>
+      <Provider>
+        {/* <SocketContext.Provider value={socket}> */}
+          <AuthProvider>
+            <TimeProvider>
+              <Router routes={routes} location={location} />
+            </TimeProvider>
+          </AuthProvider>
+        {/* </SocketContext.Provider> */}
+      </Provider>
     </ChakraProvider>
   )
 }

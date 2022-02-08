@@ -4,6 +4,9 @@ import Login from '../components/Auth'
 import Layout from '../components/Layout'
 import React from 'react'
 import Account from '../components/Account'
+import WordManager from '../components/WordManager'
+import { WordManagerProps } from '../types'
+import { testWords } from './testWords'
 
 export const routes: Route<DefaultGenerics>[] = [
   {
@@ -38,4 +41,12 @@ export const routes: Route<DefaultGenerics>[] = [
   //     </Layout>
   //   ),
   // },
+  {
+    path: '/refactor',
+    element: (
+      <Layout>
+        <WordManager words={testWords} />
+      </Layout>
+    ),
+  },
 ]
