@@ -6,6 +6,7 @@ import Layout from '../components/Layout'
 import TypingTest from '../components/TypingTest'
 import WordManager from '../components/WordManager'
 import WordManagerWrapper from '../components/WordManagerWrapper'
+import NewWordsManager from '../components/NewWordsManager'
 
 export const routes: Route<DefaultGenerics>[] = [
   {

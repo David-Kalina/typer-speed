@@ -3,38 +3,30 @@ import { useAtom } from 'jotai'
 import React, { useEffect } from 'react'
 import { socketAtom, wordsAtom } from '../../store'
 import { WordType } from '../../types'
+import NewWordsManager from '../NewWordsManager'
 import Word from '../Word/index'
 
 function Index() {
   const [socket] = useAtom(socketAtom)
   const [words, setWords] = useAtom(wordsAtom)
 
+  console.log('RENDERING WORDS', words)
+
   const renderWords = words.map(({ className, characters, id }) => {
     return <Word id={id} key={id} className={className} characters={characters} />
   })
 
   useEffect(() => {
-    socket.on('words', (words: WordType[]) => setWords(words))
+    socket.on('words', (words: WordType[]) => {
+      setWords(words)
+    })
   }, [])
 
-  useEffect(() => {
-    console.log(words)
-  }, [words])
-
   return (
-    <>
-      <Flex
-        flexWrap="wrap"
-        alignContent="flex-start"
-        height="calc(5 * 1em)"
-        overflow="hidden"
-        mx="auto"
-        pb="1em"
-        w="100%"
-      >
-        {renderWords}
-      </Flex>
-    </>
+    <Flex flexWrap="wrap" alignContent="flex-start" mx="auto" paddingBottom="1rem" w="100%">
+      {renderWords}
+      <NewWordsManager />
+    </Flex>
   )
 }
 

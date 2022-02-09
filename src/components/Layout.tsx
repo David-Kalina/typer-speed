@@ -19,7 +19,7 @@ function Layout({ children }: { children: React.ReactNode[] | React.ReactNode })
       align="start"
       h="100vh"
       flexDir="column"
-      w={['100%', '100%', '100%', '900px']}
+      w={['100%', '100%', '100%', '1000px']}
     >
       {/* <Header /> */}
       <Box></Box>

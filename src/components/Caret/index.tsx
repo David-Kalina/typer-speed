@@ -6,7 +6,7 @@ import { characterIndexAtom, wordOffsetAtom } from '../../store'
 function Index({ fontSize }: { fontSize: number }) {
   const [wordOffset] = useAtom(wordOffsetAtom)
   const [characterIndex] = useAtom(characterIndexAtom)
-  const [offset, setOffset] = useState(0)
+  const [offset, setOffset] = useState(75)
   const [delay, setDelay] = useState(50)
 
   const offSetWidth = useMemo(() => 16 * fontSize * 0.6, [fontSize])
@@ -18,7 +18,7 @@ function Index({ fontSize }: { fontSize: number }) {
   useEffect(() => {
     setDelay(0)
     setTimeout(() => {
-      setDelay(50)
+      setDelay(75)
     })
   }, [wordOffset.top])
 
