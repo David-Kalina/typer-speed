@@ -1,34 +1,37 @@
 import { Box } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React, { useEffect, useMemo, useState } from 'react'
-import { characterIndexAtom, wordOffsetAtom } from '../../store'
+import { characterIndexAtom, wordOffsetAtom, caretOffsetAtom } from '../../store'
 
-function Index({ fontSize }: { fontSize: number }) {
-  const [wordOffset] = useAtom(wordOffsetAtom)
-  const [characterIndex] = useAtom(characterIndexAtom)
-  const [offset, setOffset] = useState(75)
+function Index() {
+  // const [wordOffset] = useAtom(wordOffsetAtom)
+  // const [characterIndex] = useAtom(characterIndexAtom)
+  // const [offset, setOffset] = useState(75)
   const [delay, setDelay] = useState(50)
+  const [carretOffset] = useAtom(caretOffsetAtom)
 
-  const offSetWidth = useMemo(() => 16 * fontSize * 0.6, [fontSize])
+  // console.log('render')
 
-  useEffect(() => {
-    setOffset(characterIndex * offSetWidth)
-  }, [characterIndex])
+  // const offSetWidth = useMemo(() => 16 * fontSize * 0.6, [fontSize])
 
-  useEffect(() => {
-    setDelay(0)
-    setTimeout(() => {
-      setDelay(75)
-    })
-  }, [wordOffset.top])
+  // useEffect(() => {
+  //   setOffset(characterIndex * offSetWidth)
+  // }, [characterIndex])
+
+  // useEffect(() => {
+  //   setDelay(0)
+  //   setTimeout(() => {
+  //     setDelay(75)
+  //   })
+  // }, [wordOffset.top])
 
   return (
     <Box
       position="absolute"
       h="1.25em"
-      top={`${wordOffset.top + -8}px `}
+      top={`${carretOffset.top + -8}px `}
       transition={`left ${delay}ms linear`}
-      left={`${wordOffset.left + offset}px`}
+      left={`${carretOffset.left}px`}
       borderRadius="md"
       width="0.14em"
       fontWeight="bold"

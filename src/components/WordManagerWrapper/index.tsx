@@ -12,7 +12,7 @@ function Index({ children, fontSize }: { children: React.ReactNode | React.React
       boxSizing="border-box"
       // overflow="hidden"
     >
-      <Caret fontSize={fontSize} />
+      <Caret />
       {children}
       <KeyManager />
     </Box>
