@@ -1,17 +1,13 @@
 export interface Character {
   className: string
   value: string
-  id: number
+  id: string
   wordId: number
   word: string
 }
 
-export interface Word {
+export interface WordType {
   characters: Character[]
   id: number
   className: string
-}
-
-export interface WordManagerProps {
-  words: Word[]
 }

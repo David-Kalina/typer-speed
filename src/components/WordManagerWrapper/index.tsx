@@ -5,13 +5,7 @@ import KeyManager from '../KeyManager'
 
 function Index({ children, fontSize }: { children: React.ReactNode | React.ReactNode[]; fontSize: number }) {
   return (
-    <Box
-      position="relative"
-      overflow="hidden"
-      fontFamily="Roboto Mono, Roboto Mono"
-      fontSize={`${fontSize}em`}
-      boxSizing="border-box"
-    >
+    <Box position="relative" fontFamily="Roboto Mono, Roboto Mono" fontSize={`${fontSize}em`} boxSizing="border-box">
       <Caret fontSize={fontSize} />
       {children}
       <KeyManager />

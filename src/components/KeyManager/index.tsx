@@ -1,28 +1,42 @@
 import { useAtom } from 'jotai'
 import React from 'react'
-import { characterIndexAtom, wordIndexAtom } from '../../store'
+import { forbiddenKeys } from '../../constants/forbiddenKeys'
+import { characterIndexAtom, socketAtom, wordIndexAtom } from '../../store'
 
 function Index() {
-  const [, setWordIndex] = useAtom(wordIndexAtom)
   const [characterIndex, setCharacterIndex] = useAtom(characterIndexAtom)
+  const [, setWordIndex] = useAtom(wordIndexAtom)
+  const [socket] = useAtom(socketAtom)
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.code === 'Backspace') {
-      if (characterIndex <= 0) {
-        return
-      }
-      return setCharacterIndex(prev => (prev -= 1))
+    if (forbiddenKeys.includes(e.key)) {
+      return e.preventDefault()
     }
 
-    if (e.code === 'Space') {
-      setWordIndex(prev => prev + 1)
-      setCharacterIndex(0)
+    if (e.code === 'Backspace') {
+      if (characterIndex <= 0) return
+      socket.emit('backspace')
+      return setCharacterIndex(prev => prev - 1)
+    } else if (e.code === 'Space') {
+      if (characterIndex > 0) {
+        socket.emit('space')
+        setCharacterIndex(0)
+        return setWordIndex(prev => prev + 1)
+      }
     } else {
-      setCharacterIndex(prev => prev + 1)
+      socket.emit('key', e.key)
+      return setCharacterIndex(prev => prev + 1)
     }
   }
 
-  return <input className="key-manager" autoFocus onKeyDown={e => onKeyDown(e)} />
+  return (
+    <input
+      className="key-manager"
+      autoFocus
+      onKeyDown={e => onKeyDown(e)}
+      style={{ height: 0, width: 0, display: 'inline', opacity: 0 }}
+    />
+  )
 }
 
 export default Index

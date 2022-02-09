@@ -1,11 +1,9 @@
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
+import { Provider } from 'jotai'
 import * as React from 'react'
 import { ReactLocation, Router } from 'react-location'
 import { routes } from './constants/routes'
 import { AuthProvider } from './contexts/AuthContext'
-import { socket, SocketContext } from './contexts/SocketContext'
-import { TimeProvider } from './contexts/TimeContext'
-import { Provider } from 'jotai'
 import './styles.css'
 
 const config = {
@@ -19,15 +17,11 @@ const location = new ReactLocation()
 export const App = () => {
   return (
     <ChakraProvider theme={theme}>
-      <Provider>
-        {/* <SocketContext.Provider value={socket}> */}
-          <AuthProvider>
-            <TimeProvider>
-              <Router routes={routes} location={location} />
-            </TimeProvider>
-          </AuthProvider>
-        {/* </SocketContext.Provider> */}
-      </Provider>
+      <AuthProvider>
+        <Provider>
+          <Router routes={routes} location={location} />
+        </Provider>
+      </AuthProvider>
     </ChakraProvider>
   )
 }

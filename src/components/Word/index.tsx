@@ -2,20 +2,19 @@ import { Flex } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React, { useEffect } from 'react'
 import { wordIndexAtom, wordOffsetAtom } from '../../store'
-import { Word } from '../../types'
+import { WordType } from '../../types'
 import Character from '../Character'
 
-function Index({ characters, id }: Word) {
+function Index({ characters, id }: WordType) {
   const [wordIndex] = useAtom(wordIndexAtom)
   const [, setWordOffset] = useAtom(wordOffsetAtom)
   const ref = React.useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const { current: word } = ref
-    if (word) {
+    if (ref.current) {
       setWordOffset({
-        top: word.offsetTop,
-        left: word.offsetLeft,
+        top: ref.current.offsetTop,
+        left: ref.current.offsetLeft,
       })
     }
   }, [wordIndex])
