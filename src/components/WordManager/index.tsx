@@ -10,8 +10,6 @@ function Index() {
   const [socket] = useAtom(socketAtom)
   const [words, setWords] = useAtom(wordsAtom)
 
-  console.log('RENDERING WORDS', words)
-
   const renderWords = words.map(({ className, characters, id }) => {
     return <Word id={id} key={id} className={className} characters={characters} />
   })
