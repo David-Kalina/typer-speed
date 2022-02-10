@@ -8,7 +8,6 @@ export const useOnScreen = (ref: React.RefObject<HTMLElement>) => {
       ([entry]) => {
         if (root) {
           if (entry.boundingClientRect.top < root?.getClientRects()[0]?.top) {
-            console.log('Insane')
             entry.target.remove()
           }
         }

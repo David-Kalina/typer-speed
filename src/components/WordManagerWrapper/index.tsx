@@ -9,16 +9,13 @@ import Caret from '../Caret'
 function Index({ children }: { children: React.ReactNode | React.ReactNode[] }) {
   const [fontSize] = useAtom(fontSizeAtom)
   const ref = useRef<HTMLDivElement>(null)
-    useScroll(ref)
-
-
+  useScroll(ref)
   useResize(ref)
 
   return (
     <>
       <Box
         ref={ref}
-        border="1px solid blue"
         className="word-manager-wrapper"
         position="relative"
         fontFamily="Roboto Mono, Roboto Mono"

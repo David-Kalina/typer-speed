@@ -25,7 +25,6 @@ function Index() {
     <Flex
       ref={ref}
       flexWrap="wrap"
-      border="1px solid red"
       alignContent="flex-start"
       mx="auto"
       paddingBottom="1em"
