@@ -1,5 +1,5 @@
 import { useAtom } from 'jotai'
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect } from 'react'
 import { newWordsAtom, socketAtom } from '../../store'
 import { WordType } from '../../types'
 import Word from '../Word/index'

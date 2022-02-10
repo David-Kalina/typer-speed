@@ -1,29 +1,10 @@
 import { Box } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
-import React, { useEffect, useMemo, useState } from 'react'
-import { characterIndexAtom, wordOffsetAtom, caretOffsetAtom } from '../../store'
+import React from 'react'
+import { caretOffsetAtom } from '../../store'
 
-function Index() {
-  // const [wordOffset] = useAtom(wordOffsetAtom)
-  // const [characterIndex] = useAtom(characterIndexAtom)
-  // const [offset, setOffset] = useState(75)
-  const [delay, setDelay] = useState(50)
+function Index({ delay }: { delay: number }) {
   const [carretOffset] = useAtom(caretOffsetAtom)
-
-  // console.log('render')
-
-  // const offSetWidth = useMemo(() => 16 * fontSize * 0.6, [fontSize])
-
-  // useEffect(() => {
-  //   setOffset(characterIndex * offSetWidth)
-  // }, [characterIndex])
-
-  // useEffect(() => {
-  //   setDelay(0)
-  //   setTimeout(() => {
-  //     setDelay(75)
-  //   })
-  // }, [wordOffset.top])
 
   return (
     <Box

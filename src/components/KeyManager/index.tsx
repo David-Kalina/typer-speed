@@ -1,12 +1,14 @@
 import { useAtom } from 'jotai'
 import React from 'react'
 import { forbiddenKeys } from '../../constants/forbiddenKeys'
-import { characterIndexAtom, socketAtom, wordIndexAtom } from '../../store'
+import { caretOffsetAtom, characterIndexAtom, caretCutOffAtom, socketAtom, wordIndexAtom } from '../../store'
 
 function Index() {
   const [characterIndex, setCharacterIndex] = useAtom(characterIndexAtom)
   const [, setWordIndex] = useAtom(wordIndexAtom)
   const [socket] = useAtom(socketAtom)
+  const [offset] = useAtom(caretOffsetAtom)
+  const [caretCutoff] = useAtom(caretCutOffAtom)
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (forbiddenKeys.includes(e.key)) {
@@ -24,6 +26,10 @@ function Index() {
         return setWordIndex(prev => prev + 1)
       }
     } else {
+      if (offset.left >= caretCutoff) {
+        e.preventDefault()
+        return
+      }
       socket.emit('key', e.key)
       return setCharacterIndex(prev => prev + 1)
     }

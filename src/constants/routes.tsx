@@ -2,11 +2,11 @@ import React from 'react'
 import { DefaultGenerics, Route } from 'react-location'
 import Account from '../components/Account'
 import Login from '../components/Auth'
+import KeyManager from '../components/KeyManager'
 import Layout from '../components/Layout'
 import TypingTest from '../components/TypingTest'
 import WordManager from '../components/WordManager'
 import WordManagerWrapper from '../components/WordManagerWrapper'
-import NewWordsManager from '../components/NewWordsManager'
 
 export const routes: Route<DefaultGenerics>[] = [
   {
@@ -38,9 +38,10 @@ export const routes: Route<DefaultGenerics>[] = [
     path: '/refactor',
     element: (
       <Layout>
-        <WordManagerWrapper fontSize={2}>
+        <WordManagerWrapper>
           <WordManager />
         </WordManagerWrapper>
+        <KeyManager />
       </Layout>
     ),
   },

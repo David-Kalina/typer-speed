@@ -4,16 +4,16 @@ import React, { useState } from 'react'
 import { socketAtom } from '../../store'
 import { Character } from '../../types'
 
-function Index({ value, id }: Character) {
+function Index({ value, id, className }: Character) {
   const [socket] = useAtom(socketAtom)
-  const [className, setClassName] = useState('default')
+  const [newClassName, setNewClassName] = useState(className)
 
   React.useEffect(() => {
-    socket.on(`${id}`, className => setClassName(className))
+    socket.on(`${id}`, className => setNewClassName(className))
   }, [])
 
   return (
-    <Box display="inline-block" lineHeight="1em" borderBottom=".05em solid transparent" className={className}>
+    <Box display="inline-block" lineHeight="1em" borderBottom=".05em solid transparent" className={newClassName ||className}>
       {value}
     </Box>
   )

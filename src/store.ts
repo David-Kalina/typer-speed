@@ -9,9 +9,13 @@ export const wordIndexAtom = atom<number>(0)
 
 export const wordHeightAtom = atom<number>(0)
 
+export const fontSizeAtom = atom<number>(1.5)
+
 export const wordsAtom = atom<WordType[]>([])
 
 export const newWordsAtom = atom<WordType[]>([])
+
+export const caretCutOffAtom = atom<number>(0)
 
 export const timeAtom = atom<number>(0)
 
@@ -24,6 +28,6 @@ export const caretOffsetAtom = atom(get => {
   const { top, left } = get(wordOffsetAtom)
   return {
     top,
-    left: left + get(characterIndexAtom) * 16 * 2 * 0.6,
+    left: left + get(characterIndexAtom) * 16 * get(fontSizeAtom) * 0.6,
   }
 })

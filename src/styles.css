@@ -20,6 +20,10 @@
   color: orange;
 }
 
+.extra {
+  color: darkred;
+}
+
 .current-char {
   border: 1px solid red;
   width: 18px;
