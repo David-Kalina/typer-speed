@@ -6,14 +6,13 @@ import { caretOffsetAtom } from '../../store'
 function Index({ delay }: { delay: number }) {
   const [carretOffset] = useAtom(caretOffsetAtom)
 
-  console.log('rednering caret')
   return (
     <Box
       position="absolute"
       h="1.25em"
       top={`${carretOffset.top + -8}px `}
       transition={`left ${delay}ms linear`}
-      left={`${carretOffset.left}px`}
+      left={`${carretOffset.left - 2}px`}
       borderRadius="md"
       width="0.14em"
       fontWeight="bold"

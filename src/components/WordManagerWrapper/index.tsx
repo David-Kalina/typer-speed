@@ -1,17 +1,18 @@
-import { Box, Button } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import { useUpdateAtom } from 'jotai/utils'
 import React, { useEffect, useRef } from 'react'
-import { caretCutOffAtom, fontSizeAtom, wordHeightAtom, wordOffsetAtom } from '../../store'
+import { useScroll } from '../../hooks/useScroll'
+import { caretCutOffAtom, fontSizeAtom } from '../../store'
 import Caret from '../Caret'
 
 function Index({ children }: { children: React.ReactNode | React.ReactNode[] }) {
   const [fontSize] = useAtom(fontSizeAtom)
   const ref = useRef<HTMLDivElement>(null)
 
-  const [top] = useAtom(wordHeightAtom)
-
   const setCaretCutoff = useUpdateAtom(caretCutOffAtom)
+
+  useScroll(ref)
 
   useEffect(() => {
     const resize = () => {
@@ -32,10 +33,6 @@ function Index({ children }: { children: React.ReactNode | React.ReactNode[] }) 
     }
   }, [])
 
-  const scroll = () => {
-    ref.current?.scrollBy({ top, behavior: 'smooth' })
-  }
-
   return (
     <>
       <Box
@@ -48,10 +45,9 @@ function Index({ children }: { children: React.ReactNode | React.ReactNode[] }) 
         overflow="hidden"
         h="5.0625em"
       >
-        <Caret delay={100} />
+        <Caret delay={75} />
         {children}
       </Box>
-      <Button onClick={scroll}>SCROLL</Button>
     </>
   )
 }
