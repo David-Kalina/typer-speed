@@ -6,6 +6,7 @@ import { caretOffsetAtom } from '../../store'
 function Index({ delay }: { delay: number }) {
   const [carretOffset] = useAtom(caretOffsetAtom)
 
+  console.log('rednering caret')
   return (
     <Box
       position="absolute"

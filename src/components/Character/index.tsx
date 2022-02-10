@@ -13,7 +13,13 @@ function Index({ value, id, className }: Character) {
   }, [])
 
   return (
-    <Box display="inline-block" lineHeight="1em" borderBottom=".05em solid transparent" className={newClassName ||className}>
+    <Box
+      display="inline-block"
+      lineHeight="1em"
+      borderBottom=".05em solid transparent"
+      className={newClassName || className}
+      boxSizing="border-box"
+    >
       {value}
     </Box>
   )

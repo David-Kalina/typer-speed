@@ -21,7 +21,15 @@ function Index() {
   }, [])
 
   return (
-    <Flex flexWrap="wrap" alignContent="flex-start" mx="auto" paddingBottom="1rem" w="100%">
+    <Flex
+      flexWrap="wrap"
+      alignContent="flex-start"
+      mx="auto"
+      paddingBottom="1em"
+      height="6.75rem"
+      boxSizing="border-box"
+      w="100%"
+    >
       {renderWords}
       <NewWordsManager />
     </Flex>

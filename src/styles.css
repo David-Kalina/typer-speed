@@ -1,13 +1,3 @@
-.default-char {
-  color: white;
-  width: 18px !important;
-}
-
-.default-word {
-  /* border: 1px solid red; */
-  font-size: 1.8rem;
-}
-
 .correct {
   color: green;
 }
@@ -22,20 +12,4 @@
 
 .extra {
   color: darkred;
-}
-
-.current-char {
-  border: 1px solid red;
-  width: 18px;
-}
-
-.current-word {
-  border: 1px solid yellow;
-  margin: 4px;
-  font-size: 1.8rem;
-}
-
-.key-manager {
-  background: inherit;
-  border: 1px solid white;
 }

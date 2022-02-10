@@ -9,7 +9,7 @@ export const wordIndexAtom = atom<number>(0)
 
 export const wordHeightAtom = atom<number>(0)
 
-export const fontSizeAtom = atom<number>(1.5)
+export const fontSizeAtom = atom<number>(2)
 
 export const wordsAtom = atom<WordType[]>([])
 
