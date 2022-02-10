@@ -2,6 +2,7 @@ import { Flex } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import { useUpdateAtom } from 'jotai/utils'
 import React from 'react'
+import { useOnScreen } from '../../hooks/useOnScreen'
 import { socketAtom, wordHeightAtom, wordOffsetAtom } from '../../store'
 import { Character as CharacterType, WordType } from '../../types'
 import Character from '../Character'
@@ -14,7 +15,7 @@ const Index = React.memo(({ characters, id }: WordType) => {
   const ref = React.useRef<HTMLDivElement>(null)
   const [extraCharacters, setExtraCharacters] = React.useState<CharacterType[]>([])
 
-  console.log('render')
+  useOnScreen(ref)
 
   React.useEffect(() => {
     socket.on(`${id}`, wordId => {
