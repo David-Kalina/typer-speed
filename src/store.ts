@@ -1,5 +1,5 @@
 import { atom } from 'jotai'
-import { atomWithReset } from 'jotai/utils'
+import { atomWithReset, atomWithStorage } from 'jotai/utils'
 import { io } from 'socket.io-client'
 import { WordType } from './types'
 
@@ -16,6 +16,8 @@ export const fontSizeAtom = atom<number>(2)
 
 export const wordsAtom = atomWithReset<WordType[]>([])
 
+export const loadingAtom = atomWithReset<boolean>(true)
+
 export const newWordsAtom = atomWithReset<WordType[]>([])
 
 export const caretCutOffAtom = atomWithReset<number>(0)
@@ -23,6 +25,10 @@ export const caretCutOffAtom = atomWithReset<number>(0)
 export const timeAtom = atomWithReset<number>(0)
 
 export const testStartedAtom = atomWithReset<boolean>(false)
+
+export const testFinishedAtom = atomWithReset<boolean>(false)
+
+export const testTimeAtom = atomWithStorage<number>('testTime', 0)
 
 export const wordOffsetAtom = atomWithReset<{ top: number; left: number }>({
   top: 0,

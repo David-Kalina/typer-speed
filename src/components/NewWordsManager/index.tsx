@@ -24,4 +24,6 @@ function Index() {
   return <>{renderWords}</>
 }
 
+Index.displayName = 'NewWordsManager'
+
 export default Index

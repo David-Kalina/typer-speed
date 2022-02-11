@@ -86,7 +86,7 @@ function TypingTestsTable() {
       </Flex>
 
       {!loading && tableRows ? (
-        <Table variant="striped" size={breakpoint === 'base' || breakpoint === 'sm' ? 'sm' : 'lg'}>
+        <Table size={breakpoint === 'base' || breakpoint === 'sm' ? 'sm' : 'lg'} color="white">
           <TableCaption textAlign="left" p={0} placement="top" mb="2">
             Recent Typing Tests
           </TableCaption>

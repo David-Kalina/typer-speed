@@ -13,23 +13,23 @@ function Index({ children }: { children: React.ReactNode | React.ReactNode[] }) 
   useResize(ref)
 
   return (
-    <>
-      <Box
-        ref={ref}
-        className="word-manager-wrapper"
-        position="relative"
-        fontFamily="Roboto Mono, Roboto Mono"
-        fontSize={`${fontSize}em`}
-        boxSizing="border-box"
-        overflow="hidden"
-        w="100%"
-        h="5.0625em"
-      >
-        <Caret delay={75} />
-        {children}
-      </Box>
-    </>
+    <Box
+      ref={ref}
+      className="word-manager-wrapper"
+      position="relative"
+      fontFamily="Roboto Mono, Roboto Mono"
+      fontSize={`${fontSize}em`}
+      boxSizing="border-box"
+      overflow="hidden"
+      w="100%"
+      h="5.0625em"
+    >
+      <Caret delay={75} />
+      {children}
+    </Box>
   )
 }
+
+Index.displayName = 'WordManagerWrapper'
 
 export default Index

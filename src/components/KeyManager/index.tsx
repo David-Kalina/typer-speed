@@ -30,7 +30,7 @@ function Index() {
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (forbiddenKeys.includes(e.key)) {
-      return e.preventDefault()
+      return e.stopPropagation()
     }
 
     if (e.code === 'Backspace') {
@@ -64,5 +64,7 @@ function Index() {
     />
   )
 }
+
+Index.displayName = 'KeyManager'
 
 export default Index

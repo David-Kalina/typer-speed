@@ -1,6 +1,8 @@
+import { Flex } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
-import React, { useEffect, useState } from 'react'
-import { socketAtom } from '../store'
+import React, { useEffect } from 'react'
+import { loadingAtom, socketAtom, testFinishedAtom, wordsAtom } from '../store'
+import { WordType } from '../types'
 import Countdown from './Countdown'
 import KeyManager from './KeyManager'
 import NewTest from './NewTest'
@@ -10,12 +12,25 @@ import WordManagerWrapper from './WordManagerWrapper'
 
 function TypingTest() {
   const [socket] = useAtom(socketAtom)
-  const [finished, setFinished] = useState(false)
+  const [finished, setFinished] = useAtom(testFinishedAtom)
+  const [loading, setLoading] = useAtom(loadingAtom)
+  const [words, setWords] = useAtom(wordsAtom)
+
+  useEffect(() => {
+    socket.on('words', (words: WordType[]) => {
+      setWords(words)
+      setLoading(false)
+    })
+
+    return () => {
+      socket.off('words')
+    }
+  })
 
   useEffect(() => {
     socket.emit('init')
     setFinished(false)
-  }, [socket])
+  }, [setFinished, socket])
 
   useEffect(() => {
     socket.on('finishTimer', () => {
@@ -24,21 +39,27 @@ function TypingTest() {
     return () => {
       socket.off('finishedTimer')
     }
-  }, [socket])
+  }, [setFinished, socket])
 
   return (
-    <>
-      <Countdown />
-      {finished ? (
-        <Results />
+    <Flex flexDir="column" w="100%" className="typing-test">
+      {!loading ? (
+        <>
+          <Countdown />
+          {finished ? (
+            <Results />
+          ) : (
+            <WordManagerWrapper>
+              <WordManager />
+            </WordManagerWrapper>
+          )}
+          <NewTest />
+          <KeyManager />
+        </>
       ) : (
-        <WordManagerWrapper>
-          <WordManager />
-        </WordManagerWrapper>
+        <div>Loading...</div>
       )}
-      <NewTest />
-      <KeyManager />
-    </>
+    </Flex>
   )
 }
 

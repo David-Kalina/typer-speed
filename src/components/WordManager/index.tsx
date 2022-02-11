@@ -1,18 +1,12 @@
 import { Flex } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
-import React, { useEffect } from 'react'
-import { socketAtom, wordsAtom } from '../../store'
-import { WordType } from '../../types'
+import React from 'react'
+import { wordsAtom } from '../../store'
 import NewWordsManager from '../NewWordsManager'
 import Word from '../Word/index'
 
 function Index() {
-  const [socket] = useAtom(socketAtom)
-  const [words, setWords] = useAtom(wordsAtom)
-
-  useEffect(() => {
-    socket.on('words', (words: WordType[]) => setWords(words))
-  }, [setWords, socket])
+  const [words] = useAtom(wordsAtom)
 
   const renderWords = words?.map(({ className, characters, id }) => {
     return <Word id={id} key={id} className={className} characters={characters} />
@@ -34,5 +28,7 @@ function Index() {
     </Flex>
   )
 }
+
+Index.displayName = 'WordManager'
 
 export default Index

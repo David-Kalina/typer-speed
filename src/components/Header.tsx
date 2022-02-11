@@ -3,7 +3,6 @@ import React from 'react'
 import { FiLogOut, FiUser } from 'react-icons/fi'
 import { GiSpeedometer } from 'react-icons/gi'
 import { Link, useLocation } from 'react-location'
-import { ColorModeSwitcher } from '../ColorModeSwitcher'
 import { useAuth } from '../contexts/AuthContext'
 import MobileHeader from './MobileHeader'
 import SetTestTime from './SetTestTime'
@@ -47,7 +46,6 @@ function Header() {
               </Text>
             </Flex>
           ) : null}
-          <ColorModeSwitcher />
         </HStack>
       </HStack>
     )

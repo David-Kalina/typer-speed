@@ -23,13 +23,15 @@ function Index() {
 
   if (time) {
     return (
-      <Text fontSize="md" pl="0.5em" minHeight="30px">
+      <Text fontSize="1.5em" minH="1.5em" pl="0.5em" color="brand.200">
         {time}
       </Text>
     )
   } else {
-    return <Text fontSize="md" pl="0.5em" minHeight="30px" />
+    return <Text fontSize="1.5em" minH="1.5em" pl="0.5em" color="brand.200" />
   }
 }
+
+Index.displayName = 'Countdown'
 
 export default Index

@@ -1,50 +1,55 @@
-import { Badge, Box, HStack } from '@chakra-ui/react'
+import { Badge, Box, HStack, Text } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
-import React from 'react'
-import { timeAtom } from '../store'
+import React, { useEffect } from 'react'
+import { socketAtom, testTimeAtom } from '../store'
 
 function SetTestTime() {
-  const [time, setTime] = useAtom(timeAtom)
+  const [socket] = useAtom(socketAtom)
+  const [testTime, setTestTime] = useAtom(testTimeAtom)
+
+  useEffect(() => {
+    socket.emit('testTime', testTime)
+  }, [socket, testTime])
 
   return (
     <Box textAlign="center">
       <HStack>
-        <Badge
+        <Text
           p="1"
           cursor="pointer"
-          onClick={() => setTime(15)}
-          fontSize="xs"
-          colorScheme={time === 15 ? 'yellow' : 'unset'}
+          onClick={() => setTestTime(15)}
+          fontSize="sm"
+          color={testTime === 15 ? 'brand.300' : 'brand.200'}
         >
           {15}
-        </Badge>
-        <Badge
+        </Text>
+        <Text
           p="1"
           cursor="pointer"
-          onClick={() => setTime(30)}
-          fontSize="xs"
-          colorScheme={time === 30 ? 'yellow' : 'unset'}
+          onClick={() => setTestTime(30)}
+          fontSize="sm"
+          color={testTime === 30 ? 'brand.300' : 'brand.200'}
         >
           {30}
-        </Badge>
-        <Badge
+        </Text>
+        <Text
           p="1"
           cursor="pointer"
-          onClick={() => setTime(60)}
-          fontSize="xs"
-          colorScheme={time === 60 ? 'yellow' : 'unset'}
+          onClick={() => setTestTime(60)}
+          fontSize="sm"
+          color={testTime === 60 ? 'brand.300' : 'brand.200'}
         >
           {60}
-        </Badge>
-        <Badge
+        </Text>
+        <Text
           p="1"
           cursor="pointer"
-          onClick={() => setTime(120)}
-          fontSize="xs"
-          colorScheme={time === 120 ? 'yellow' : 'unset'}
+          onClick={() => setTestTime(120)}
+          fontSize="sm"
+          color={testTime === 120 ? 'brand.300' : 'brand.200'}
         >
           {120}
-        </Badge>
+        </Text>
       </HStack>
     </Box>
   )

@@ -27,6 +27,18 @@
   animation: blink 2s infinite both;
 }
 
+/* .word-manager-wrapper {
+  animation: fadeIn 4s;
+}
+
+.word-manager {
+  animation: fadeIn 4s;
+} */
+
+.typing-test {
+  animation: fadeIn 4s;
+}
+
 @keyframes blink {
   0%,
   50%,
@@ -36,5 +48,14 @@
   25%,
   75% {
     opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
