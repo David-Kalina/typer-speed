@@ -1,15 +1,40 @@
 .correct {
-  color: green;
+  color: #79aea3;
+}
+
+.default {
+  color: #f7f7ff;
 }
 
 .incorrect {
-  color: red;
+  color: #d62828;
 }
 
 .missed {
-  color: orange;
+  color: #f7f7ff;
 }
 
 .extra {
   color: darkred;
+}
+
+.key-manager {
+  border: transparent;
+}
+
+.blink {
+  -webkit-animation: blink 2s infinite both;
+  animation: blink 2s infinite both;
+}
+
+@keyframes blink {
+  0%,
+  50%,
+  100% {
+    opacity: 1;
+  }
+  25%,
+  75% {
+    opacity: 0;
+  }
 }

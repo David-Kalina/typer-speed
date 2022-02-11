@@ -10,7 +10,11 @@ function Index({ value, id, className }: Character) {
 
   React.useEffect(() => {
     socket.on(`${id}`, className => setNewClassName(className))
-  }, [])
+
+    return () => {
+      socket.off(`${id}`)
+    }
+  }, [id, socket])
 
   return (
     <Box

@@ -10,5 +10,5 @@ export const useRedirect = (condition: unknown, pathName: string) => {
     }
 
     return undefined
-  }, [condition])
+  }, [condition, navigate, pathName])
 }

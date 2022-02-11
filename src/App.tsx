@@ -6,11 +6,16 @@ import { routes } from './constants/routes'
 import { AuthProvider } from './contexts/AuthContext'
 import './styles.css'
 
-const config = {
-  initialColorMode: 'dark',
-  useSystemColorMode: false,
-}
-const theme = extendTheme({ config } as any)
+const theme = extendTheme({
+  colors: {
+    brand: {
+      100: '#000000',
+      200: '#EF767A',
+      300: '#F7F7FF',
+      400: '#23B5D3',
+    },
+  },
+})
 
 const location = new ReactLocation()
 

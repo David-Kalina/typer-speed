@@ -1,25 +1,43 @@
-import { Flex } from '@chakra-ui/react'
-import React from 'react'
-import { useTime } from '../contexts/TimeContext'
-import { useEmitSocketEvent } from '../hooks/useSocketEvent'
-import KeyHandler from './KeyHandler'
+import { useAtom } from 'jotai'
+import React, { useEffect, useState } from 'react'
+import { socketAtom } from '../store'
+import Countdown from './Countdown'
+import KeyManager from './KeyManager'
 import NewTest from './NewTest'
-import StatChart from './StatChart'
-import WordsDisplay from './WordsDisplay'
+import Results from './Results'
+import WordManager from './WordManager'
+import WordManagerWrapper from './WordManagerWrapper'
 
 function TypingTest() {
-  const [time] = useTime()
-  useEmitSocketEvent('init', time)
+  const [socket] = useAtom(socketAtom)
+  const [finished, setFinished] = useState(false)
+
+  useEffect(() => {
+    socket.emit('init')
+    setFinished(false)
+  }, [socket])
+
+  useEffect(() => {
+    socket.on('finishTimer', () => {
+      setFinished(true)
+    })
+    return () => {
+      socket.off('finishedTimer')
+    }
+  }, [socket])
 
   return (
     <>
-      <WordsDisplay />
-      <KeyHandler />
-      <Flex>
-        <NewTest />
-      </Flex>
-
-      <StatChart />
+      <Countdown />
+      {finished ? (
+        <Results />
+      ) : (
+        <WordManagerWrapper>
+          <WordManager />
+        </WordManagerWrapper>
+      )}
+      <NewTest />
+      <KeyManager />
     </>
   )
 }

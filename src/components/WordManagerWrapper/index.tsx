@@ -22,7 +22,8 @@ function Index({ children }: { children: React.ReactNode | React.ReactNode[] }) 
         fontSize={`${fontSize}em`}
         boxSizing="border-box"
         overflow="hidden"
-        h="9.5625rem"
+        w="100%"
+        h="5.0625em"
       >
         <Caret delay={75} />
         {children}

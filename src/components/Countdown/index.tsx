@@ -1,10 +1,9 @@
 import { Text } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
-import * as React from 'react'
-import { useEffect } from 'react'
-import { socketAtom, testStartedAtom, timeAtom } from '../store'
+import React, { useEffect } from 'react'
+import { socketAtom, testStartedAtom, timeAtom } from '../../store'
 
-const Timer: React.FC = () => {
+function Index() {
   const [time, setTime] = useAtom(timeAtom)
   const [socket] = useAtom(socketAtom)
   const [testStarted] = useAtom(testStartedAtom)
@@ -33,4 +32,4 @@ const Timer: React.FC = () => {
   }
 }
 
-export default Timer
+export default Index

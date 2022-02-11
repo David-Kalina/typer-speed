@@ -16,7 +16,10 @@ function Index() {
     socket.on('newWord', (newWord: WordType) => {
       setNewWords(prev => [...prev, newWord])
     })
-  }, [])
+    return () => {
+      socket.off('newWord')
+    }
+  }, [setNewWords, socket])
 
   return <>{renderWords}</>
 }

@@ -1,9 +1,10 @@
 import { Badge, Box, HStack } from '@chakra-ui/react'
+import { useAtom } from 'jotai'
 import React from 'react'
-import { useTime } from '../contexts/TimeContext'
+import { timeAtom } from '../store'
 
 function SetTestTime() {
-  const [time, setTime] = useTime()
+  const [time, setTime] = useAtom(timeAtom)
 
   return (
     <Box textAlign="center">

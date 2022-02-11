@@ -1,42 +1,25 @@
-import { Flex, Box } from '@chakra-ui/react'
+import { Box, Flex } from '@chakra-ui/react'
 import React from 'react'
-import Header from './Header'
 import Footer from './Footer'
-import { useAtom } from 'jotai'
-import { socketAtom } from '../store'
+import Header from './Header'
 
 function Layout({ children }: { children: React.ReactNode[] | React.ReactNode }) {
-  const [socket] = useAtom(socketAtom)
-
-  React.useEffect(() => {
-    socket.emit('init')
-  }, [])
-
   return (
-    <Flex
-      mx="auto"
-      justify={['start', 'start', 'space-between', 'space-between']}
-      align="start"
-      h="100vh"
-      flexDir="column"
-      w={['100%', '100%', '100%', '100%']}
-      maxW="1000px"
-    >
-      {/* <Header /> */}
-      <Box></Box>
-
-      <Box
+    <Flex mx="auto" align="start" h="100vh" bg="brand.100" flexDir="column">
+      <Flex
+        fontFamily="Roboto Mono"
+        flexDir="column"
         mx="auto"
-        p={[4, 4, 4, 0]}
-        minH={['100vh', '100vh', 'unset']}
-        h="max-content"
-        mb={['auto', 'auto', 'unset']}
-        w="100%"
+        h="100vh"
+        w={['100%', '100%', '100%', '100%']}
+        justify={['start', 'start', 'space-between', 'space-between']}
+        align="center"
+        maxW="1000px"
       >
+        <Header />
         {children}
-      </Box>
-
-      <Footer />
+        <Footer />
+      </Flex>
     </Flex>
   )
 }

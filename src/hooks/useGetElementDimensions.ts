@@ -13,5 +13,5 @@ export const useGetElementDimensions = (ref: React.RefObject<HTMLElement>) => {
       const padding = parseInt(style.paddingTop, 10) + parseInt(style.paddingBottom, 10)
       setWordHeight(ref.current.clientHeight + border + margin + padding)
     }
-  }, [])
+  }, [ref, setWordHeight])
 }

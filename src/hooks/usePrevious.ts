@@ -8,6 +8,6 @@ export function usePrevious(value: any) {
 
   useEffect(() => {
     console.log(ref.current)
-  }, [ref.current])
+  }, [])
   return ref.current
 }

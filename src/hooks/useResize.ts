@@ -9,18 +9,18 @@ export const useResize = (ref: React.RefObject<HTMLDivElement>) => {
     const resize = () => {
       window.addEventListener('resize', () => {
         if (ref.current) {
-          setCaretCutoff(ref.current.clientWidth * 0.97)
+          setCaretCutoff(ref.current.offsetWidth * 0.98)
         }
       })
     }
 
     resize()
     return () => window.removeEventListener('resize', resize)
-  }, [])
+  }, [ref, setCaretCutoff])
 
   useEffect(() => {
     if (ref.current) {
-      setCaretCutoff(ref.current.clientWidth * 0.97)
+      setCaretCutoff(ref.current.offsetWidth * 0.98)
     }
-  }, [])
+  }, [ref, setCaretCutoff])
 }

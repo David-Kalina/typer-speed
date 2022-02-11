@@ -19,7 +19,7 @@ function Header() {
     return <MobileHeader />
   } else {
     return (
-      <HStack w="100%" py="12" px={['12', '12', 0]} justifyContent="space-between">
+      <HStack w="100%" py="12" px={['12', '12', 0]} justifyContent="space-between" color="white">
         <HStack spacing={6}>
           <Link to="/">
             <Flex align="center" cursor="pointer" fontSize="lg">
