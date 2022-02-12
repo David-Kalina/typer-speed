@@ -1,5 +1,5 @@
 import { Button, Input, Text, VStack } from '@chakra-ui/react'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useForm } from 'react-hook-form'
 import { SignUpData, useAuth } from '../contexts/AuthContext'
 
