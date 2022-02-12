@@ -7,6 +7,8 @@ function Index({ delay }: { delay: number }) {
   const [carretOffset] = useAtom(caretOffsetAtom)
   const [testStarted] = useAtom(testStartedAtom)
 
+  console.log('render')
+
   return (
     <Box
       position="absolute"
