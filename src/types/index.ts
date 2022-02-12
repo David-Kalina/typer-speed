@@ -1,0 +1,13 @@
+export interface Character {
+  className: string
+  value: string
+  id: string
+  wordId: number
+  word: string
+}
+
+export interface WordType {
+  characters: Character[]
+  id: number
+  className: string
+}

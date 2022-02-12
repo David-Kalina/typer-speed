@@ -12,9 +12,7 @@ function Register() {
   } = useForm()
   const [error, setError] = React.useState<string | null>(null)
 
-  useEffect(() => {
-    console.log(error)
-  }, [error])
+ 
 
   return (
     <form

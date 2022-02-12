@@ -1,10 +1,9 @@
 import { Flex, HStack, Text, useBreakpoint } from '@chakra-ui/react'
 import React from 'react'
 import { FiLogOut, FiUser } from 'react-icons/fi'
-import { GiSpeedometer } from 'react-icons/gi'
 import { Link, useLocation } from 'react-location'
-import { ColorModeSwitcher } from '../ColorModeSwitcher'
 import { useAuth } from '../contexts/AuthContext'
+import Logo from './Logo'
 import MobileHeader from './MobileHeader'
 import SetTestTime from './SetTestTime'
 
@@ -19,14 +18,9 @@ function Header() {
     return <MobileHeader />
   } else {
     return (
-      <HStack w="100%" py="12" px={['12', '12', 0]} justifyContent="space-between">
+      <HStack w="100%" py="12" px={['12', '12', 0]} justifyContent="space-between" color="white">
         <HStack spacing={6}>
-          <Link to="/">
-            <Flex align="center" cursor="pointer" fontSize="lg">
-              <GiSpeedometer />
-              <Text ml="4px">Typer Speed</Text>
-            </Flex>
-          </Link>
+          <Logo />
           <Link to="/"></Link>
           <Link to={user?.email ? '/account' : '/login'}>
             <Flex align="center" cursor="pointer" pos="relative">
@@ -47,7 +41,6 @@ function Header() {
               </Text>
             </Flex>
           ) : null}
-          <ColorModeSwitcher />
         </HStack>
       </HStack>
     )

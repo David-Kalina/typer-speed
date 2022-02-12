@@ -1,9 +1,9 @@
-import { Route, DefaultGenerics } from 'react-location'
-import TypingTest from '../components/TypingTest'
+import React from 'react'
+import { DefaultGenerics, Route } from 'react-location'
+import Account from '../components/Account'
 import Login from '../components/Auth'
 import Layout from '../components/Layout'
-import React from 'react'
-import Account from '../components/Account'
+import TypingTest from '../components/TypingTest'
 
 export const routes: Route<DefaultGenerics>[] = [
   {
@@ -30,12 +30,4 @@ export const routes: Route<DefaultGenerics>[] = [
       </Layout>
     ),
   },
-  // {
-  //   path: '/test',
-  //   element: (
-  //     <Layout>
-  //       <Test margin={1} fontSize={32} text={textMap} />
-  //     </Layout>
-  //   ),
-  // },
 ]

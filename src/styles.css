@@ -1,11 +1,61 @@
-.default {
-  color: white
+.correct {
+  color: #79aea3;
 }
 
-.correct {
-  color: green
+.default {
+  color: #f7f7ff;
 }
 
 .incorrect {
-  color: red
+  color: #d62828;
+}
+
+.missed {
+  color: #f7f7ff;
+}
+
+.extra {
+  color: #8b0000;
+}
+
+.key-manager {
+  border: transparent;
+}
+
+.blink {
+  -webkit-animation: blink 2s infinite both;
+  animation: blink 2s infinite both;
+}
+
+/* .word-manager-wrapper {
+  animation: fadeIn 4s;
+}
+
+.word-manager {
+  animation: fadeIn 4s;
+} */
+
+.typing-test {
+  animation: fadeIn 4s;
+}
+
+@keyframes blink {
+  0%,
+  50%,
+  100% {
+    opacity: 1;
+  }
+  25%,
+  75% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
