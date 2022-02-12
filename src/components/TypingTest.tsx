@@ -17,7 +17,6 @@ function TypingTest() {
   const [loading, setLoading] = useAtom(loadingAtom)
   const setWords = useUpdateAtom(wordsAtom)
 
-
   useEffect(() => {
     socket.on('words', (words: WordType[]) => {
       setWords(words)
@@ -51,9 +50,9 @@ function TypingTest() {
           {/* {finished ? (
             <Results />
           ) : ( */}
-            <WordManagerWrapper>
-              <WordManager />
-            </WordManagerWrapper>
+          <WordManagerWrapper>
+            <WordManager />
+          </WordManagerWrapper>
           {/* )} */}
           <NewTest />
           <KeyManager />
