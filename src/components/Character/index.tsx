@@ -29,4 +29,6 @@ function Index({ value, id, className }: Character) {
   )
 }
 
+Index.displayName = 'Character'
+
 export default Index

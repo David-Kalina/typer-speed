@@ -51,7 +51,7 @@ const StatChart: React.FC = () => {
         seconds: time,
         date: {
           seconds: Date.now() / 1000,
-          nanoseconds: Date.now() % 1000,
+          nanoseconds: Date.now() / 1000000,
         },
       })
       const statsRef = doc(db, 'stats', user?.email)

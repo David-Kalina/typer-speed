@@ -30,13 +30,4 @@ export const routes: Route<DefaultGenerics>[] = [
       </Layout>
     ),
   },
-
-  {
-    path: '/refactor',
-    element: (
-      <Layout>
-        <TypingTest />
-      </Layout>
-    ),
-  },
 ]

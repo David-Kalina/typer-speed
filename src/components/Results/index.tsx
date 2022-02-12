@@ -1,57 +1,88 @@
-import { Flex } from '@chakra-ui/react'
-import React from 'react'
-import { LineChart, XAxis, YAxis, Tooltip, Legend, Line, ResponsiveContainer, Label } from 'recharts'
-
-const fakeData = [
-  {
-    time: 0,
-    wpm: 0,
-    errors: 0,
-  },
-  {
-    time: 1,
-    wpm: 10,
-    errors: 0,
-  },
-  {
-    time: 2,
-    wpm: 30,
-    errors: 5,
-  },
-  {
-    time: 3,
-    wpm: 30,
-    errors: 2,
-  },
-  {
-    time: 4,
-    wpm: 40,
-    errors: 8,
-  },
-  {
-    time: 5,
-    wpm: 50,
-    errors: 10,
-  },
-]
+import { addDoc, doc, increment, setDoc } from 'firebase/firestore'
+import { useAtom } from 'jotai'
+import React, { useEffect, useState } from 'react'
+import { Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import { useAuth } from '../../contexts/AuthContext'
+import { db, testsRef } from '../../firebase'
+import { socketAtom } from '../../store'
 
 function Index() {
+  const [socket] = useAtom(socketAtom)
+  const { user } = useAuth()
+  const [data, setData] = useState({
+    recap: [],
+    averageWPM: 0,
+    accuracy: 0,
+    testTime: 0,
+    averageAccuracy: 0,
+  })
+
+  useEffect(() => {
+    socket.on('data', ({ recap, averageWPM, averageAccuracy, accuracy, testTime }) => {
+      setData({
+        recap,
+        averageWPM,
+        accuracy,
+        testTime,
+        averageAccuracy,
+      })
+
+      if (user && user.email) {
+        addDoc(testsRef, {
+          email: user?.email,
+          recap,
+          wpm: averageWPM,
+          accuracy: averageAccuracy,
+          seconds: testTime,
+          date: {
+            seconds: Date.now() / 1000,
+            nanoseconds: Date.now() / 1000000,
+          },
+        })
+      }
+      const statsRef = doc(db, 'stats', user?.email as string)
+
+      setDoc(
+        statsRef,
+        {
+          testsTaken: increment(1),
+          testsCompleted: increment(1),
+          timeTyping: increment(testTime),
+        },
+        { merge: true }
+      )
+    })
+
+    return () => {
+      socket.off('data')
+    }
+  }, [socket, data, user?.email, user])
+
+  useEffect(() => {
+    socket.emit('getData')
+    return () => {
+      socket.off('data')
+    }
+  }, [socket])
+
   return (
-    <ResponsiveContainer width="100%" height={300} maxHeight={300}>
-      <LineChart data={fakeData}>
-        <XAxis dataKey="time" />
-        <YAxis
-          color="white"
-          dataKey="wpm"
-          label={{ value: 'Words per minute', angle: -90, position: 'center', fill: 'white' }}
-        ></YAxis>
-        <Tooltip />
-        <Legend />
-        <Line type="monotone" dataKey="wpm" stroke="green" animationDuration={5000} />
-        <Line type="monotone" dataKey="errors" stroke="red" animationDuration={5000} />
-      </LineChart>
-    </ResponsiveContainer>
+    <>
+      {data.recap.length > 0 ? (
+        <ResponsiveContainer width="100%" height={300} maxHeight={300}>
+          <LineChart data={data.recap}>
+            <XAxis dataKey="time" />
+            <YAxis dataKey="wpm" />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="wpm" stroke="#82ca9d" animationDuration={5000} />
+            <Line type="monotone" dataKey="errors" stroke="#8b0000" animationDuration={5000} />
+          </LineChart>
+        </ResponsiveContainer>
+      ) : null}
+    </>
   )
 }
+
+Index.displayName = 'TypingTest'
 
 export default Index

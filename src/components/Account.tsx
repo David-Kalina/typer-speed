@@ -3,12 +3,13 @@ import React from 'react'
 import { Link } from 'react-location'
 import { useAuth } from '../contexts/AuthContext'
 import { useRedirect } from '../hooks/useRedirect'
+import { useResetTypingTest } from '../hooks/useResetTypingTest'
 import AccountStats from './AccountStats'
 import TypingTestsTable from './TypingTestsTable'
 
 function Account() {
   const { user } = useAuth()
-
+  const reset = useResetTypingTest()
   useRedirect(!user?.email, '/')
 
   if (user?.email) {
@@ -24,7 +25,7 @@ function Account() {
 
         <Flex mx="auto" w="100%" justify="center">
           <Link to="/">
-            <Button>Take a test</Button>
+            <Button onClick={reset}>Take a test</Button>
           </Link>
         </Flex>
       </VStack>

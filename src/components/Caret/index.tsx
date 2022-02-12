@@ -23,4 +23,6 @@ function Index({ delay }: { delay: number }) {
   )
 }
 
+Index.displayName = 'Caret'
+
 export default Index

@@ -12,7 +12,7 @@ export const wordHeightAtom = atomWithReset<number>(0)
 
 export const startScrollingAtom = atomWithReset<boolean>(false)
 
-export const fontSizeAtom = atom<number>(2)
+export const fontSizeAtom = atom<number>(1.5)
 
 export const wordsAtom = atomWithReset<WordType[]>([])
 

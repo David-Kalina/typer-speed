@@ -1,5 +1,6 @@
 import { Flex } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
+import { useUpdateAtom } from 'jotai/utils'
 import React, { useEffect } from 'react'
 import { loadingAtom, socketAtom, testFinishedAtom, wordsAtom } from '../store'
 import { WordType } from '../types'
@@ -14,7 +15,9 @@ function TypingTest() {
   const [socket] = useAtom(socketAtom)
   const [finished, setFinished] = useAtom(testFinishedAtom)
   const [loading, setLoading] = useAtom(loadingAtom)
-  const [words, setWords] = useAtom(wordsAtom)
+  const setWords = useUpdateAtom(wordsAtom)
+
+  console.log('render')
 
   useEffect(() => {
     socket.on('words', (words: WordType[]) => {
