@@ -48,13 +48,13 @@ function TypingTest() {
       {!loading ? (
         <>
           <Countdown />
-          {finished ? (
+          {/* {finished ? (
             <Results />
-          ) : (
+          ) : ( */}
             <WordManagerWrapper>
               <WordManager />
             </WordManagerWrapper>
-          )}
+          {/* )} */}
           <NewTest />
           <KeyManager />
         </>

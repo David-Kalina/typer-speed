@@ -58,12 +58,13 @@ function Index() {
     }
   }, [socket, data, user?.email, user])
 
-  useEffect(() => {
-    socket.emit('getData')
-    return () => {
-      socket.off('data')
-    }
-  }, [socket])
+  // useEffect(() => {
+  //   console.log('hi')
+  //   socket.emit('getData')
+  //   return () => {
+  //     socket.off('data')
+  //   }
+  // }, [socket])
 
   return (
     <>
