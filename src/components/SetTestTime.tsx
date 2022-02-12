@@ -1,4 +1,4 @@
-import { Badge, Box, HStack, Text } from '@chakra-ui/react'
+import { Box, HStack, Text } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React, { useEffect } from 'react'
 import { socketAtom, testTimeAtom } from '../store'

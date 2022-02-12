@@ -17,7 +17,6 @@ function TypingTest() {
   const [loading, setLoading] = useAtom(loadingAtom)
   const setWords = useUpdateAtom(wordsAtom)
 
-  console.log('render')
 
   useEffect(() => {
     socket.on('words', (words: WordType[]) => {

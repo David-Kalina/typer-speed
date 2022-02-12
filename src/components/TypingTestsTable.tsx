@@ -35,7 +35,6 @@ function TypingTestsTable() {
 
     getDocs(q)
       .then(snapshot => {
-        console.log('snap')
         setLoading(true)
         setTableData(snapshot.docs.map(doc => doc.data()) as TypingTestData[])
       })
