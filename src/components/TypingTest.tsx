@@ -7,13 +7,13 @@ import { WordType } from '../types'
 import Countdown from './Countdown'
 import KeyManager from './KeyManager'
 import NewTest from './NewTest'
-import Results from './Results'
+// import Results from './Results'
 import WordManager from './WordManager'
 import WordManagerWrapper from './WordManagerWrapper'
 
 function TypingTest() {
   const [socket] = useAtom(socketAtom)
-  const [finished, setFinished] = useAtom(testFinishedAtom)
+  const [, setFinished] = useAtom(testFinishedAtom)
   const [loading, setLoading] = useAtom(loadingAtom)
   const setWords = useUpdateAtom(wordsAtom)
 
