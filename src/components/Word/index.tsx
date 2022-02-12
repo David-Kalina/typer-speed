@@ -19,11 +19,12 @@ const Index = React.memo(({ characters, id }: WordType) => {
   useGetElementDimensions(ref)
 
   React.useEffect(() => {
-    socket.on(`${id}`, wordId => {
-      if (wordId === id) {
+    socket.on(`${id}`, () => {
+      const { current } = ref
+      if (current) {
         return setWordOffset({
-          top: ref.current?.offsetTop || 0,
-          left: ref.current?.offsetLeft || 0,
+          top: current.offsetTop,
+          left: current.offsetLeft,
         })
       }
     })
