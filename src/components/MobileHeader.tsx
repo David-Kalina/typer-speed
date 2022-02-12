@@ -24,7 +24,7 @@ function MobileHeader() {
 
   useEffect(() => {
     toggle(false)
-  }, [current.pathname, user])
+  }, [current.pathname, toggle, user])
 
   return (
     <Flex
