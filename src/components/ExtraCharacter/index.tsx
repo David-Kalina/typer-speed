@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/react'
 import { useUpdateAtom } from 'jotai/utils'
 import React, { useRef } from 'react'
-import { currentCharacterAtom, currentWordAtom } from '../../store'
+import { currentCharacterAtom } from '../../store'
 import { Character } from '../../types'
 
 const Index = React.memo(({ value }: Character) => {

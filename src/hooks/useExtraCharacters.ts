@@ -1,7 +1,6 @@
 import { useAtom } from 'jotai'
-import { useUpdateAtom } from 'jotai/utils'
 import { useEffect, useState } from 'react'
-import { currentWordAtom, socketAtom } from '../store'
+import { socketAtom } from '../store'
 import { Character as CharacterType } from '../types'
 
 export const useExtraCharacters = (id: number) => {
