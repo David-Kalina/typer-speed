@@ -7,7 +7,6 @@ function Layout({ children }: { children: React.ReactNode[] | React.ReactNode })
   return (
     <Flex mx="auto" align="start" h="100vh" bg="brand.100" flexDir="column">
       <Flex
-        fontFamily="Roboto Mono"
         flexDir="column"
         mx="auto"
         h="100vh"

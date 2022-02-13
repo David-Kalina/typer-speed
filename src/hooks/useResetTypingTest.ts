@@ -1,56 +1,45 @@
 import { useAtom } from 'jotai'
 import { useResetAtom } from 'jotai/utils'
-import React, { useEffect } from 'react'
-import { useLocation } from 'react-location'
 import {
+  caretPositionAtom,
   characterIndexAtom,
+  currentCharacterAtom,
+  currentWordAtom,
+  loadingAtom,
   newWordsAtom,
   socketAtom,
   testFinishedAtom,
   testStartedAtom,
   timeAtom,
-  wordHeightAtom,
-  wordIndexAtom,
-  wordsAtom
+  wordsAtom,
 } from '../store'
 
 export const useResetTypingTest = () => {
   const [socket] = useAtom(socketAtom)
-  const resetWordIndex = useResetAtom(wordIndexAtom)
   const resetCharacterIndex = useResetAtom(characterIndexAtom)
-  const resetWordHeight = useResetAtom(wordHeightAtom)
-  // const resetWordOffset = useResetAtom(wordOffsetAtom)
   const resetWords = useResetAtom(wordsAtom)
+  const resetLoading = useResetAtom(loadingAtom)
   const resetNewWords = useResetAtom(newWordsAtom)
   const resetTime = useResetAtom(timeAtom)
   const resetTestStarted = useResetAtom(testStartedAtom)
   const resetTestFinished = useResetAtom(testFinishedAtom)
-  // const [, resetCaret] = useAtom(caretOffsetAtom)
+  const resetCurrentWord = useResetAtom(currentWordAtom)
+  const resetCurrentCharacter = useResetAtom(currentCharacterAtom)
+  const resetCaretPosition = useResetAtom(caretPositionAtom)
 
-  const reset = React.useCallback(() => {
-    resetWordIndex()
+  const reset = () => {
     resetCharacterIndex()
-    resetWordHeight()
-    // resetWordOffset()
-    // resetCaret()
     resetWords()
+    resetLoading()
     resetNewWords()
     resetTime()
     resetTestStarted()
     resetTestFinished()
-    socket.emit('resetTimer')
+    resetCurrentWord()
+    resetCurrentCharacter()
+    resetCaretPosition()
     socket.emit('init')
-  }, [resetWordIndex, resetCharacterIndex, resetWordHeight, resetWords, resetNewWords, socket, resetTime, resetTestStarted, resetTestFinished])
-
-  const { current } = useLocation()
-
-  useEffect(() => {
-    socket.on('reset', reset)
-
-    return () => {
-      socket.off('reset')
-    }
-  }, [reset, socket, current])
+  }
 
   return reset
 }

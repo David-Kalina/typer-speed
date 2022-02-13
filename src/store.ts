@@ -4,13 +4,10 @@ import { io } from 'socket.io-client'
 import { WordType } from './types'
 
 export const socketAtom = atom(io(process.env.REACT_APP_SOCKET_SERVER as string))
+
 export const characterIndexAtom = atomWithReset<number>(0)
 
-export const wordIndexAtom = atomWithReset<number>(0)
-
 export const wordHeightAtom = atomWithReset<number>(0)
-
-export const startScrollingAtom = atomWithReset<boolean>(false)
 
 export const fontSizeAtom = atom<number>(2)
 
@@ -30,14 +27,26 @@ export const testFinishedAtom = atomWithReset<boolean>(false)
 
 export const testTimeAtom = atomWithStorage<number>('testTime', 0)
 
-export const currentWordAtom = atom<HTMLDivElement | null>(null)
-export const currentCharacterAtom = atom<HTMLDivElement | null>(null)
-export const traversingCharacterAtom = atomWithReset<boolean>(false)
+export const currentWordAtom = atomWithReset<HTMLDivElement | null>(null)
+export const currentCharacterAtom = atomWithReset<HTMLDivElement | null>(null)
 
-export const caretPositionAtom = atom<{
+export const caretPositionAtom = atomWithReset<{
   top: number
   left: number
 }>({
   top: 0,
   left: 0,
 })
+
+export const resetAtoms = [
+  characterIndexAtom,
+  wordsAtom,
+  loadingAtom,
+  newWordsAtom,
+  timeAtom,
+  testStartedAtom,
+  testFinishedAtom,
+  currentWordAtom,
+  currentCharacterAtom,
+  caretPositionAtom,
+]

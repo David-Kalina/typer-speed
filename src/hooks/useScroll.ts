@@ -1,17 +1,16 @@
 import { useAtom } from 'jotai'
 import { useEffect } from 'react'
-import { wordHeightAtom } from '../store'
+import { caretPositionAtom } from '../store'
+import { useGetElementDimensions } from './useGetElementDimensions'
 
 export const useScroll = (ref: React.RefObject<HTMLDivElement>) => {
-  const [scrollByHeight] = useAtom(wordHeightAtom)
-  // const [{ top }] = useAtom(wordOffsetAtom)
-  const [wordHeight] = useAtom(wordHeightAtom)
+  const [{ top }] = useAtom(caretPositionAtom)
+  const wordHeight = useGetElementDimensions('.word')
 
-  //   useEffect(() => {
-  //     const { current } = ref
-  //     if (current && top > wordHeight * 2) {
-  //       current.scrollBy({ top: scrollByHeight, behavior: 'smooth' })
-  //     }
-  //   }, [ref, scrollByHeight, top, wordHeight])
-  // }
+  useEffect(() => {
+    const { current } = ref
+    if (current && wordHeight && top > wordHeight * 2) {
+      current.scrollBy({ top: wordHeight, behavior: 'smooth' })
+    }
+  }, [ref, top, wordHeight])
 }

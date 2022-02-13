@@ -1,31 +1,18 @@
 import { Flex } from '@chakra-ui/react'
-import { useAtom } from 'jotai'
-import { useUpdateAtom } from 'jotai/utils'
 import React from 'react'
-import { useGetElementDimensions } from '../../hooks/useGetElementDimensions'
+import { useExtraCharacters } from '../../hooks/useExtraCharacters'
 import { useOnScreen } from '../../hooks/useOnScreen'
-import { socketAtom } from '../../store'
-import { Character as CharacterType, WordType } from '../../types'
+import { WordType } from '../../types'
 import Character from '../Character'
 import ExtraCharacter from '../ExtraCharacter'
 
 const Index = React.memo(({ characters, id }: WordType) => {
-  const [socket] = useAtom(socketAtom)
-  // const setWordOffset = useUpdateAtom(wordOffsetAtom)
   const ref = React.useRef<HTMLDivElement>(null)
-  const [extraCharacters, setExtraCharacters] = React.useState<CharacterType[]>([])
-
   useOnScreen(ref)
-  useGetElementDimensions(ref)
 
-  React.useEffect(() => {
-    socket.on(`extra-${id}`, (characters: CharacterType[]) => {
-      setExtraCharacters(characters)
-    })
-    return () => {
-      socket.off(`extra-${id}`)
-    }
-  }, [extraCharacters, id, socket])
+  const extraCharacters = useExtraCharacters(id)
+
+  console.log('render')
 
   const renderCharacters = characters.map(({ className, value, id, wordId, word }) => {
     return <Character id={id} word={word} wordId={wordId} key={id} className={className} value={value}></Character>
@@ -37,10 +24,11 @@ const Index = React.memo(({ characters, id }: WordType) => {
     )
   })
 
+  const allCharacters = [...renderCharacters, ...renderExtraCharacters]
+
   return (
-    <Flex ref={ref} m="0.25em" borderBottom="2px solid transparent" lineHeight="1em" boxSizing="border-box">
-      {renderCharacters}
-      {renderExtraCharacters}
+    <Flex ref={ref} className="word">
+      {allCharacters}
     </Flex>
   )
 })

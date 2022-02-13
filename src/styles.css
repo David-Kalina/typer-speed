@@ -22,6 +22,13 @@
   border: transparent;
 }
 
+.word {
+  margin: 0.25em;
+  border-bottom: 2px solid transparent;
+  line-height: 1em;
+  box-sizing: border-box;
+}
+
 .blink {
   -webkit-animation: blink 2s infinite both;
   animation: blink 2s infinite both;
