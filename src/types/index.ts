@@ -8,6 +8,7 @@ export interface Character {
 
 export interface WordType {
   characters: Character[]
+  extraCharacters: Character[]
   id: number
   className: string
 }

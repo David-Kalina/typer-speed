@@ -1,96 +1,126 @@
 import { useAtom } from 'jotai'
-import { useUpdateAtom } from 'jotai/utils'
-import { useEffect } from 'react'
-import { caretPositionAtom, characterIndexAtom, currentCharacterAtom, currentWordAtom, socketAtom } from '../store'
+import { useEffect, useState } from 'react'
+import {
+  caretPositionAtom,
+  currentCharacterElementAtom,
+  currentWordElementAtom,
+  extraCharactersAtom,
+  wordIndexAtom,
+} from '../store'
 
-export const useNavigateCaret = () => {
-  const [currentCharacter, setCurrentCharacter] = useAtom(currentCharacterAtom)
-  const [currentWord, setCurrentWord] = useAtom(currentWordAtom)
-  const setPosition = useUpdateAtom(caretPositionAtom)
-  const [characterIndex] = useAtom(characterIndexAtom)
-  const [socket] = useAtom(socketAtom)
+export const useCaretNavigator = () => {
+  const [caretPosition, setCaretPosition] = useAtom(caretPositionAtom)
+  const [currentCharacterElement, setCurrentCharacterElement] = useAtom(currentCharacterElementAtom)
+  const [currentWordElement, setCurrentWordElement] = useAtom(currentWordElementAtom)
+  const [temporaryPrev, setTemporaryPrev] = useState<HTMLDivElement | null>(null)
+  const [wordIndex] = useAtom(wordIndexAtom)
+  const [extraCharacters] = useAtom(extraCharactersAtom)
 
-  const getNextCharacter = () => {
-    if (currentCharacter?.nextElementSibling) {
-      return currentCharacter.nextSibling as HTMLDivElement
-    }
-    return null
-  }
-
-  const getCurrentCharacter = () => {
-    if (currentCharacter) return currentCharacter
-    return null
-  }
-
-  const getPrevCharacter = () => {
-    if (currentCharacter?.previousElementSibling) return currentCharacter.previousElementSibling as HTMLDivElement
-    return null
-  }
-
-  const getNextWord = () => {
-    if (currentWord?.nextElementSibling) return currentWord.nextElementSibling as HTMLDivElement
-    return null
-  }
-
-  const moveCaretToNextWord = () => {
-    const nextWord = getNextWord()
-    setCurrentCharacter(nextWord?.firstChild as HTMLDivElement)
-    setCurrentWord(nextWord)
-    if (nextWord) {
-      setPosition({
-        top: nextWord.offsetTop,
-        left: nextWord.offsetLeft,
-      })
-    }
+  const setPosition = ({
+    direction,
+    top,
+    left,
+    cb,
+  }: {
+    direction: 'forward' | 'backward'
+    top?: number
+    left: number
+    cb: () => void
+  }) => {
+    setCaretPosition(prev => ({
+      ...prev,
+      top: top ? top : prev.top,
+      left: direction === 'forward' ? prev.left + left : prev.left - left,
+    }))
+    return cb()
   }
 
   const moveCaretForward = () => {
-    const character = characterIndex > 0 ? getNextCharacter() : getCurrentCharacter()
-    setCurrentCharacter(character)
-    if (character) {
-      return setPosition(prev => ({
-        top: prev.top,
-        left: prev.left + character.offsetWidth,
-      }))
+    console.log(currentCharacterElement?.nextElementSibling)
+    // if (extraCharacters[wordIndex] && extraCharacters[wordIndex].length > 0)
+    //   setCurrentCharacterElement(currentWordElement?.previousElementSibling?.lastElementChild as HTMLDivElement)
+
+    if (temporaryPrev) {
+      return setPosition({
+        direction: 'forward',
+        top: temporaryPrev.offsetTop,
+        left: temporaryPrev.offsetWidth,
+        cb: () => {
+          setCurrentCharacterElement(temporaryPrev.nextElementSibling as HTMLDivElement)
+          setTemporaryPrev(null)
+        },
+      })
+    }
+
+    if (currentCharacterElement) {
+      const next = currentCharacterElement.nextElementSibling as HTMLDivElement
+      if (next) {
+        setPosition({
+          direction: 'forward',
+          top: next.offsetTop,
+          left: next.offsetWidth,
+          cb: () => {
+            setCurrentCharacterElement(currentCharacterElement.nextElementSibling as HTMLDivElement)
+          },
+        })
+      } else {
+        setPosition({
+          direction: 'forward',
+          top: currentCharacterElement.offsetTop,
+          left: currentCharacterElement.offsetWidth,
+          cb: () => {
+            setCurrentCharacterElement(currentCharacterElement as HTMLDivElement)
+          },
+        })
+      }
     }
   }
 
   const moveCaretBackward = () => {
-    const prevCharacter = currentCharacter
-    setCurrentCharacter(getPrevCharacter())
-    if (prevCharacter) {
-      console.log('if backward', prevCharacter)
-      setPosition(prev => ({
-        top: prev.top,
-        left: prev.left - prevCharacter?.clientWidth,
-      }))
-    } else {
-      console.log('insane')
+    if (currentCharacterElement) {
+      if (currentCharacterElement?.previousElementSibling as HTMLDivElement) {
+        setPosition({
+          direction: 'backward',
+          top: currentCharacterElement.offsetTop,
+          left: currentCharacterElement.offsetWidth,
+          cb: () => {
+            setTemporaryPrev(currentCharacterElement as HTMLDivElement)
+            setCurrentCharacterElement(currentCharacterElement.previousElementSibling as HTMLDivElement)
+          },
+        })
+      } else {
+        setPosition({
+          direction: 'backward',
+          top: currentCharacterElement.offsetTop,
+          left: currentCharacterElement.offsetWidth,
+          cb: () => {
+            setTemporaryPrev(null)
+            setCurrentCharacterElement(currentCharacterElement as HTMLDivElement)
+          },
+        })
+      }
     }
   }
 
-  useEffect(() => {
-    socket.on('extra', () => {
-      if (currentCharacter) {
-        return setPosition(prev => ({
-          top: prev.top,
-          left: prev.left + currentCharacter.offsetWidth,
-        }))
-      }
-    })
-
-    return () => {
-      socket.off('extra')
+  const moveCaretToWord = () => {
+    if (currentWordElement) {
+      setCurrentWordElement(currentWordElement.nextElementSibling as HTMLDivElement)
+      setCurrentCharacterElement(currentWordElement.firstElementChild as HTMLDivElement)
+      setCaretPosition(prev => ({
+        ...prev,
+        top: currentWordElement.offsetTop,
+        left: currentWordElement.offsetLeft,
+      }))
     }
-  }, [currentCharacter, setPosition, socket])
+  }
 
-  useEffect(() => {
-    if (characterIndex <= 0) setCurrentCharacter(currentWord?.firstChild as HTMLDivElement)
-  }, [characterIndex, currentWord?.firstChild, setCurrentCharacter])
+  // useEffect(() => {
+  //   console.log(Array.from(document.querySelectorAll('.default')).find((el: any) => el.innerText === 'b'))
+  // }, [currentCharacterElement, currentWordElement?.previousElementSibling?.clientWidth])
 
   return {
-    moveCaretForward,
     moveCaretBackward,
-    moveCaretToNextWord,
+    moveCaretForward,
+    moveCaretToWord,
   }
 }

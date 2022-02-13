@@ -1,20 +1,10 @@
 import { Box } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React, { useState } from 'react'
-import { socketAtom } from '../../store'
 import { Character } from '../../types'
 
 function Index({ value, id, className }: Character) {
-  const [socket] = useAtom(socketAtom)
   const [newClassName, setNewClassName] = useState(className)
-
-  React.useEffect(() => {
-    socket.on(`${id}`, className => setNewClassName(className))
-
-    return () => {
-      socket.off(`${id}`)
-    }
-  }, [id, socket])
 
   return (
     <Box

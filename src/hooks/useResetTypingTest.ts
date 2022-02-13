@@ -1,13 +1,9 @@
-import { useAtom } from 'jotai'
 import { useResetAtom } from 'jotai/utils'
 import {
   caretPositionAtom,
   characterIndexAtom,
-  currentCharacterAtom,
-  currentWordAtom,
   loadingAtom,
   newWordsAtom,
-  socketAtom,
   testFinishedAtom,
   testStartedAtom,
   timeAtom,
@@ -15,7 +11,6 @@ import {
 } from '../store'
 
 export const useResetTypingTest = () => {
-  const [socket] = useAtom(socketAtom)
   const resetCharacterIndex = useResetAtom(characterIndexAtom)
   const resetWords = useResetAtom(wordsAtom)
   const resetLoading = useResetAtom(loadingAtom)
@@ -23,8 +18,7 @@ export const useResetTypingTest = () => {
   const resetTime = useResetAtom(timeAtom)
   const resetTestStarted = useResetAtom(testStartedAtom)
   const resetTestFinished = useResetAtom(testFinishedAtom)
-  const resetCurrentWord = useResetAtom(currentWordAtom)
-  const resetCurrentCharacter = useResetAtom(currentCharacterAtom)
+
   const resetCaretPosition = useResetAtom(caretPositionAtom)
 
   const reset = () => {
@@ -35,10 +29,7 @@ export const useResetTypingTest = () => {
     resetTime()
     resetTestStarted()
     resetTestFinished()
-    resetCurrentWord()
-    resetCurrentCharacter()
     resetCaretPosition()
-    socket.emit('init')
   }
 
   return reset

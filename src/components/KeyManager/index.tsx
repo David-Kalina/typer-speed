@@ -1,45 +1,29 @@
 import { useAtom } from 'jotai'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { forbiddenKeys } from '../../constants/forbiddenKeys'
-import { useNavigateCaret } from '../../hooks/useNavigateCaret'
-import { characterIndexAtom, socketAtom, testStartedAtom } from '../../store'
+import { useKeyManager } from '../../hooks/useKeyManager'
+import { characterIndexAtom, testStartedAtom } from '../../store'
 
 function Index() {
-  const [characterIndex, setCharacterIndex] = useAtom(characterIndexAtom)
-  const [socket] = useAtom(socketAtom)
   const [testStarted, setTestStarted] = useAtom(testStartedAtom)
-  const { moveCaretBackward, moveCaretForward, moveCaretToNextWord } = useNavigateCaret()
   const ref = React.useRef<HTMLInputElement>(null)
 
-  useEffect(() => {
-    socket.on('focus', () => {
-      ref.current?.focus()
-    })
-    return () => {
-      socket.off('focus')
-    }
-  }, [socket])
+  const { handleBackspace, handleCharacter, handleSpace } = useKeyManager()
+
+  const [characterIndex] = useAtom(characterIndexAtom)
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (forbiddenKeys.includes(e.key)) {
       return e.stopPropagation()
     }
     if (e.code === 'Backspace') {
-      if (characterIndex <= 0) return
-      socket.emit('backspace')
-      moveCaretBackward()
-      setCharacterIndex(prev => prev - 1)
+      if (characterIndex <= 0) return e.preventDefault()
+      handleBackspace()
     } else if (e.code === 'Space') {
-      if (characterIndex > 0) {
-        socket.emit('space')
-        moveCaretToNextWord()
-        setCharacterIndex(0)
-      }
+      handleSpace()
     } else {
       if (!testStarted) setTestStarted(true)
-      socket.emit('key', e.key)
-      setCharacterIndex(prev => prev + 1)
-      moveCaretForward()
+      handleCharacter(e.key)
     }
   }
 

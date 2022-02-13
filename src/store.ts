@@ -1,17 +1,25 @@
 import { atom } from 'jotai'
 import { atomWithReset, atomWithStorage } from 'jotai/utils'
-import { io } from 'socket.io-client'
+import { Character } from './classes/Character'
 import { WordType } from './types'
-
-export const socketAtom = atom(io(process.env.REACT_APP_SOCKET_SERVER as string))
 
 export const characterIndexAtom = atomWithReset<number>(0)
 
+export const wordIndexAtom = atomWithReset<number>(0)
+
 export const wordHeightAtom = atomWithReset<number>(0)
 
-export const fontSizeAtom = atom<number>(2)
+export const fontSizeAtom = atom<number>(1.5)
 
 export const wordsAtom = atomWithReset<WordType[]>([])
+
+export const newExtraCharacterAtom = atomWithReset<string>('')
+
+interface ExtraCharactersAtom {
+  [key: number]: Character[]
+}
+
+export const extraCharactersAtom = atomWithReset<ExtraCharactersAtom>({})
 
 export const loadingAtom = atomWithReset<boolean>(true)
 
@@ -27,8 +35,9 @@ export const testFinishedAtom = atomWithReset<boolean>(false)
 
 export const testTimeAtom = atomWithStorage<number>('testTime', 0)
 
-export const currentWordAtom = atomWithReset<HTMLDivElement | null>(null)
-export const currentCharacterAtom = atomWithReset<HTMLDivElement | null>(null)
+export const currentWordElementAtom = atomWithReset<HTMLDivElement | null>(null)
+
+export const currentCharacterElementAtom = atomWithReset<HTMLDivElement | null>(null)
 
 export const caretPositionAtom = atomWithReset<{
   top: number
@@ -46,7 +55,5 @@ export const resetAtoms = [
   timeAtom,
   testStartedAtom,
   testFinishedAtom,
-  currentWordAtom,
-  currentCharacterAtom,
   caretPositionAtom,
 ]

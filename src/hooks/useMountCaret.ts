@@ -1,17 +1,19 @@
+import { useAtom } from 'jotai'
 import { useUpdateAtom } from 'jotai/utils'
 import { useEffect } from 'react'
-import { currentWordAtom, currentCharacterAtom } from '../store'
+import { currentWordElementAtom, currentCharacterElementAtom, wordsAtom } from '../store'
 
 export const useMountCaret = (ref: React.RefObject<HTMLDivElement>) => {
-  const setCurrentWord = useUpdateAtom(currentWordAtom)
-  const setCurrentCharacter = useUpdateAtom(currentCharacterAtom)
+  const setCurrentWord = useUpdateAtom(currentWordElementAtom)
+  const setCurrentCharacter = useUpdateAtom(currentCharacterElementAtom)
+  const [words] = useAtom(wordsAtom)
   useEffect(() => {
     const { current: caret } = ref
-    if (caret) {
-      const currentWord = caret?.nextElementSibling?.firstElementChild as HTMLDivElement
+    if (caret && words.length) {
+      const nextWord = caret?.nextElementSibling?.firstElementChild?.nextElementSibling as HTMLDivElement
       const currentCharacter = caret?.nextElementSibling?.firstElementChild?.firstElementChild as HTMLDivElement
-      setCurrentWord(currentWord)
+      setCurrentWord(nextWord)
       setCurrentCharacter(currentCharacter as HTMLDivElement)
     }
-  }, [ref, setCurrentCharacter, setCurrentWord])
+  }, [ref, setCurrentCharacter, setCurrentWord, words.length])
 }
