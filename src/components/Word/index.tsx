@@ -3,6 +3,7 @@ import React from 'react'
 import { useOnScreen } from '../../hooks/useOnScreen'
 import { WordType } from '../../types'
 import Character from '../Character'
+import ExtraCharacter from '../ExtraCharacter'
 
 const Index = React.memo(({ characters, extraCharacters }: WordType) => {
   const ref = React.useRef<HTMLDivElement>(null)
@@ -14,7 +15,9 @@ const Index = React.memo(({ characters, extraCharacters }: WordType) => {
   })
 
   const renderExtraCharacters = extraCharacters?.map(({ className, value, id, wordId, word }) => {
-    return <Character id={id} word={word} wordId={wordId} key={id} className={className} value={value}></Character>
+    return (
+      <ExtraCharacter id={id} word={word} wordId={wordId} key={id} className={className} value={value}></ExtraCharacter>
+    )
   })
 
   const allCharacters = [...renderCharacters, ...(renderExtraCharacters || [])]

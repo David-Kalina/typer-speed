@@ -1,4 +1,6 @@
+import { useAtom } from 'jotai'
 import { useState } from 'react'
+import { currentCharacterElementAtom, extraCharactersAtom, wordIndexAtom } from '../store'
 import { useCaretNavigator } from './useNavigateCaret'
 import { useWordManager } from './useWordManager'
 
@@ -21,6 +23,10 @@ export const useKeyManager = () => {
     moveCaretBackward()
   }
 
+  const [currentCharacterElement] = useAtom(currentCharacterElementAtom)
+  const [wordIndex] = useAtom(wordIndexAtom)
+  const [extraCharacters] = useAtom(extraCharactersAtom)
+
   const handleCharacter = (key: string) => {
     const currentCharacter = getCurrentCharacter()
 
@@ -35,11 +41,11 @@ export const useKeyManager = () => {
       }
       setTypedKeys('')
       incrementCharacterIndex()
-      moveCaretForward()
+      moveCaretForward(currentCharacterElement as HTMLDivElement)
     } else {
       addExtraCharacter(key)
       incrementCharacterIndex()
-      moveCaretForward()
+      moveCaretForward(currentCharacterElement as HTMLDivElement)
     }
   }
 

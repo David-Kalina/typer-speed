@@ -76,31 +76,31 @@ export const useWordManager = () => {
   const addExtraCharacter = (character: string) => {
     const currentWordId = getCurrentWord().id
 
-    const characterNode = document.createElement('div')
-    characterNode.innerText = character
-    characterNode.className = 'extra'
+    // const characterNode = document.createElement('div')
+    // characterNode.innerText = character
+    // characterNode.className = 'extra'
 
-    const newElement = currentWordElement?.previousElementSibling?.appendChild(
-      document.createElement('div').appendChild(characterNode)
-    )
+    // const newElement = currentWordElement?.previousElementSibling?.appendChild(
+    //   document.createElement('div').appendChild(characterNode)
+    // )
 
-    setCurrentCharacterElement(newElement as HTMLDivElement)
+    // setCurrentCharacterElement(newElement as HTMLDivElement)
 
-    // const extraChars = extraCharacters[currentWordId] || []
+    const extraChars = extraCharacters[currentWordId] || []
 
-    // setExtraCharacters({
-    //   ...extraCharacters,
-    //   [currentWordId]: [
-    //     ...extraChars,
-    //     new Character(
-    //       character,
-    //       `${character}${new Date().getMilliseconds() * Math.random()}`,
-    //       currentWordId,
-    //       '',
-    //       'extra'
-    //     ),
-    //   ],
-    // })
+    setExtraCharacters({
+      ...extraCharacters,
+      [currentWordId]: [
+        ...extraChars,
+        new Character(
+          character,
+          `${character}${new Date().getMilliseconds() * Math.random()}`,
+          currentWordId,
+          '',
+          'extra'
+        ),
+      ],
+    })
   }
 
   useEffect(() => {

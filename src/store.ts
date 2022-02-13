@@ -37,6 +37,8 @@ export const testTimeAtom = atomWithStorage<number>('testTime', 0)
 
 export const currentWordElementAtom = atomWithReset<HTMLDivElement | null>(null)
 
+export const currentExtraCharacterElementAtom = atomWithReset<HTMLDivElement | null>(null)
+
 export const currentCharacterElementAtom = atomWithReset<HTMLDivElement | null>(null)
 
 export const caretPositionAtom = atomWithReset<{
