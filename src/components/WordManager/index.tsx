@@ -11,8 +11,6 @@ function Index() {
 
   const [extraCharacters] = useAtom(extraCharactersAtom)
 
-  console.log('render', extraCharacters)
-
   const renderWords = words?.map(({ className, characters, id }) => {
     return <Word id={id} key={id} className={className} characters={characters} extraCharacters={extraCharacters[id]} />
   })

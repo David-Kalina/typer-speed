@@ -1,23 +1,31 @@
+import { Console } from 'console'
 import { useAtom } from 'jotai'
 import { useCallback, useEffect, useState } from 'react'
 import {
   caretPositionAtom,
+  copyCurrentCharacterElementAtom,
+  copyCurrentExtraCharacterElementAtom,
   currentCharacterElementAtom,
   currentExtraCharacterElementAtom,
   currentWordElementAtom,
-  extraCharactersAtom,
 } from '../store'
 
 export const useCaretNavigator = () => {
-  const [caretPosition, setCaretPosition] = useAtom(caretPositionAtom)
+  const [, setCaretPosition] = useAtom(caretPositionAtom)
   const [currentCharacterElement, setCurrentCharacterElement] = useAtom(currentCharacterElementAtom)
+  const [currentCharacterElementCopy, setCurrentCharacterElementCopy] = useAtom(copyCurrentCharacterElementAtom)
   const [currentWordElement, setCurrentWordElement] = useAtom(currentWordElementAtom)
-  const [temporaryPrev, setTemporaryPrev] = useState<HTMLDivElement | null>(null)
-  const [extraCharacters] = useAtom(extraCharactersAtom)
+  const [, setTemporaryPrev] = useState<HTMLDivElement | null>(null)
+
+  const [traversingExtra, setTraversingExtra] = useState(false)
+
+  const [removing, setRemoving] = useState(false)
 
   const [currentExtraCharacterElement, setCurrentExtraCharacterElement] = useAtom(currentExtraCharacterElementAtom)
 
-  const [isExtraCharacter, setIsExtraCharacter] = useState(false)
+  const [copyCurrentExtraCharacterElement, setCopyCurrentExtraCharacterElement] = useAtom(
+    copyCurrentExtraCharacterElementAtom
+  )
 
   const setPosition = useCallback(
     ({
@@ -42,42 +50,44 @@ export const useCaretNavigator = () => {
   )
 
   const moveCaretForward = (ref: HTMLDivElement) => {
-    if (!isExtraCharacter) {
-      if (ref) {
-        setPosition({
-          direction: 'forward',
-          top: ref.offsetTop,
-          left: ref.offsetWidth,
-          cb: () => {
-            setCurrentCharacterElement(ref.nextElementSibling as HTMLDivElement)
-          },
-        })
-      } else {
-        console.log('no ref')
-      }
+    if (ref) {
+      setPosition({
+        direction: 'forward',
+        top: ref.offsetTop,
+        left: ref.offsetWidth,
+        cb: () => {
+          setCurrentCharacterElement(ref.nextElementSibling as HTMLDivElement)
+          setCurrentCharacterElementCopy(ref as HTMLDivElement)
+        },
+      })
     }
   }
 
-  const moveCaretBackward = () => {
-    if (currentCharacterElement) {
-      if (currentCharacterElement?.previousElementSibling as HTMLDivElement) {
+  const moveCaretBackward = (ref: HTMLDivElement) => {
+    if (!traversingExtra) {
+      if (ref) {
+        console.log(ref)
         setPosition({
           direction: 'backward',
-          top: currentCharacterElement.offsetTop,
-          left: currentCharacterElement.offsetWidth,
+          top: ref.offsetTop,
+          left: ref.offsetWidth,
           cb: () => {
-            setTemporaryPrev(currentCharacterElement as HTMLDivElement)
-            setCurrentCharacterElement(currentCharacterElement.previousElementSibling as HTMLDivElement)
+            // setCurrentCharacterElement(ref.previousElementSibling as HTMLDivElement)
+            setCurrentCharacterElementCopy(ref.previousElementSibling as HTMLDivElement),
+              setCurrentCharacterElement(ref as HTMLDivElement)
           },
         })
-      } else {
+      }
+    } else {
+      if (copyCurrentExtraCharacterElement as HTMLDivElement) {
         setPosition({
           direction: 'backward',
-          top: currentCharacterElement.offsetTop,
-          left: currentCharacterElement.offsetWidth,
+          top: copyCurrentExtraCharacterElement?.offsetTop,
+          left: copyCurrentExtraCharacterElement?.offsetWidth as number,
           cb: () => {
-            setTemporaryPrev(null)
-            setCurrentCharacterElement(currentCharacterElement as HTMLDivElement)
+            setCopyCurrentExtraCharacterElement(
+              copyCurrentExtraCharacterElement?.previousElementSibling as HTMLDivElement
+            )
           },
         })
       }
@@ -86,7 +96,6 @@ export const useCaretNavigator = () => {
 
   const moveCaretToWord = () => {
     if (currentWordElement) {
-      console.log(currentWordElement.firstElementChild)
       setCurrentWordElement(currentWordElement.nextElementSibling as HTMLDivElement)
       setCurrentCharacterElement(currentWordElement.firstElementChild as HTMLDivElement)
       setCaretPosition(prev => ({
@@ -99,13 +108,10 @@ export const useCaretNavigator = () => {
 
   useEffect(() => {
     if (currentExtraCharacterElement) {
-      setPosition({
-        direction: 'forward',
+      setTraversingExtra(true)
+      setCaretPosition({
         top: currentExtraCharacterElement.offsetTop,
-        left: currentExtraCharacterElement.offsetWidth,
-        cb: () => {
-          return null
-        },
+        left: currentExtraCharacterElement.offsetLeft + currentExtraCharacterElement.offsetWidth,
       })
     }
     return () => {
@@ -113,12 +119,21 @@ export const useCaretNavigator = () => {
     }
   }, [
     currentCharacterElement,
+    currentCharacterElementCopy,
     currentExtraCharacterElement,
-    isExtraCharacter,
+    setCaretPosition,
+    setCopyCurrentExtraCharacterElement,
     setCurrentCharacterElement,
     setCurrentExtraCharacterElement,
     setPosition,
   ])
+
+  useEffect(() => {
+    if (!copyCurrentExtraCharacterElement?.className.includes('extra')) {
+      setTraversingExtra(false)
+      console.log(currentCharacterElement, currentCharacterElementCopy)
+    }
+  }, [copyCurrentExtraCharacterElement?.className, currentCharacterElement, currentCharacterElementCopy])
 
   return {
     moveCaretBackward,

@@ -1,6 +1,11 @@
 import { useAtom } from 'jotai'
 import { useState } from 'react'
-import { currentCharacterElementAtom, extraCharactersAtom, wordIndexAtom } from '../store'
+import {
+  copyCurrentCharacterElementAtom,
+  currentCharacterElementAtom,
+  extraCharactersAtom,
+  wordIndexAtom,
+} from '../store'
 import { useCaretNavigator } from './useNavigateCaret'
 import { useWordManager } from './useWordManager'
 
@@ -14,19 +19,22 @@ export const useKeyManager = () => {
     decrementCharacterIndex,
     resetCharacterIndex,
     addExtraCharacter,
+    removeExtraCharacter,
   } = useWordManager()
 
   const { moveCaretBackward, moveCaretForward, moveCaretToWord } = useCaretNavigator()
 
-  const handleBackspace = () => {
-    decrementCharacterIndex()
-    moveCaretBackward()
-  }
-
   const [currentCharacterElement] = useAtom(currentCharacterElementAtom)
+  const [currentCharacterElementCopy] = useAtom(copyCurrentCharacterElementAtom)
   const [wordIndex] = useAtom(wordIndexAtom)
   const [extraCharacters] = useAtom(extraCharactersAtom)
 
+  const handleBackspace = () => {
+    setTypedKeys(typedKeys.slice(0, typedKeys.length - 1))
+    decrementCharacterIndex()
+    moveCaretBackward(currentCharacterElementCopy as HTMLDivElement)
+    removeExtraCharacter()
+  }
   const handleCharacter = (key: string) => {
     const currentCharacter = getCurrentCharacter()
 
@@ -63,4 +71,7 @@ export const useKeyManager = () => {
     typedKeys,
     setTypedKeys,
   }
+}
+function currentCharacterElementCopyAtom(currentCharacterElementCopyAtom: any): [any] {
+  throw new Error('Function not implemented.')
 }

@@ -76,16 +76,6 @@ export const useWordManager = () => {
   const addExtraCharacter = (character: string) => {
     const currentWordId = getCurrentWord().id
 
-    // const characterNode = document.createElement('div')
-    // characterNode.innerText = character
-    // characterNode.className = 'extra'
-
-    // const newElement = currentWordElement?.previousElementSibling?.appendChild(
-    //   document.createElement('div').appendChild(characterNode)
-    // )
-
-    // setCurrentCharacterElement(newElement as HTMLDivElement)
-
     const extraChars = extraCharacters[currentWordId] || []
 
     setExtraCharacters({
@@ -100,6 +90,17 @@ export const useWordManager = () => {
           'extra'
         ),
       ],
+    })
+  }
+
+  const removeExtraCharacter = () => {
+    const currentWordId = getCurrentWord().id
+
+    const extraChars = extraCharacters[currentWordId] || []
+
+    setExtraCharacters({
+      ...extraCharacters,
+      [currentWordId]: extraChars.slice(0, extraChars.length - 1),
     })
   }
 
@@ -125,6 +126,7 @@ export const useWordManager = () => {
     incrementCharacterIndex,
     addExtraCharacter,
     decrementCharacterIndex,
+    removeExtraCharacter,
     words,
   }
 }
