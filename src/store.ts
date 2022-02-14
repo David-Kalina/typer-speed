@@ -1,25 +1,81 @@
 import { atom } from 'jotai'
 import { atomWithReset, atomWithStorage } from 'jotai/utils'
-import { Character } from './classes/Character'
 import { WordType } from './types'
+import { CharactersAtom, generateWords } from './utils/generateWords'
 
 export const characterIndexAtom = atomWithReset<number>(0)
 
 export const wordIndexAtom = atomWithReset<number>(0)
 
+export const wordsAtom = atom<CharactersAtom>(generateWords(10, 5))
+
+export const incrementCharacterIndexAtom = atom(
+  get => get(characterIndexAtom),
+  (get, set) => set(characterIndexAtom, get(characterIndexAtom) + 1)
+)
+
+export const decrementCharacterIndexAtom = atom(
+  get => get(characterIndexAtom),
+  (get, set) => set(characterIndexAtom, get(characterIndexAtom) - 1)
+)
+
+export const resetCharacterIndexAtom = atom(
+  get => get(characterIndexAtom),
+  (get, set) => set(characterIndexAtom, 0)
+)
+
+export const incrementWordIndexAtom = atom(
+  get => get(wordIndexAtom),
+  (get, set) => set(wordIndexAtom, get(wordIndexAtom) + 1)
+)
+
+export const decrementWordIndexAtom = atom(
+  get => get(wordIndexAtom),
+  (get, set) => set(wordIndexAtom, get(wordIndexAtom) - 1)
+)
+
+export const addWordsAtom = atom(
+  get => get(wordsAtom),
+  (get, set, { count, maxLength }) => {
+    const words = generateWords(count, maxLength, Object.keys(get(wordsAtom)).length)
+
+    return set(wordsAtom, {
+      ...get(wordsAtom),
+      ...words,
+    })
+  }
+)
+
+export const getCurrentCharacterAtom = atom(
+  get => get(wordsAtom)[get(wordIndexAtom)].characters[get(characterIndexAtom)]
+)
+
+export const updateCharacterAtom = atom(
+  get => get(wordsAtom),
+  (get, set, { className }) => {
+    const words = get(wordsAtom)
+    const wordIndex = get(wordIndexAtom)
+    const character = get(getCurrentCharacterAtom)
+    const characters = words[wordIndex].characters
+
+    // replace character with updated character
+    const updatedCharacters = characters.map((character, index) =>
+      index === get(characterIndexAtom) ? { ...character, className } : character
+    )
+
+    return set(wordsAtom, {
+      ...words,
+      [wordIndex]: {
+        ...words[wordIndex],
+        characters: updatedCharacters,
+      },
+    })
+  }
+)
+
 export const wordHeightAtom = atomWithReset<number>(0)
 
 export const fontSizeAtom = atom<number>(1.5)
-
-export const wordsAtom = atomWithReset<WordType[]>([])
-
-export const newExtraCharacterAtom = atomWithReset<string>('')
-
-interface ExtraCharactersAtom {
-  [key: number]: Character[]
-}
-
-export const extraCharactersAtom = atomWithReset<ExtraCharactersAtom>({})
 
 export const loadingAtom = atomWithReset<boolean>(true)
 
@@ -55,7 +111,7 @@ export const caretPositionAtom = atomWithReset<{
 
 export const resetAtoms = [
   characterIndexAtom,
-  wordsAtom,
+  // wordsAtom,
   loadingAtom,
   newWordsAtom,
   timeAtom,

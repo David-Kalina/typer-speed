@@ -7,8 +7,9 @@ import ExtraCharacter from '../ExtraCharacter'
 
 const Index = React.memo(({ characters, extraCharacters }: WordType) => {
   const ref = React.useRef<HTMLDivElement>(null)
+
+  console.log('characters', characters)
   useOnScreen(ref)
-  // const extraCharacters = useExtraCharacters(id)
 
   const renderCharacters = characters.map(({ className, value, id, wordId, word }) => {
     return <Character id={id} word={word} wordId={wordId} key={id} className={className} value={value}></Character>

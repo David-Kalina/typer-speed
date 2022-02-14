@@ -8,7 +8,7 @@ function Index() {
   const [testStarted, setTestStarted] = useAtom(testStartedAtom)
   const ref = React.useRef<HTMLInputElement>(null)
 
-  const { handleBackspace, handleCharacter, handleSpace } = useKeyManager()
+  const { handleBackspace, handleSpace, handleCharacter } = useKeyManager()
 
   const [characterIndex] = useAtom(characterIndexAtom)
 

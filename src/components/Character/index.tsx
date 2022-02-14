@@ -1,23 +1,22 @@
 import { Box } from '@chakra-ui/react'
-import { useAtom } from 'jotai'
 import React, { useState } from 'react'
 import { Character } from '../../types'
 
-function Index({ value, id, className }: Character) {
-  const [newClassName, setNewClassName] = useState(className)
+const Index = React.memo(({ value, id, className }: Character) => {
+  const [newClassName, setNewClassName] = useState('')
 
   return (
     <Box
       display="inline-block"
       lineHeight="1em"
       borderBottom=".05em solid transparent"
-      className={newClassName || className}
+      className={className}
       boxSizing="border-box"
     >
       {value}
     </Box>
   )
-}
+})
 
 Index.displayName = 'Character'
 

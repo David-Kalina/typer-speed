@@ -1,18 +1,15 @@
 import { Flex } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React from 'react'
-import { useWordManager } from '../../hooks/useWordManager'
-import { extraCharactersAtom } from '../../store'
+import { wordsAtom } from '../../store'
 import NewWordsManager from '../NewWordsManager'
-import Word from '../Word/index'
+import Word from '../Word'
 
 function Index() {
-  const { words } = useWordManager()
+  const [words] = useAtom(wordsAtom)
 
-  const [extraCharacters] = useAtom(extraCharactersAtom)
-
-  const renderWords = words?.map(({ className, characters, id }) => {
-    return <Word id={id} key={id} className={className} characters={characters} extraCharacters={extraCharacters[id]} />
+  const renderWords = Object.values(words).map((item, idx) => {
+    return <Word id={idx} key={idx} className="word" characters={item.characters} extraCharacters={[]} />
   })
 
   return (

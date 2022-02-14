@@ -7,12 +7,12 @@ import {
   testFinishedAtom,
   testStartedAtom,
   timeAtom,
-  wordsAtom,
+  // wordsAtom,
 } from '../store'
 
 export const useResetTypingTest = () => {
   const resetCharacterIndex = useResetAtom(characterIndexAtom)
-  const resetWords = useResetAtom(wordsAtom)
+  // const resetWords = useResetAtom(wordsAtom)
   const resetLoading = useResetAtom(loadingAtom)
   const resetNewWords = useResetAtom(newWordsAtom)
   const resetTime = useResetAtom(timeAtom)
@@ -23,7 +23,7 @@ export const useResetTypingTest = () => {
 
   const reset = () => {
     resetCharacterIndex()
-    resetWords()
+    // resetWords()
     resetLoading()
     resetNewWords()
     resetTime()

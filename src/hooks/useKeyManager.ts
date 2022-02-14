@@ -1,59 +1,52 @@
 import { useAtom } from 'jotai'
 import { useState } from 'react'
 import {
-  copyCurrentCharacterElementAtom,
-  currentCharacterElementAtom,
-  extraCharactersAtom,
+  characterIndexAtom,
+  decrementCharacterIndexAtom,
+  getCurrentCharacterAtom,
+  incrementCharacterIndexAtom,
+  incrementWordIndexAtom,
+  resetCharacterIndexAtom,
+  updateCharacterAtom,
   wordIndexAtom,
+  wordsAtom,
 } from '../store'
 import { useCaretNavigator } from './useNavigateCaret'
-import { useWordManager } from './useWordManager'
 
 export const useKeyManager = () => {
   const [typedKeys, setTypedKeys] = useState('')
-
-  const {
-    incrementCharacterIndex,
-    incrementWordIndex,
-    getCurrentCharacter,
-    decrementCharacterIndex,
-    resetCharacterIndex,
-    addExtraCharacter,
-    removeExtraCharacter,
-  } = useWordManager()
-
   const { moveCaretBackward, moveCaretForward, moveCaretToWord } = useCaretNavigator()
-
-  const [currentCharacterElement] = useAtom(currentCharacterElementAtom)
-  const [currentCharacterElementCopy] = useAtom(copyCurrentCharacterElementAtom)
+  const [, incrementCharacterIndex] = useAtom(incrementCharacterIndexAtom)
+  const [, decrementCharacterIndex] = useAtom(decrementCharacterIndexAtom)
+  const [, resetCharacterIndex] = useAtom(resetCharacterIndexAtom)
+  const [currentCharacter] = useAtom(getCurrentCharacterAtom)
+  const [characterIndex] = useAtom(characterIndexAtom)
   const [wordIndex] = useAtom(wordIndexAtom)
-  const [extraCharacters] = useAtom(extraCharactersAtom)
+  const [, incrementWordIndex] = useAtom(incrementWordIndexAtom)
+  const [, updateCharacter] = useAtom(updateCharacterAtom)
+  const [words] = useAtom(wordsAtom)
+  // const [currentCharacterElement] = useAtom(currentCharacterElementAtom)
+  // const [currentCharacterElementCopy] = useAtom(copyCurrentCharacterElementAtom)
+  // const [wordIndex] = useAtom(wordIndexAtom)
+  // const [extraCharacters] = useAtom(extraCharactersAtom)
 
   const handleBackspace = () => {
     setTypedKeys(typedKeys.slice(0, typedKeys.length - 1))
     decrementCharacterIndex()
-    moveCaretBackward(currentCharacterElementCopy as HTMLDivElement)
-    removeExtraCharacter()
   }
   const handleCharacter = (key: string) => {
-    const currentCharacter = getCurrentCharacter()
-
     setTypedKeys(typedKeys + key)
-
     if (currentCharacter && typedKeys.length < currentCharacter.word.length) {
       if (key === currentCharacter.value) {
-        console.log('correct')
+        updateCharacter({ className: 'correct' })
       }
       if (key !== currentCharacter.value) {
-        console.log('incorrect', currentCharacter.value, key)
+        updateCharacter({ className: 'incorrect' })
       }
       setTypedKeys('')
       incrementCharacterIndex()
-      moveCaretForward(currentCharacterElement as HTMLDivElement)
     } else {
-      addExtraCharacter(key)
       incrementCharacterIndex()
-      moveCaretForward(currentCharacterElement as HTMLDivElement)
     }
   }
 
@@ -61,7 +54,6 @@ export const useKeyManager = () => {
     setTypedKeys('')
     resetCharacterIndex()
     incrementWordIndex()
-    moveCaretToWord()
   }
 
   return {
@@ -71,7 +63,4 @@ export const useKeyManager = () => {
     typedKeys,
     setTypedKeys,
   }
-}
-function currentCharacterElementCopyAtom(currentCharacterElementCopyAtom: any): [any] {
-  throw new Error('Function not implemented.')
 }
