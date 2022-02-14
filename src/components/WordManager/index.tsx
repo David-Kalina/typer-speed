@@ -9,7 +9,7 @@ function Index() {
   const [words] = useAtom(wordsAtom)
 
   const renderWords = Object.values(words).map((item, idx) => {
-    return <Word id={idx} key={idx} className="word" characters={item.characters} extraCharacters={[]} />
+    return <Word id={idx} key={idx} className="word" characters={item.characters} />
   })
 
   return (
