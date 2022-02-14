@@ -55,12 +55,11 @@ export const updateCharacterAtom = atom(
   (get, set, { className }) => {
     const words = get(wordsAtom)
     const wordIndex = get(wordIndexAtom)
-    const character = get(getCurrentCharacterAtom)
+    const characterIndex = get(characterIndexAtom)
     const characters = words[wordIndex].characters
 
-    // replace character with updated character
     const updatedCharacters = characters.map((character, index) =>
-      index === get(characterIndexAtom) ? { ...character, className } : character
+      index === characterIndex ? { ...character, className } : character
     )
 
     return set(wordsAtom, {
