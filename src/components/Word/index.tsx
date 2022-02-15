@@ -8,24 +8,44 @@ import ExtraCharacter from '../ExtraCharacter'
 const Index = React.memo(({ characters }: WordType) => {
   const ref = React.useRef<HTMLDivElement>(null)
 
-  console.log('rendering word')
   useOnScreen(ref)
 
-  const renderCharacters = characters.map(({ className, value, id, wordId, word }) => {
-    return <Character id={id} word={word} wordId={wordId} key={id} className={className} value={value}></Character>
-  })
+  const renderCharacters = characters
+    .filter(c => c.className !== 'extra')
+    .map(({ className, value, id, wordId, word }, index) => {
+      return (
+        <Character
+          id={id}
+          index={index}
+          word={word}
+          wordId={wordId}
+          key={id}
+          className={className}
+          value={value}
+        ></Character>
+      )
+    })
 
-  // const renderExtraCharacters = extraCharacters?.map(({ className, value, id, wordId, word }) => {
-  //   return (
-  //     <ExtraCharacter id={id} word={word} wordId={wordId} key={id} className={className} value={value}></ExtraCharacter>
-  //   )
-  // })
-
-  // const allCharacters = [...renderCharacters, ...(renderExtraCharacters || [])]
+  const renderExtraCharacters = characters
+    .filter(c => c.className === 'extra')
+    .map(({ className, value, id, wordId, word }, index) => {
+      return (
+        <ExtraCharacter
+          id={id}
+          index={index}
+          wordId={wordId}
+          key={id}
+          className={className}
+          value={value}
+          word={word}
+        />
+      )
+    })
 
   return (
     <Flex ref={ref} className="word">
       {renderCharacters}
+      {renderExtraCharacters}
     </Flex>
   )
 })

@@ -1,39 +1,47 @@
 import { useAtom } from 'jotai'
 import { useState } from 'react'
 import {
+  addCharactersAtom,
+  addWordsAtom,
   characterIndexAtom,
+  currentCharacterElementAtom,
+  currentWordElementAtom,
   decrementCharacterIndexAtom,
   getCurrentCharacterAtom,
   incrementCharacterIndexAtom,
   incrementWordIndexAtom,
+  removeCharacterAtom,
   resetCharacterIndexAtom,
   updateCharacterAtom,
+  updateCharactersAtom,
   wordIndexAtom,
-  wordsAtom,
 } from '../store'
-import { useCaretNavigator } from './useNavigateCaret'
+import { useCaret } from './useCaret'
 
 export const useKeyManager = () => {
   const [typedKeys, setTypedKeys] = useState('')
-  const { moveCaretBackward, moveCaretForward, moveCaretToWord } = useCaretNavigator()
   const [, incrementCharacterIndex] = useAtom(incrementCharacterIndexAtom)
   const [, decrementCharacterIndex] = useAtom(decrementCharacterIndexAtom)
   const [, resetCharacterIndex] = useAtom(resetCharacterIndexAtom)
   const [currentCharacter] = useAtom(getCurrentCharacterAtom)
-  const [characterIndex] = useAtom(characterIndexAtom)
   const [wordIndex] = useAtom(wordIndexAtom)
   const [, incrementWordIndex] = useAtom(incrementWordIndexAtom)
   const [, updateCharacter] = useAtom(updateCharacterAtom)
-  const [words] = useAtom(wordsAtom)
-  // const [currentCharacterElement] = useAtom(currentCharacterElementAtom)
-  // const [currentCharacterElementCopy] = useAtom(copyCurrentCharacterElementAtom)
-  // const [wordIndex] = useAtom(wordIndexAtom)
-  // const [extraCharacters] = useAtom(extraCharactersAtom)
+  const [, addWords] = useAtom(addWordsAtom)
+  const [, updateCharacters] = useAtom(updateCharactersAtom)
+  const [, addCharacters] = useAtom(addCharactersAtom)
+  const [, removeCharacter] = useAtom(removeCharacterAtom)
+
+  const { forward, backward } = useCaret()
 
   const handleBackspace = () => {
+    backward()
+    removeCharacter({ className: 'extra' })
     setTypedKeys(typedKeys.slice(0, typedKeys.length - 1))
     decrementCharacterIndex()
+    updateCharacter({ className: 'default' })
   }
+
   const handleCharacter = (key: string) => {
     setTypedKeys(typedKeys + key)
     if (currentCharacter && typedKeys.length < currentCharacter.word.length) {
@@ -43,17 +51,21 @@ export const useKeyManager = () => {
       if (key !== currentCharacter.value) {
         updateCharacter({ className: 'incorrect' })
       }
-      setTypedKeys('')
       incrementCharacterIndex()
+      setTypedKeys('')
     } else {
+      addCharacters(key)
       incrementCharacterIndex()
     }
+    forward()
   }
 
   const handleSpace = () => {
+    updateCharacters({ className: 'default', replaceClassName: 'missed', wordIndex })
     setTypedKeys('')
-    resetCharacterIndex()
     incrementWordIndex()
+    resetCharacterIndex()
+    addWords(1)
   }
 
   return {

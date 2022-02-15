@@ -6,8 +6,8 @@ import Word from '../Word/index'
 function Index() {
   const [newWords, setNewWords] = useAtom(newWordsAtom)
 
-  const renderWords = newWords.map(({ className, characters, id, extraCharacters }) => {
-    return <Word id={id} key={id} className={className} characters={characters} extraCharacters={extraCharacters} />
+  const renderWords = newWords.map(({ className, characters, id }) => {
+    return <Word id={id} key={id} className={className} characters={characters} />
   })
 
   return <>{renderWords}</>

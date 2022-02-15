@@ -1,4 +1,3 @@
-import { Console } from 'console'
 import { useAtom } from 'jotai'
 import { useCallback, useEffect, useState } from 'react'
 import {
@@ -15,14 +14,8 @@ export const useCaretNavigator = () => {
   const [currentCharacterElement, setCurrentCharacterElement] = useAtom(currentCharacterElementAtom)
   const [currentCharacterElementCopy, setCurrentCharacterElementCopy] = useAtom(copyCurrentCharacterElementAtom)
   const [currentWordElement, setCurrentWordElement] = useAtom(currentWordElementAtom)
-  const [, setTemporaryPrev] = useState<HTMLDivElement | null>(null)
-
   const [traversingExtra, setTraversingExtra] = useState(false)
-
-  const [removing, setRemoving] = useState(false)
-
   const [currentExtraCharacterElement, setCurrentExtraCharacterElement] = useAtom(currentExtraCharacterElementAtom)
-
   const [copyCurrentExtraCharacterElement, setCopyCurrentExtraCharacterElement] = useAtom(
     copyCurrentExtraCharacterElementAtom
   )
