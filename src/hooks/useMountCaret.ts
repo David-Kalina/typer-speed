@@ -12,11 +12,11 @@ export const useMountCaret = (ref: React.RefObject<HTMLDivElement>) => {
   // const [words] = useAtom(wordsAtom)
   useEffect(() => {
     const { current: caret } = ref
-    const nextWord = caret?.nextElementSibling?.firstElementChild?.nextElementSibling as HTMLDivElement
+    const word = caret?.nextElementSibling?.firstElementChild as HTMLDivElement
     const currentCharacter = caret?.nextElementSibling?.firstElementChild?.firstElementChild as HTMLDivElement
-    if (caret && nextWord && currentCharacter) {
+    if (caret && word && currentCharacter) {
       setCaret(caret)
-      setCurrentWord(nextWord)
+      setCurrentWord(word)
       setCurrentCharacter(currentCharacter as HTMLDivElement)
       return setCaretPosition({
         top: currentCharacter.offsetTop,

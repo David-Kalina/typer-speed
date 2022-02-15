@@ -12,7 +12,7 @@ export const useCaret = () => {
   const [current, setCurrent] = useAtom(currentCharacterElementAtom)
   const [previous, setPrevious] = useState<HTMLDivElement | null>(null)
   const [currentExtra, setCurrentExtra] = useAtom(currentExtraCharacterElementAtom)
-  const [currentWordElement] = useAtom(currentWordElementAtom)
+  const [currentWordElement, setCurrentWordElement] = useAtom(currentWordElementAtom)
   const [caret] = useAtom(caretElementAtom)
   const [position, setPosition] = useAtom(caretPositionAtom2)
   const [traversingExtra, setTraversingExtra] = useState(false)
@@ -58,17 +58,28 @@ export const useCaret = () => {
     }
   }
 
-  // Side Effects
+  const newWord = () => {
+    if (caret && currentWordElement) {
+      const nextWord = currentWordElement.nextElementSibling as HTMLDivElement
+      if (currentWordElement && nextWord) {
+        setPosition({
+          top: nextWord.offsetTop,
+          left: nextWord.offsetLeft,
+        })
+        setCurrentWordElement(nextWord)
+        setCurrent(nextWord.firstElementChild as HTMLDivElement)
+        setPrevious(current)
+      }
+    }
+  }
 
+  // Side Effects
   useEffect(() => {
-    if (previousPosition.length <= 1) setTraversingExtra(false)
     if (currentExtra) {
-      setTraversingExtra(true)
       setPosition({
         top: currentExtra.offsetTop,
         left: currentExtra.offsetLeft + currentExtra.offsetWidth,
       })
-      setPreviousPosition([...previousPosition, { top: currentExtra.offsetTop, left: currentExtra.offsetLeft }])
     }
 
     return () => {
@@ -77,22 +88,50 @@ export const useCaret = () => {
   }, [caret, currentExtra, position, previousPosition, setCurrentExtra, setPosition, traversingExtra])
 
   useEffect(() => {
-    if (current) current.style.border = '1px solid yellow'
-    return () => {
-      if (current) current.style.border = 'none'
-    }
-  }, [current])
+    if (previousPosition.length <= 1) setTraversingExtra(false)
+  }, [traversingExtra, previousPosition])
 
   useEffect(() => {
-    if (previous) previous.style.border = '1px solid purple'
-    return () => {
-      if (previous) previous.style.border = 'none'
-    }
-  }, [previous])
+    setTraversingExtra(false)
+    setPreviousPosition([{ top: 0, left: 0 }])
+  }, [currentWordElement])
 
   useEffect(() => {
-    console.log(previousPosition)
-  }, [previousPosition])
+    if (currentExtra) setTraversingExtra(true)
+  }, [currentExtra])
 
-  return { forward, backward }
+  useEffect(() => {
+    if (currentExtra)
+      setPreviousPosition([...previousPosition, { top: currentExtra.offsetTop, left: currentExtra.offsetLeft }])
+  }, [currentExtra, previousPosition])
+
+  // Debug only
+
+  // useEffect(() => {
+  //   if (current) current.style.border = '1px solid yellow'
+  //   return () => {
+  //     if (current) current.style.border = 'none'
+  //   }
+  // }, [current])
+
+  // useEffect(() => {
+  //   if (previous) previous.style.border = '1px solid purple'
+  //   return () => {
+  //     if (previous) previous.style.border = 'none'
+  //   }
+  // }, [previous])
+
+  // useEffect(() => {
+  //   if (currentWordElement) currentWordElement.style.border = '1px solid red'
+
+  //   return () => {
+  //     if (currentWordElement) currentWordElement.style.border = 'none'
+  //   }
+  // }, [currentWordElement])
+
+  // useEffect(() => {
+  //   console.log(previousPosition)
+  // }, [previousPosition])
+
+  return { forward, backward, newWord }
 }

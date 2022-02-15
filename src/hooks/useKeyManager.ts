@@ -32,7 +32,7 @@ export const useKeyManager = () => {
   const [, addCharacters] = useAtom(addCharactersAtom)
   const [, removeCharacter] = useAtom(removeCharacterAtom)
 
-  const { forward, backward } = useCaret()
+  const { forward, backward, newWord } = useCaret()
 
   const handleBackspace = () => {
     backward()
@@ -61,6 +61,7 @@ export const useKeyManager = () => {
   }
 
   const handleSpace = () => {
+    newWord()
     updateCharacters({ className: 'default', replaceClassName: 'missed', wordIndex })
     setTypedKeys('')
     incrementWordIndex()
