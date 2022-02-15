@@ -38,8 +38,6 @@ export const useCaret = () => {
           left: current.offsetWidth + current.offsetLeft,
         })
         setPrevious(current)
-      } else {
-        return
       }
     }
   }
@@ -54,18 +52,23 @@ export const useCaret = () => {
         setCurrent(previous as HTMLDivElement)
         setPrevious(previous?.previousElementSibling as HTMLDivElement)
       }
+    } else {
+      setPreviousPosition(previousPosition.slice(0, previousPosition.length - 1))
+      setPosition(previousPosition[previousPosition.length - 1])
     }
   }
 
   // Side Effects
 
   useEffect(() => {
+    if (previousPosition.length <= 1) setTraversingExtra(false)
     if (currentExtra) {
       setTraversingExtra(true)
       setPosition({
         top: currentExtra.offsetTop,
         left: currentExtra.offsetLeft + currentExtra.offsetWidth,
       })
+      setPreviousPosition([...previousPosition, { top: currentExtra.offsetTop, left: currentExtra.offsetLeft }])
     }
 
     return () => {
@@ -73,19 +76,23 @@ export const useCaret = () => {
     }
   }, [caret, currentExtra, position, previousPosition, setCurrentExtra, setPosition, traversingExtra])
 
-  // useEffect(() => {
-  //   if (current) current.style.border = '1px solid yellow'
-  //   return () => {
-  //     if (current) current.style.border = 'none'
-  //   }
-  // }, [current])
+  useEffect(() => {
+    if (current) current.style.border = '1px solid yellow'
+    return () => {
+      if (current) current.style.border = 'none'
+    }
+  }, [current])
 
-  // useEffect(() => {
-  //   if (previous) previous.style.border = '1px solid purple'
-  //   return () => {
-  //     if (previous) previous.style.border = 'none'
-  //   }
-  // }, [previous])
+  useEffect(() => {
+    if (previous) previous.style.border = '1px solid purple'
+    return () => {
+      if (previous) previous.style.border = 'none'
+    }
+  }, [previous])
+
+  useEffect(() => {
+    console.log(previousPosition)
+  }, [previousPosition])
 
   return { forward, backward }
 }
