@@ -6,7 +6,7 @@ import {
   newWordsAtom,
   testFinishedAtom,
   testStartedAtom,
-  timeAtom,
+  testTimeAtom,
   // wordsAtom,
 } from '../store'
 
@@ -15,7 +15,7 @@ export const useResetTypingTest = () => {
   // const resetWords = useResetAtom(wordsAtom)
   const resetLoading = useResetAtom(loadingAtom)
   const resetNewWords = useResetAtom(newWordsAtom)
-  const resetTime = useResetAtom(timeAtom)
+  const resetTime = useResetAtom(testTimeAtom)
   const resetTestStarted = useResetAtom(testStartedAtom)
   const resetTestFinished = useResetAtom(testFinishedAtom)
 

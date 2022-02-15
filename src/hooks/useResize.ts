@@ -20,7 +20,7 @@ export const useResize = (ref: React.RefObject<HTMLDivElement>) => {
 
   useEffect(() => {
     if (ref.current) {
-      setCaretCutoff(ref.current.offsetWidth * 0.98)
+      setCaretCutoff(ref.current.offsetWidth * 0.97)
     }
   }, [ref, setCaretCutoff])
 }

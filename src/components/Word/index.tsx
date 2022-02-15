@@ -7,7 +7,6 @@ import ExtraCharacter from '../ExtraCharacter'
 
 const Index = React.memo(({ characters }: WordType) => {
   const ref = React.useRef<HTMLDivElement>(null)
-
   useOnScreen(ref)
 
   const renderCharacters = characters

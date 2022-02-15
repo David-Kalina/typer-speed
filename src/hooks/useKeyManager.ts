@@ -12,6 +12,7 @@ import {
   incrementWordIndexAtom,
   removeCharacterAtom,
   resetCharacterIndexAtom,
+  setTestStartedAtom,
   updateCharacterAtom,
   updateCharactersAtom,
   wordIndexAtom,
@@ -31,6 +32,7 @@ export const useKeyManager = () => {
   const [, updateCharacters] = useAtom(updateCharactersAtom)
   const [, addCharacters] = useAtom(addCharactersAtom)
   const [, removeCharacter] = useAtom(removeCharacterAtom)
+  const [, setTestStarted] = useAtom(setTestStartedAtom)
 
   const { forward, backward, newWord } = useCaret()
 
@@ -57,6 +59,7 @@ export const useKeyManager = () => {
       addCharacters(key)
       incrementCharacterIndex()
     }
+    setTestStarted(true)
     forward()
   }
 

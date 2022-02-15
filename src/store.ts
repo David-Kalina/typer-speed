@@ -8,7 +8,7 @@ export const characterIndexAtom = atomWithReset<number>(0)
 
 export const wordIndexAtom = atomWithReset<number>(0)
 
-export const wordsAtom = atom<CharactersAtom>(generateWords(10, 6))
+export const wordsAtom = atom<CharactersAtom>(generateWords(100, 5))
 
 export const caretElementAtom = atom<HTMLDivElement | null>(null)
 
@@ -107,7 +107,6 @@ export const removeCharacterAtom = atom(
   (get, set, { className }) => {
     const words = get(wordsAtom)
     const wordIndex = get(wordIndexAtom)
-    const characterIndex = get(characterIndexAtom)
     const characters = words[wordIndex].characters
 
     const lastCharacter = characters[characters.length - 1]
@@ -170,7 +169,7 @@ export const decrementWordIndexAtom = atom(
 
 export const wordHeightAtom = atomWithReset<number>(0)
 
-export const fontSizeAtom = atom<number>(1.5)
+export const fontSizeAtom = atom<number>(2)
 
 export const loadingAtom = atomWithReset<boolean>(true)
 
@@ -178,9 +177,16 @@ export const newWordsAtom = atomWithReset<WordType[]>([])
 
 export const caretCutOffAtom = atomWithReset<number>(0)
 
-export const timeAtom = atomWithReset<number>(0)
+export const testTime = atomWithReset<number>(15)
+
+export const elapsedTimeAtom = atomWithReset<number>(0)
 
 export const testStartedAtom = atomWithReset<boolean>(false)
+
+export const setTestStartedAtom = atom(
+  get => get(testStartedAtom),
+  (get, set) => set(testStartedAtom, true)
+)
 
 export const testFinishedAtom = atomWithReset<boolean>(false)
 
@@ -202,7 +208,7 @@ export const caretPositionAtom = atomWithReset<{
   left: 0,
 })
 
-export const caretPositionAtom2 = atom(
+export const updateCaretPositionAtom = atom(
   get => {
     return {
       top: get(currentCharacterElementAtom)?.offsetTop,
@@ -222,7 +228,7 @@ export const resetAtoms = [
   // wordsAtom,
   loadingAtom,
   newWordsAtom,
-  timeAtom,
+  testTimeAtom,
   testStartedAtom,
   testFinishedAtom,
   caretPositionAtom,

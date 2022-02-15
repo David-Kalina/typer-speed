@@ -2,28 +2,29 @@ import { useAtom } from 'jotai'
 import React from 'react'
 import { forbiddenKeys } from '../../constants/forbiddenKeys'
 import { useKeyManager } from '../../hooks/useKeyManager'
-import { characterIndexAtom, testStartedAtom } from '../../store'
+import { caretCutOffAtom, characterIndexAtom, testStartedAtom, caretPositionAtom } from '../../store'
 
 function Index() {
   const [testStarted, setTestStarted] = useAtom(testStartedAtom)
   const ref = React.useRef<HTMLInputElement>(null)
-
   const { handleBackspace, handleSpace, handleCharacter } = useKeyManager()
-
   const [characterIndex] = useAtom(characterIndexAtom)
+  const [caretPosition] = useAtom(caretPositionAtom)
+  const [caretCutOff] = useAtom(caretCutOffAtom)
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (forbiddenKeys.includes(e.key)) {
-      return e.stopPropagation()
-    }
+    if (forbiddenKeys.includes(e.key)) return e.stopPropagation()
+
     if (e.code === 'Backspace') {
       if (characterIndex <= 0) return e.preventDefault()
-      handleBackspace()
+      return handleBackspace()
     } else if (e.code === 'Space') {
-      handleSpace()
+      return handleSpace()
     } else {
+      if (caretPosition.left > caretCutOff) return e.preventDefault()
+
       if (!testStarted) setTestStarted(true)
-      handleCharacter(e.key)
+      return handleCharacter(e.key)
     }
   }
 

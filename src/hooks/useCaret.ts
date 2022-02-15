@@ -1,11 +1,12 @@
 import { useAtom } from 'jotai'
+import { useUpdateAtom } from 'jotai/utils'
 import { useEffect, useState } from 'react'
 import {
   caretElementAtom,
-  caretPositionAtom2,
   currentCharacterElementAtom,
   currentExtraCharacterElementAtom,
   currentWordElementAtom,
+  updateCaretPositionAtom,
 } from '../store'
 
 export const useCaret = () => {
@@ -14,7 +15,7 @@ export const useCaret = () => {
   const [currentExtra, setCurrentExtra] = useAtom(currentExtraCharacterElementAtom)
   const [currentWordElement, setCurrentWordElement] = useAtom(currentWordElementAtom)
   const [caret] = useAtom(caretElementAtom)
-  const [position, setPosition] = useAtom(caretPositionAtom2)
+  const setPosition = useUpdateAtom(updateCaretPositionAtom)
   const [traversingExtra, setTraversingExtra] = useState(false)
   const [previousPosition, setPreviousPosition] = useState<
     {
@@ -85,7 +86,7 @@ export const useCaret = () => {
     return () => {
       setCurrentExtra(null)
     }
-  }, [caret, currentExtra, position, previousPosition, setCurrentExtra, setPosition, traversingExtra])
+  }, [caret, currentExtra, previousPosition, setCurrentExtra, setPosition, traversingExtra])
 
   useEffect(() => {
     if (previousPosition.length <= 1) setTraversingExtra(false)
@@ -128,10 +129,6 @@ export const useCaret = () => {
   //     if (currentWordElement) currentWordElement.style.border = 'none'
   //   }
   // }, [currentWordElement])
-
-  // useEffect(() => {
-  //   console.log(previousPosition)
-  // }, [previousPosition])
 
   return { forward, backward, newWord }
 }

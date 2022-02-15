@@ -15,10 +15,10 @@ function Index({ delay }: { delay: number }) {
     <Box
       ref={ref}
       position="absolute"
-      h="1.25em"
-      top={`${top}px `}
+      h="1.15em"
+      top={`${top - 2}px `}
       transition={`left ${delay}ms linear`}
-      left={`${left}px`}
+      left={`${left - 2}px`}
       borderRadius="md"
       width="0.1em"
       fontWeight="bold"
