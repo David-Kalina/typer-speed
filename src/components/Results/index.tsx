@@ -1,19 +1,13 @@
 import { useAtom } from 'jotai'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { useAuth } from '../../contexts/AuthContext'
-import { testFinishedAtom } from '../../store'
+import { getRecapDataAtom, testFinishedAtom } from '../../store'
 
 function Index() {
   const [testFinished] = useAtom(testFinishedAtom)
   const { user } = useAuth()
-  const [data, setData] = useState({
-    recap: [],
-    averageWPM: 0,
-    accuracy: 0,
-    testTime: 0,
-    averageAccuracy: 0,
-  })
+  const [recapData] = useAtom(getRecapDataAtom)
 
   // useEffect(() => {
   //   socket.on('data', ({ recap, averageWPM, averageAccuracy, accuracy, testTime }) => {
@@ -58,15 +52,21 @@ function Index() {
 
   return (
     <>
-      {testFinished && data.recap.length > 0 ? (
+      {testFinished && recapData.length > 0 ? (
         <ResponsiveContainer width="100%" height={300} maxHeight={300}>
-          <LineChart data={data.recap}>
-            <XAxis dataKey="time" />
+          <LineChart data={recapData}>
+            <XAxis dataKey="seconds" />
             <YAxis dataKey="wpm" />
             <Tooltip />
             <Legend />
             <Line type="monotone" dataKey="wpm" stroke="#82ca9d" animationDuration={5000} />
-            <Line type="monotone" dataKey="errors" stroke="#8b0000" animationDuration={5000} />
+            <Line
+              type="monotone"
+              dataKey="incorrect"
+              stroke="#8b0000"
+              animationDuration={5000}
+              zoomAndPan="incorrect"
+            />
           </LineChart>
         </ResponsiveContainer>
       ) : null}

@@ -1,5 +1,7 @@
-import { Flex } from '@chakra-ui/react'
+import { Button, Flex } from '@chakra-ui/react'
+import { useAtom } from 'jotai'
 import React from 'react'
+import { testFinishedAtom } from '../store'
 import Countdown from './Countdown'
 import KeyManager from './KeyManager'
 import NewTest from './NewTest'
@@ -8,16 +10,22 @@ import WordManager from './WordManager'
 import WordManagerWrapper from './WordManagerWrapper'
 
 function TypingTest() {
+  const [testFinished] = useAtom(testFinishedAtom)
   return (
     <Flex flexDir="column" w="100%" className="typing-test">
       <>
-        <Results />
-        <Countdown />
-        <WordManagerWrapper>
-          <WordManager />
-        </WordManagerWrapper>
+        {testFinished ? (
+          <Results />
+        ) : (
+          <>
+            <Countdown />
+            <WordManagerWrapper>
+              <WordManager />
+            </WordManagerWrapper>
+            <KeyManager />
+          </>
+        )}
         <NewTest />
-        <KeyManager />
       </>
     </Flex>
   )

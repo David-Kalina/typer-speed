@@ -1,10 +1,11 @@
 import { Flex, Icon } from '@chakra-ui/react'
+import { useAtom } from 'jotai'
 import * as React from 'react'
 import { VscDebugRestart } from 'react-icons/vsc'
-import { useResetTypingTest } from '../hooks/useResetTypingTest'
+import { resetTypingTestAtom } from '../store'
 
-const StartTest: React.FC = () => {
-  const reset = useResetTypingTest()
+const NewTest: React.FC = () => {
+  const [, reset] = useAtom(resetTypingTestAtom)
 
   return (
     <Flex>
@@ -22,4 +23,4 @@ const StartTest: React.FC = () => {
   )
 }
 
-export default StartTest
+export default NewTest
