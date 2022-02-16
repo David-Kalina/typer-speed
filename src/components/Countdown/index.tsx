@@ -1,7 +1,7 @@
 import { Text } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React, { useEffect, useState } from 'react'
-import { getCharactersByClassNameAtom } from '../../store/characterAtoms'
+import { getCharactersByStatusAtom } from '../../store/characterAtoms'
 import { addToResultsAtom } from '../../store/resultsAtoms'
 import { testFinishedAtom, testStartedAtom } from '../../store/typingTestAtoms'
 
@@ -9,7 +9,7 @@ function Index() {
   const [duration, setDuration] = useState(15)
   const [elapsed, setElapsed] = useState(0)
   const [testStarted, setTestStarted] = useAtom(testStartedAtom)
-  const [, getCharactersByClassName] = useAtom(getCharactersByClassNameAtom)
+  const [, getCharactersByStatus] = useAtom(getCharactersByStatusAtom)
   const [, addToResults] = useAtom(addToResultsAtom)
   const [, setTestFinished] = useAtom(testFinishedAtom)
 
@@ -22,15 +22,15 @@ function Index() {
           addToResults({
             testTime: duration,
             seconds: elapsed,
-            correct: getCharactersByClassName({ className: 'correct' }).length,
-            incorrect: getCharactersByClassName({ className: 'incorrect' }).length,
+            correct: getCharactersByStatus({ status: 'correct' }).length,
+            incorrect: getCharactersByStatus({ status: 'incorrect' }).length,
           })
       }
     }, 1000)
     return () => {
       clearInterval(interval)
     }
-  }, [addToResults, duration, elapsed, getCharactersByClassName, setTestStarted, testStarted])
+  }, [addToResults, duration, elapsed, getCharactersByStatus, setTestStarted, testStarted])
 
   useEffect(() => {
     if (duration === 0) {

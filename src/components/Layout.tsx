@@ -1,11 +1,14 @@
 import { Flex } from '@chakra-ui/react'
+import { useAtom } from 'jotai'
 import React from 'react'
+import { themeAtom } from '../store/typingTestAtoms'
 import Footer from './Footer'
 import Header from './Header'
 
 function Layout({ children }: { children: React.ReactNode[] | React.ReactNode }) {
+  const [theme] = useAtom(themeAtom)
   return (
-    <Flex mx="auto" align="start" h="100vh" bg="brand.100" flexDir="column">
+    <Flex mx="auto" align="start" h="100vh" bg={`${theme}.100`} flexDir="column">
       <Flex
         flexDir="column"
         mx="auto"

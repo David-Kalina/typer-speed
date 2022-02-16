@@ -5,9 +5,11 @@ import { characterIndexAtom } from './characterAtoms'
 import { resultsAtom } from './resultsAtoms'
 import { wordIndexAtom, wordsAtom } from './wordAtoms'
 
+export const themeAtom = atomWithStorage<string>('theme', 'mountainHaze')
+
 export const wordHeightAtom = atom<number>(0)
 
-export const fontSizeAtom = atom<number>(1.2)
+export const fontSizeAtom = atom<number>(1)
 
 export const loadingAtom = atom<boolean>(true)
 

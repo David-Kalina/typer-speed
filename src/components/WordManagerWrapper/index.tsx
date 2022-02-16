@@ -15,6 +15,7 @@ function Index({ children }: { children: React.ReactNode | React.ReactNode[] }) 
   return (
     <Box
       ref={ref}
+      fontFamily="Roboto Mono"
       className="word-manager-wrapper"
       position="relative"
       fontSize={`${fontSize}vw`}

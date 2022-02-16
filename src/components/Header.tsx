@@ -1,8 +1,10 @@
 import { Flex, HStack, Text, useBreakpoint } from '@chakra-ui/react'
+import { useAtom } from 'jotai'
 import React from 'react'
 import { FiLogOut, FiUser } from 'react-icons/fi'
 import { Link, useLocation } from 'react-location'
 import { useAuth } from '../contexts/AuthContext'
+import { themeAtom } from '../store/typingTestAtoms'
 import Logo from './Logo'
 import MobileHeader from './MobileHeader'
 import SetTestTime from './SetTestTime'
@@ -14,11 +16,13 @@ function Header() {
 
   const breakpoint = useBreakpoint()
 
+  const [theme] = useAtom(themeAtom)
+
   if (breakpoint === 'base' || breakpoint === 'xs' || breakpoint === 'sm' || breakpoint === 'md') {
     return <MobileHeader />
   } else {
     return (
-      <HStack w="100%" py="12" px={['12', '12', 0]} justifyContent="space-between" color="white">
+      <HStack w="100%" py="12" px={['12', '12', 0]} justifyContent="space-between" color={`${theme}.200`}>
         <HStack spacing={6}>
           <Logo />
           <Link to="/"></Link>

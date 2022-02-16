@@ -4,10 +4,10 @@ export class Character {
     public id: string,
     public wordId: number,
     public word: string,
-    public className: string = 'default'
+    public status: 'correct' | 'incorrect' | 'skipped' | 'extra' | 'default'
   ) {
     this.value = value
     this.id = id
-    this.className = className
+    this.status = status
   }
 }

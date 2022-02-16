@@ -1,8 +1,8 @@
 import { Box } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React, { useEffect, useRef } from 'react'
+import { Character } from '../../classes/Character'
 import { currentExtraCharacterElementAtom } from '../../store/elementAtoms'
-import { Character } from '../../types'
 
 const Index = React.memo(({ value }: Character) => {
   const ref = useRef<HTMLDivElement | null>(null)

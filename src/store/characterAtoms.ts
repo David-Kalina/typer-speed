@@ -25,12 +25,12 @@ export const getCurrentCharacterAtom = atom(
   get => get(wordsAtom)[get(wordIndexAtom)].characters[get(characterIndexAtom)]
 )
 
-export const getCharactersByClassNameAtom = atom(
+export const getCharactersByStatusAtom = atom(
   () => '',
-  (get, set, { className }: { className: string }) => {
+  (get, set, { status }: { status: 'correct' | 'incorrect' | 'extra' | 'missed' | 'default' }) => {
     const words = Object.values(get(wordsAtom))
     const characters = words.reduce((acc, word) => {
-      return [...acc, ...word.characters.filter((character: any) => character.className === className)]
+      return [...acc, ...word.characters.filter((character: any) => character.status === status)]
     }, [])
 
     return characters
@@ -39,14 +39,14 @@ export const getCharactersByClassNameAtom = atom(
 
 export const updateCharacterAtom = atom(
   get => get(wordsAtom),
-  (get, set, { className }) => {
+  (get, set, { status }) => {
     const words = get(wordsAtom)
     const wordIndex = get(wordIndexAtom)
     const characterIndex = get(characterIndexAtom)
     const characters = words[wordIndex].characters
 
     const updatedCharacters = characters.map((character, index) =>
-      index === characterIndex ? { ...character, className } : character
+      index === characterIndex ? { ...character, status } : character
     )
 
     return set(wordsAtom, {
@@ -61,13 +61,13 @@ export const updateCharacterAtom = atom(
 
 export const updateCharactersAtom = atom(
   get => get(wordsAtom),
-  (get, set, { className, replaceClassName, wordIndex }) => {
+  (get, set, { status, newStatus, wordIndex }) => {
     const words = get(wordsAtom)
     const characters = words[wordIndex].characters
 
     const updatedCharacters = characters.map(character => {
-      if (character.className === className) {
-        return { ...character, className: replaceClassName }
+      if (character.status === status) {
+        return { ...character, status: newStatus }
       } else {
         return character
       }
@@ -85,12 +85,12 @@ export const updateCharactersAtom = atom(
 
 export const removeCharactersAtom = atom(
   get => get(wordsAtom),
-  (get, set, { className }) => {
+  (get, set, { status }) => {
     const words = get(wordsAtom)
     const wordIndex = get(wordIndexAtom)
     const characters = words[wordIndex].characters
 
-    const updatedCharacters = characters.filter(character => character.className !== className)
+    const updatedCharacters = characters.filter(character => character.status !== status)
 
     return set(wordsAtom, {
       ...words,
@@ -104,14 +104,14 @@ export const removeCharactersAtom = atom(
 
 export const removeCharacterAtom = atom(
   get => get(wordsAtom),
-  (get, set, { className }) => {
+  (get, set, { status }) => {
     const words = get(wordsAtom)
     const wordIndex = get(wordIndexAtom)
     const characters = words[wordIndex].characters
 
     const lastCharacter = characters[characters.length - 1]
 
-    if (lastCharacter && lastCharacter.className === className) {
+    if (lastCharacter && lastCharacter.status === status) {
       return set(wordsAtom, {
         ...words,
         [wordIndex]: {

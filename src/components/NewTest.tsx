@@ -4,11 +4,13 @@ import * as React from 'react'
 import { VscDebugRestart } from 'react-icons/vsc'
 import { mountCaretAtom } from '../store/caretAtoms'
 import { caretElementAtom } from '../store/elementAtoms'
+import { themeAtom } from '../store/typingTestAtoms'
 
 const NewTest: React.FC = () => {
   // const [, reset] = useAtom(resetTypingTestAtom)
   const [, mountCaret] = useAtom(mountCaretAtom)
   const [caretElement] = useAtom(caretElementAtom)
+  const [theme] = useAtom(themeAtom)
 
   const resetTest = () => {
     // reset()
@@ -25,7 +27,7 @@ const NewTest: React.FC = () => {
         onClick={resetTest}
         mt="1rem"
         mx="auto"
-        color="white"
+        color={`${theme}.200`}
       />
     </Flex>
   )

@@ -34,10 +34,10 @@ export const useKeyManager = () => {
 
   const handleBackspace = () => {
     backward()
-    removeCharacter({ className: 'extra' })
+    removeCharacter({ status: 'extra' })
     setTypedKeys(typedKeys.slice(0, typedKeys.length - 1))
     decrementCharacterIndex()
-    updateCharacter({ className: 'default' })
+    updateCharacter({ status: 'default' })
   }
 
   const handleCharacter = (key: string) => {
@@ -45,10 +45,10 @@ export const useKeyManager = () => {
     setTypedKeys(typedKeys + key)
     if (currentCharacter && typedKeys.length < currentCharacter.word.length) {
       if (key === currentCharacter.value) {
-        updateCharacter({ className: 'correct' })
+        updateCharacter({ status: 'correct' })
       }
       if (key !== currentCharacter.value) {
-        updateCharacter({ className: 'incorrect' })
+        updateCharacter({ status: 'incorrect' })
       }
       incrementCharacterIndex()
       setTypedKeys('')
@@ -61,7 +61,7 @@ export const useKeyManager = () => {
 
   const handleSpace = () => {
     newWord()
-    updateCharacters({ className: 'default', replaceClassName: 'missed', wordIndex })
+    updateCharacters({ status: 'default', newStatus: 'missed', wordIndex })
     setTypedKeys('')
     incrementWordIndex()
     resetCharacterIndex()

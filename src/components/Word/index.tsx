@@ -1,44 +1,24 @@
 import { Flex } from '@chakra-ui/react'
 import React from 'react'
+import { Word } from '../../classes/Word'
 import { useOnScreen } from '../../hooks/useOnScreen'
-import { WordType } from '../../types'
 import Character from '../Character'
 import ExtraCharacter from '../ExtraCharacter'
 
-const Index = React.memo(({ characters }: WordType) => {
+const Index = React.memo(({ characters }: Word) => {
   const ref = React.useRef<HTMLDivElement>(null)
   useOnScreen(ref)
 
   const renderCharacters = characters
-    .filter(c => c.className !== 'extra')
-    .map(({ className, value, id, wordId, word }, index) => {
-      return (
-        <Character
-          id={id}
-          index={index}
-          word={word}
-          wordId={wordId}
-          key={id}
-          className={className}
-          value={value}
-        ></Character>
-      )
+    .filter(c => c.status !== 'extra')
+    .map(({ status, value, id, wordId, word }) => {
+      return <Character id={id} word={word} wordId={wordId} key={id} value={value} status={status}></Character>
     })
 
   const renderExtraCharacters = characters
-    .filter(c => c.className === 'extra')
-    .map(({ className, value, id, wordId, word }, index) => {
-      return (
-        <ExtraCharacter
-          id={id}
-          index={index}
-          wordId={wordId}
-          key={id}
-          className={className}
-          value={value}
-          word={word}
-        />
-      )
+    .filter(c => c.status === 'extra')
+    .map(({ value, id, wordId, word }) => {
+      return <ExtraCharacter id={id} wordId={wordId} key={id} value={value} word={word} status="extra" />
     })
 
   return (
