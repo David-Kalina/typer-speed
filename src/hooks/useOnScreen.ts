@@ -19,7 +19,6 @@ export const useOnScreen = (ref: React.RefObject<HTMLElement>) => {
     }
     return () => {
       observer.disconnect()
-      // if (ref.current) observer.unobserve(ref.current)
     }
   }, [ref, root])
 }

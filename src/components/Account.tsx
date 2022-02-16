@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Text, VStack } from '@chakra-ui/react'
+import { Box, Flex, Text, VStack } from '@chakra-ui/react'
 import React from 'react'
 import { Link } from 'react-location'
 import { useAuth } from '../contexts/AuthContext'
