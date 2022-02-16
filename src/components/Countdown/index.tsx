@@ -24,7 +24,10 @@ function Index() {
             seconds: elapsed,
             correct: getCharactersByStatus({ status: 'correct' }).length,
             incorrect: getCharactersByStatus({ status: 'incorrect' }).length,
+            wordsMissed: getCharactersByStatus({ status: 'incorrect' }).map((c: { word: any }) => c.word),
+            charactersMissed: getCharactersByStatus({ status: 'incorrect' }).map((c: { value: any }) => c.value),
           })
+        console.log(getCharactersByStatus({ status: 'incorrect' }))
       }
     }, 1000)
     return () => {

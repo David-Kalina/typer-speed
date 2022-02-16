@@ -21,7 +21,7 @@ function Index({ delay }: { delay: number }) {
       position="absolute"
       h="1.15em"
       top={`${top - 2}px `}
-      transition={`left ${delay}ms linear`}
+      transition={`left ${delay}ms ease-out`}
       left={`${left - 2}px`}
       borderRadius="sm"
       width="0.1em"
