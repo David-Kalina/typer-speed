@@ -1,7 +1,7 @@
 import { Box, HStack, Text } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React from 'react'
-import { testTimeAtom } from '../store'
+import { testTimeAtom } from '../store/typingTestAtoms'
 
 function SetTestTime() {
   const [testTime, setTestTime] = useAtom(testTimeAtom)

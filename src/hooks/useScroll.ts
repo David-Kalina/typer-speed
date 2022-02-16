@@ -1,6 +1,6 @@
 import { useAtom } from 'jotai'
 import { useEffect } from 'react'
-import { caretPositionAtom } from '../store'
+import { caretPositionAtom } from '../store/caretAtoms'
 import { useGetElementDimensions } from './useGetElementDimensions'
 
 export const useScroll = (ref: React.RefObject<HTMLDivElement>) => {

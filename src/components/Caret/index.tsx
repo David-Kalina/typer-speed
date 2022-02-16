@@ -1,7 +1,8 @@
 import { Box } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React, { useEffect, useRef } from 'react'
-import { caretPositionAtom, characterIndexAtom, mountCaretAtom, testStartedAtom } from '../../store'
+import { caretPositionAtom, mountCaretAtom } from '../../store/caretAtoms'
+import { testStartedAtom } from '../../store/typingTestAtoms'
 
 function Index({ delay }: { delay: number }) {
   const ref = useRef<HTMLDivElement>(null)
@@ -13,13 +14,15 @@ function Index({ delay }: { delay: number }) {
     mountCaret(ref.current as HTMLDivElement)
   }, [mountCaret])
 
+  console.log('render')
+
   return (
     <Box
       ref={ref}
       position="absolute"
       h="1.15em"
       top={`${top - 2}px `}
-      transition={`left ${delay}ms ease-in-out`}
+      transition={`left ${delay}ms linear`}
       left={`${left - 2}px`}
       borderRadius="sm"
       width="0.1em"

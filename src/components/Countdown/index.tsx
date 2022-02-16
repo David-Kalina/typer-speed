@@ -1,8 +1,9 @@
 import { Text } from '@chakra-ui/react'
-import { time } from 'console'
 import { useAtom } from 'jotai'
 import React, { useEffect, useState } from 'react'
-import { addToResultsAtom, getCharactersByClassNameAtom, testFinishedAtom, testStartedAtom } from '../../store'
+import { getCharactersByClassNameAtom } from '../../store/characterAtoms'
+import { addToResultsAtom } from '../../store/resultsAtoms'
+import { testFinishedAtom, testStartedAtom } from '../../store/typingTestAtoms'
 
 function Index() {
   const [duration, setDuration] = useState(15)

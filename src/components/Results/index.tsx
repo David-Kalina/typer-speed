@@ -1,54 +1,45 @@
+import { addDoc, doc, increment, setDoc } from 'firebase/firestore'
 import { useAtom } from 'jotai'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { useAuth } from '../../contexts/AuthContext'
-import { getRecapDataAtom, testFinishedAtom } from '../../store'
+import { db, testsRef } from '../../firebase'
+import { getRecapDataAtom, getWPMDataAtom, getAccuracyDataAtom } from '../../store/resultsAtoms'
+import { testFinishedAtom } from '../../store/typingTestAtoms'
 
 function Index() {
   const [testFinished] = useAtom(testFinishedAtom)
   const { user } = useAuth()
   const [recapData] = useAtom(getRecapDataAtom)
+  const [averageWPM] = useAtom(getWPMDataAtom)
+  const [averageAccuracy] = useAtom(getAccuracyDataAtom)
 
   // useEffect(() => {
-  //   socket.on('data', ({ recap, averageWPM, averageAccuracy, accuracy, testTime }) => {
-  //     setData({
-  //       recap,
-  //       averageWPM,
-  //       accuracy,
-  //       testTime,
-  //       averageAccuracy,
-  //     })
-
-  //     if (user && user.email) {
-  //       addDoc(testsRef, {
-  //         email: user?.email,
-  //         recap,
-  //         wpm: averageWPM,
-  //         accuracy: averageAccuracy,
-  //         seconds: testTime,
-  //         date: {
-  //           seconds: Date.now() / 1000,
-  //           nanoseconds: Date.now() / 1000000,
-  //         },
-  //       })
-  //     }
-  //     const statsRef = doc(db, 'stats', user?.email as string)
-
-  //     setDoc(
-  //       statsRef,
-  //       {
-  //         testsTaken: increment(1),
-  //         testsCompleted: increment(1),
-  //         timeTyping: increment(testTime),
+  //   if (user && user.email) {
+  //     addDoc(testsRef, {
+  //       email: user?.email,
+  //       recap: recapData,
+  //       wpm: averageWPM,
+  //       accuracy: averageAccuracy,
+  //       seconds: 60,
+  //       date: {
+  //         seconds: Date.now() / 1000,
+  //         nanoseconds: Date.now() / 1000000,
   //       },
-  //       { merge: true }
-  //     )
-  //   })
-
-  //   return () => {
-  //     socket.off('data')
+  //     })
   //   }
-  // }, [socket, data, user?.email, user])
+  //   const statsRef = doc(db, 'stats', user?.email as string)
+
+  //   setDoc(
+  //     statsRef,
+  //     {
+  //       testsTaken: increment(1),
+  //       testsCompleted: increment(1),
+  //       timeTyping: increment(15),
+  //     },
+  //     { merge: true }
+  //   )
+  // }, [averageAccuracy, averageWPM, recapData, user])
 
   return (
     <>

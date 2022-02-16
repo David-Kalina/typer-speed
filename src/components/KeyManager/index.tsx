@@ -2,7 +2,9 @@ import { useAtom } from 'jotai'
 import React from 'react'
 import { forbiddenKeys } from '../../constants/forbiddenKeys'
 import { useKeyManager } from '../../hooks/useKeyManager'
-import { caretCutOffAtom, characterIndexAtom, testStartedAtom, caretPositionAtom } from '../../store'
+import { caretCutOffAtom, caretPositionAtom } from '../../store/caretAtoms'
+import { characterIndexAtom } from '../../store/characterAtoms'
+import { testStartedAtom } from '../../store/typingTestAtoms'
 
 function Index() {
   const [testStarted, setTestStarted] = useAtom(testStartedAtom)

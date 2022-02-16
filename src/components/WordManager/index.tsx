@@ -1,7 +1,7 @@
 import { Flex } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React from 'react'
-import { wordsAtom } from '../../store'
+import { wordsAtom } from '../../store/wordAtoms'
 import Word from '../Word'
 
 function Index() {

@@ -1,6 +1,6 @@
 import { useUpdateAtom } from 'jotai/utils'
 import { useEffect } from 'react'
-import { caretCutOffAtom } from '../store'
+import { caretCutOffAtom } from '../store/caretAtoms'
 
 export const useResize = (ref: React.RefObject<HTMLDivElement>) => {
   const setCaretCutoff = useUpdateAtom(caretCutOffAtom)
@@ -9,7 +9,7 @@ export const useResize = (ref: React.RefObject<HTMLDivElement>) => {
     const resize = () => {
       window.addEventListener('resize', () => {
         if (ref.current) {
-          setCaretCutoff(ref.current.offsetWidth * 0.98)
+          setCaretCutoff(ref.current.offsetWidth * 0.97)
         }
       })
     }

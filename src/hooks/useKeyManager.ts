@@ -1,23 +1,19 @@
 import { useAtom } from 'jotai'
 import { useState } from 'react'
+
+import { wordIndexAtom, addWordsAtom, incrementWordIndexAtom } from '../store/wordAtoms'
 import {
-  addCharactersAtom,
-  addWordsAtom,
-  characterIndexAtom,
-  currentCharacterElementAtom,
-  currentWordElementAtom,
-  decrementCharacterIndexAtom,
-  getCurrentCharacterAtom,
   incrementCharacterIndexAtom,
-  incrementWordIndexAtom,
-  removeCharacterAtom,
+  decrementCharacterIndexAtom,
   resetCharacterIndexAtom,
-  setTestStartedAtom,
-  updateCharacterAtom,
+  getCurrentCharacterAtom,
   updateCharactersAtom,
-  wordIndexAtom,
-} from '../store'
+  addCharactersAtom,
+  removeCharacterAtom,
+  updateCharacterAtom,
+} from '../store/characterAtoms'
 import { useCaret } from './useCaret'
+import { setTestStartedAtom } from '../store/typingTestAtoms'
 
 export const useKeyManager = () => {
   const [typedKeys, setTypedKeys] = useState('')
@@ -45,6 +41,7 @@ export const useKeyManager = () => {
   }
 
   const handleCharacter = (key: string) => {
+    forward()
     setTypedKeys(typedKeys + key)
     if (currentCharacter && typedKeys.length < currentCharacter.word.length) {
       if (key === currentCharacter.value) {
@@ -60,7 +57,6 @@ export const useKeyManager = () => {
       incrementCharacterIndex()
     }
     setTestStarted(true)
-    forward()
   }
 
   const handleSpace = () => {

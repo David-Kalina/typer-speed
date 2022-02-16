@@ -2,15 +2,16 @@ import { Flex, Icon } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import * as React from 'react'
 import { VscDebugRestart } from 'react-icons/vsc'
-import { caretElementAtom, mountCaretAtom, resetTypingTestAtom } from '../store'
+import { mountCaretAtom } from '../store/caretAtoms'
+import { caretElementAtom } from '../store/elementAtoms'
 
 const NewTest: React.FC = () => {
-  const [, reset] = useAtom(resetTypingTestAtom)
+  // const [, reset] = useAtom(resetTypingTestAtom)
   const [, mountCaret] = useAtom(mountCaretAtom)
   const [caretElement] = useAtom(caretElementAtom)
 
   const resetTest = () => {
-    reset()
+    // reset()
     mountCaret(caretElement as HTMLDivElement)
   }
 

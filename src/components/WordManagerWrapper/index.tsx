@@ -3,7 +3,7 @@ import { useAtom } from 'jotai'
 import React, { useRef } from 'react'
 import { useResize } from '../../hooks/useResize'
 import { useScroll } from '../../hooks/useScroll'
-import { fontSizeAtom } from '../../store'
+import { fontSizeAtom } from '../../store/typingTestAtoms'
 import Caret from '../Caret'
 
 function Index({ children }: { children: React.ReactNode | React.ReactNode[] }) {
@@ -23,7 +23,7 @@ function Index({ children }: { children: React.ReactNode | React.ReactNode[] }) 
       w="100%"
       h="5.0625em"
     >
-      <Caret delay={100} />
+      <Caret delay={75} />
       {children}
     </Box>
   )

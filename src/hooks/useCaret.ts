@@ -1,13 +1,14 @@
 import { useAtom } from 'jotai'
 import { useUpdateAtom } from 'jotai/utils'
 import { useEffect, useState } from 'react'
+import { updateCaretPositionAtom } from '../store/caretAtoms'
+
 import {
+  currentWordElementAtom,
+  currentExtraCharacterElementAtom,
   caretElementAtom,
   currentCharacterElementAtom,
-  currentExtraCharacterElementAtom,
-  currentWordElementAtom,
-  updateCaretPositionAtom,
-} from '../store'
+} from '../store/elementAtoms'
 
 export const useCaret = () => {
   const [current, setCurrent] = useAtom(currentCharacterElementAtom)
