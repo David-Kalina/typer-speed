@@ -1,16 +1,13 @@
 import { Box, HStack, Text } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React from 'react'
-import { useResetTypingTest } from '../hooks/useResetTypingTest'
 import { testTimeAtom } from '../store'
 
 function SetTestTime() {
   const [testTime, setTestTime] = useAtom(testTimeAtom)
-  const reset = useResetTypingTest()
 
   const updateTestTime = (time: number) => {
     setTestTime(time)
-    reset()
   }
 
   return (

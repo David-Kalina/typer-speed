@@ -12,9 +12,47 @@ export const wordsAtom = atom<CharactersAtom>(generateWords(100, 5))
 
 export const caretElementAtom = atom<HTMLDivElement | null>(null)
 
+export const caretPositionAtom = atom({ top: 0, left: 0 })
+
+export const updateCaretPositionAtom = atom(
+  get => {
+    return {
+      top: get(currentCharacterElementAtom)?.offsetTop,
+      left: get(currentCharacterElementAtom)?.offsetLeft,
+    }
+  },
+  (get, set, { top, left }) => {
+    return set(caretPositionAtom, {
+      top,
+      left,
+    })
+  }
+)
+
 export const currentCharacterElementAtom = atom<HTMLDivElement | null>(null)
 
+export const currentWordElementAtom = atom<HTMLDivElement | null>(null)
+
 export const currentCharacterElementCopyAtom = atom<HTMLDivElement | null>(null)
+
+export const mountCaretAtom = atom(
+  () => '',
+  (get, set, caret: HTMLDivElement) => {
+    if (caret) {
+      const word = caret.nextElementSibling?.firstElementChild as HTMLDivElement
+      const character = caret.nextElementSibling?.firstElementChild?.firstElementChild as HTMLDivElement
+      if (word && character) {
+        set(caretElementAtom, caret)
+        set(currentCharacterElementAtom, character)
+        set(currentWordElementAtom, word)
+        set(caretPositionAtom, {
+          top: character.offsetTop,
+          left: character.offsetLeft,
+        })
+      }
+    }
+  }
+)
 
 // Character Atoms
 
@@ -181,7 +219,7 @@ export const decrementWordIndexAtom = atom(
 
 export const wordHeightAtom = atomWithReset<number>(0)
 
-export const fontSizeAtom = atom<number>(2)
+export const fontSizeAtom = atom<number>(1.5)
 
 export const loadingAtom = atomWithReset<boolean>(true)
 
@@ -204,36 +242,11 @@ export const testFinishedAtom = atomWithReset<boolean>(false)
 
 export const testTimeAtom = atomWithStorage<number>('testTime', 0)
 
-export const currentWordElementAtom = atomWithReset<HTMLDivElement | null>(null)
-
 export const currentExtraCharacterElementAtom = atomWithReset<HTMLDivElement | null>(null)
 
 export const copyCurrentExtraCharacterElementAtom = atomWithReset<HTMLDivElement | null>(null)
 
 export const copyCurrentCharacterElementAtom = atomWithReset<HTMLDivElement | null>(null)
-
-export const caretPositionAtom = atomWithReset<{
-  top: number
-  left: number
-}>({
-  top: 0,
-  left: 0,
-})
-
-export const updateCaretPositionAtom = atom(
-  get => {
-    return {
-      top: get(currentCharacterElementAtom)?.offsetTop,
-      left: get(currentCharacterElementAtom)?.offsetLeft,
-    }
-  },
-  (get, set, { top, left }) => {
-    return set(caretPositionAtom, {
-      top,
-      left,
-    })
-  }
-)
 
 export const resetAtoms = [
   characterIndexAtom,

@@ -108,27 +108,27 @@ export const useCaret = () => {
 
   // Debug only
 
-  // useEffect(() => {
-  //   if (current) current.style.border = '1px solid yellow'
-  //   return () => {
-  //     if (current) current.style.border = 'none'
-  //   }
-  // }, [current])
+  useEffect(() => {
+    if (current) current.style.border = '1px solid yellow'
+    return () => {
+      if (current) current.style.border = 'none'
+    }
+  }, [current])
 
-  // useEffect(() => {
-  //   if (previous) previous.style.border = '1px solid purple'
-  //   return () => {
-  //     if (previous) previous.style.border = 'none'
-  //   }
-  // }, [previous])
+  useEffect(() => {
+    if (previous) previous.style.border = '1px solid purple'
+    return () => {
+      if (previous) previous.style.border = 'none'
+    }
+  }, [previous])
 
-  // useEffect(() => {
-  //   if (currentWordElement) currentWordElement.style.border = '1px solid red'
+  useEffect(() => {
+    if (currentWordElement) currentWordElement.style.border = '1px solid red'
 
-  //   return () => {
-  //     if (currentWordElement) currentWordElement.style.border = 'none'
-  //   }
-  // }, [currentWordElement])
+    return () => {
+      if (currentWordElement) currentWordElement.style.border = 'none'
+    }
+  }, [currentWordElement])
 
   return { forward, backward, newWord }
 }

@@ -2,7 +2,6 @@ import { Flex } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React from 'react'
 import { wordsAtom } from '../../store'
-import NewWordsManager from '../NewWordsManager'
 import Word from '../Word'
 
 function Index() {
@@ -24,7 +23,6 @@ function Index() {
       w="100%"
     >
       {renderWords}
-      <NewWordsManager />
     </Flex>
   )
 }
