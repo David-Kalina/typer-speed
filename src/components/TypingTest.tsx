@@ -11,6 +11,7 @@ import WordManagerWrapper from './WordManagerWrapper'
 
 function TypingTest() {
   const [testFinished] = useAtom(testFinishedAtom)
+
   return (
     <Flex flexDir="column" w="100%" className="typing-test">
       <>

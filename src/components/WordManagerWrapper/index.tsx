@@ -24,7 +24,7 @@ function Index({ children }: { children: React.ReactNode | React.ReactNode[] }) 
       w="100%"
       h="5.0625em"
     >
-      <Caret delay={60} />
+      <Caret delay={75} />
       {children}
     </Box>
   )

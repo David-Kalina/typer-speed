@@ -7,7 +7,6 @@ import { themeAtom } from '../../store/typingTestAtoms'
 const Index = React.memo(({ value, status }: Character) => {
   const [theme] = useAtom(themeAtom)
 
-  console.log(status)
   return (
     <Box
       display="inline-block"

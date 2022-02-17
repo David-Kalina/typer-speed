@@ -1,9 +1,11 @@
 import { Button, Flex, Spinner, Table, TableCaption, Tbody, Td, Th, Thead, Tr, useBreakpoint } from '@chakra-ui/react'
 import { getDocs, limit, orderBy, query, where } from 'firebase/firestore'
+import { useAtom } from 'jotai'
 import React, { useEffect, useState } from 'react'
 import { colorMap } from '../constants/wpmColorMap'
 import { useAuth } from '../contexts/AuthContext'
 import { testsRef } from '../firebase'
+import { themeAtom } from '../store/typingTestAtoms'
 
 interface TypingTestData {
   email: string
@@ -19,12 +21,10 @@ interface TypingTestData {
 function TypingTestsTable() {
   const { user } = useAuth()
   const [tableData, setTableData] = useState<TypingTestData[]>([])
-
   const [loading, setLoading] = useState(true)
-
   const [filter, setFilter] = useState('date')
-
   const breakpoint = useBreakpoint()
+  const [theme] = useAtom(themeAtom)
 
   const toggleFilter = (filter: string) => {
     setFilter(filter)
@@ -45,8 +45,8 @@ function TypingTestsTable() {
   const tableRows = tableData?.map((test, idx) => (
     <Tr key={idx} fontWeight="bold">
       <Td>{test.seconds}s</Td>
-      <Td color={colorMap(test.wpm)}>{test.wpm}</Td>
-      <Td color={colorMap(test.accuracy)}>{test.accuracy}%</Td>
+      <Td>{test.wpm}</Td>
+      <Td>{test.accuracy}%</Td>
       <Td>{new Date(test.date.seconds * 1000).toLocaleDateString('en-US')}</Td>
     </Tr>
   ))
@@ -85,7 +85,11 @@ function TypingTestsTable() {
       </Flex>
 
       {!loading && tableRows ? (
-        <Table size={breakpoint === 'base' || breakpoint === 'sm' ? 'sm' : 'lg'} color="white">
+        <Table
+          size={breakpoint === 'base' || breakpoint === 'sm' ? 'sm' : 'lg'}
+          variant="simple"
+          color={`${theme}.300`}
+        >
           <TableCaption textAlign="left" p={0} placement="top" mb="2">
             Recent Typing Tests
           </TableCaption>

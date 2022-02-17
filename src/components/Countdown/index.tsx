@@ -3,15 +3,16 @@ import { useAtom } from 'jotai'
 import React, { useEffect, useState } from 'react'
 import { getCharactersByStatusAtom } from '../../store/characterAtoms'
 import { addToResultsAtom } from '../../store/resultsAtoms'
-import { testFinishedAtom, testStartedAtom } from '../../store/typingTestAtoms'
+import { testFinishedAtom, testStartedAtom, themeAtom } from '../../store/typingTestAtoms'
 
 function Index() {
-  const [duration, setDuration] = useState(15)
+  const [duration, setDuration] = useState(120)
   const [elapsed, setElapsed] = useState(0)
   const [testStarted, setTestStarted] = useAtom(testStartedAtom)
   const [, getCharactersByStatus] = useAtom(getCharactersByStatusAtom)
   const [, addToResults] = useAtom(addToResultsAtom)
   const [, setTestFinished] = useAtom(testFinishedAtom)
+  const [theme] = useAtom(themeAtom)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -43,7 +44,7 @@ function Index() {
   }, [duration, setTestFinished, setTestStarted])
 
   return (
-    <Text fontSize="1.5em" minH="1.5em" pl="0.5rem" color="brand.200">
+    <Text fontSize="1.5em" minH="1.5em" pl="0.5rem" color={`${theme}.300`}>
       {duration && testStarted ? `${duration}s` : null}
     </Text>
   )

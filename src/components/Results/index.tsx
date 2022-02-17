@@ -1,14 +1,14 @@
-import { Box, HStack, Stat, StatLabel, StatNumber, useTheme, Text } from '@chakra-ui/react'
+import { Flex, Stat, StatLabel, StatNumber, useTheme, VStack } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React from 'react'
-import { Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { useAuth } from '../../contexts/AuthContext'
 import {
   getAccuracyDataAtom,
   getMostMissedCharacterAtom,
   getMostMissedWordAtom,
   getRecapDataAtom,
-  getWPMDataAtom,
+  getWPMDataAtom
 } from '../../store/resultsAtoms'
 import { testFinishedAtom, themeAtom } from '../../store/typingTestAtoms'
 
@@ -24,7 +24,6 @@ function Index() {
 
   const chakraTheme = useTheme()
 
-  console.log(chakraTheme.colors[theme][100])
 
   // useEffect(() => {
   //   if (user && user.email) {
@@ -54,27 +53,35 @@ function Index() {
   // }, [averageAccuracy, averageWPM, recapData, user])
 
   return (
-    <Box>
+    <Flex p="4em" flexDir="row-reverse">
       {testFinished && recapData.length > 0 ? (
         <ResponsiveContainer width="100%" height={300} maxHeight={300}>
           <LineChart data={recapData}>
+            <CartesianGrid stroke={`${chakraTheme.colors[theme][200]}`} strokeDasharray="3, 3" />
             <XAxis dataKey="seconds" />
-            <YAxis dataKey="wpm" />
+            <YAxis dataKey="wpm" yAxisId="left" />
+            <YAxis dataKey="incorrect" yAxisId="right" orientation="right" />
             <Tooltip />
             <Legend />
-            <Line type="monotone" dataKey="wpm" fill={`${chakraTheme.colors[theme][200]}`} animationDuration={5000} />
             <Line
+              type="monotone"
+              yAxisId="left"
+              dataKey="wpm"
+              fill={`${chakraTheme.colors[theme][200]}`}
+              animationDuration={5000}
+            />
+            <Line
+              yAxisId="right"
               type="monotone"
               dataKey="incorrect"
               stroke={`${chakraTheme.colors[theme]['incorrect']}`}
               animationDuration={5000}
-              zoomAndPan="incorrect"
             />
           </LineChart>
         </ResponsiveContainer>
       ) : null}
 
-      <HStack>
+      <VStack align="stretch">
         <Stat>
           <StatLabel>Average WPM</StatLabel>
           <StatNumber>{averageWPM.wpm}</StatNumber>
@@ -82,16 +89,8 @@ function Index() {
           <StatLabel>Accuracy</StatLabel>
           <StatNumber>{averageAccuracy.accuracy}%</StatNumber>
         </Stat>
-
-        <Stat>
-          <StatLabel>Most Missed Word</StatLabel>
-          <Text>{mostMissedWord.mostMissedWord}</Text>
-
-          <StatLabel>Accuracy</StatLabel>
-          <StatNumber>{averageAccuracy.accuracy}%</StatNumber>
-        </Stat>
-      </HStack>
-    </Box>
+      </VStack>
+    </Flex>
   )
 }
 

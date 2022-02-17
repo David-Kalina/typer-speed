@@ -13,6 +13,10 @@ export const useGetElementDimensions = (className: string) => {
       const padding = parseInt(style.paddingTop, 10) + parseInt(style.paddingBottom, 10)
       setWordHeight(element.clientHeight + border + margin + padding)
     }
+
+    return () => {
+      setWordHeight(0)
+    }
   }, [element, setWordHeight])
 
   return wordHeight

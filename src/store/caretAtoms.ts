@@ -20,21 +20,23 @@ export const updateCaretPositionAtom = atom(
   }
 )
 
-export const mountCaretAtom = atom(
-  () => '',
-  (get, set, caret: HTMLDivElement) => {
-    if (caret) {
-      const word = caret.nextElementSibling?.firstElementChild as HTMLDivElement
-      const character = caret.nextElementSibling?.firstElementChild?.firstElementChild as HTMLDivElement
-      if (word && character) {
-        set(caretElementAtom, caret)
-        set(currentCharacterElementAtom, character)
-        set(currentWordElementAtom, word)
-        set(caretPositionAtom, {
-          top: character.offsetTop,
-          left: character.offsetLeft,
-        })
-      }
-    }
-  }
-)
+// export const mountCaretAtom = atom(
+//   () => '',
+//   (get, set) => {
+//     const caret = document.querySelector('.blink') as HTMLDivElement
+//     if (caret) {
+//       const word = caret.nextElementSibling?.firstElementChild as HTMLDivElement
+//       const character = word.firstElementChild as HTMLDivElement
+//       if (word && character) {
+//         word.style.border = '2px solid brown'
+//         set(caretElementAtom, caret)
+//         set(currentWordElementAtom, word)
+//         set(currentCharacterElementAtom, character)
+//         set(caretPositionAtom, {
+//           top: character.offsetTop,
+//           left: character.offsetLeft,
+//         })
+//       }
+//     }
+//   }
+// )

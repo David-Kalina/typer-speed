@@ -9,6 +9,7 @@ import {
   caretElementAtom,
   currentCharacterElementAtom,
 } from '../store/elementAtoms'
+import { testStartedAtom } from '../store/typingTestAtoms'
 
 export const useCaret = () => {
   const [current, setCurrent] = useAtom(currentCharacterElementAtom)
@@ -18,6 +19,10 @@ export const useCaret = () => {
   const [caret] = useAtom(caretElementAtom)
   const setPosition = useUpdateAtom(updateCaretPositionAtom)
   const [traversingExtra, setTraversingExtra] = useState(false)
+  const [testStarted] = useAtom(testStartedAtom)
+  const setCharElement = useUpdateAtom(currentCharacterElementAtom)
+  const setWordElement = useUpdateAtom(currentWordElementAtom)
+  const setCaretElement = useUpdateAtom(caretElementAtom)
   const [previousPosition, setPreviousPosition] = useState<
     {
       top: number
@@ -105,11 +110,12 @@ export const useCaret = () => {
   useEffect(() => {
     if (currentExtra)
       setPreviousPosition([...previousPosition, { top: currentExtra.offsetTop, left: currentExtra.offsetLeft }])
-  }, [currentExtra, previousPosition])
+  }, [currentExtra, previousPosition, testStarted])
 
   // Debug only
 
   // useEffect(() => {
+  //   console.log(current)
   //   if (current) current.style.border = '1px solid yellow'
   //   return () => {
   //     if (current) current.style.border = 'none'
@@ -130,6 +136,27 @@ export const useCaret = () => {
   //     if (currentWordElement) currentWordElement.style.border = 'none'
   //   }
   // }, [currentWordElement])
+
+  // useEffect(() => {
+  //   if (!testStarted && current) {
+  //     setPosition({
+  //       top: current?.offsetTop,
+  //       left: current?.offsetLeft,
+  //     })
+  //   }
+  // }, [current, current?.offsetLeft, current?.offsetTop, setPosition, testStarted])
+
+  useEffect(() => {
+    const caret = document.querySelector('.blink') as HTMLDivElement
+    if (caret && !testStarted) {
+      const word = caret.nextElementSibling?.firstElementChild as HTMLDivElement
+      const character = word?.firstElementChild as HTMLDivElement
+      setCaretElement(caret)
+      setWordElement(word)
+      setCharElement(character)
+      setPosition({ top: character.offsetTop, left: character.offsetLeft })
+    }
+  }, [setCaretElement, setCharElement, setPosition, setWordElement, testStarted])
 
   return { forward, backward, newWord }
 }
