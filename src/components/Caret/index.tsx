@@ -14,12 +14,12 @@ function Index({ delay }: { delay: number }) {
     <Box
       ref={ref}
       position="absolute"
-      h="1.15em"
-      top={`${top - 2}px `}
+      h="1.3em"
+      top={`calc(${top}px - 0.2em)`}
       transition={`left ${delay}ms linear`}
-      left={`${left - 2}px`}
-      borderRadius="sm"
-      width="0.1em"
+      left={`${left}px`}
+      borderRadius="md"
+      width="0.11em"
       fontWeight="bold"
       bg={`${theme}.400`}
       className={testStarted ? 'caret' : 'blink'}

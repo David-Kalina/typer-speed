@@ -6,8 +6,8 @@ interface ResultType {
   seconds: number
   correct: number
   incorrect: number
-  wordsMissed: string[]
-  charactersMissed: string[]
+  // wordsMissed: string[]
+  // charactersMissed: string[]
 }
 
 export const resultsAtom = atomWithReset<ResultType[]>([])
@@ -60,43 +60,43 @@ export const getAccuracyDataAtom = atom(get => {
   }
 })
 
-export const getMostMissedWordAtom = atom(get => {
-  const results = get(resultsAtom)
+// export const getMostMissedWordAtom = atom(get => {
+//   const results = get(resultsAtom)
 
-  let count = 0
+//   let count = 0
 
-  const mostMissedWord = results.reduce((acc, item) => {
-    const mostMissed = item.wordsMissed.reduce((acc, word) => {
-      if (acc.length < word.length) {
-        return word
-      }
-      return acc
-    }, '')
+//   const mostMissedWord = results.reduce((acc, item) => {
+//     const mostMissed = item.wordsMissed.reduce((acc, word) => {
+//       if (acc.length < word.length) {
+//         return word
+//       }
+//       return acc
+//     }, '')
 
-    count = mostMissed.length
-    return mostMissed.length > acc.length ? mostMissed : acc
-  }, '')
+//     count = mostMissed.length
+//     return mostMissed.length > acc.length ? mostMissed : acc
+//   }, '')
 
-  return { count, mostMissedWord }
-})
+//   return { count, mostMissedWord }
+// })
 
-export const getMostMissedCharacterAtom = atom(get => {
-  const results = get(resultsAtom)
+// export const getMostMissedCharacterAtom = atom(get => {
+//   const results = get(resultsAtom)
 
-  let count = 0
+//   let count = 0
 
-  const mostMissedCharacter = results.reduce((acc, item) => {
-    const mostMissed = item.charactersMissed.reduce((acc, character) => {
-      if (acc.length < character.length) {
-        return character
-      }
-      return acc
-    }, '')
+//   const mostMissedCharacter = results.reduce((acc, item) => {
+//     const mostMissed = item.charactersMissed.reduce((acc, character) => {
+//       if (acc.length < character.length) {
+//         return character
+//       }
+//       return acc
+//     }, '')
 
-    count = mostMissed.length
+//     count = mostMissed.length
 
-    return mostMissed.length > acc.length ? mostMissed : acc
-  }, '')
+//     return mostMissed.length > acc.length ? mostMissed : acc
+//   }, '')
 
-  return { count, mostMissedCharacter }
-})
+//   return { count, mostMissedCharacter }
+// })

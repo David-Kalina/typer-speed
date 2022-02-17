@@ -1,8 +1,10 @@
 import { Button, Flex, IconButton, Input, Text, VStack } from '@chakra-ui/react'
+import { useAtom } from 'jotai'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { IoLogoGoogle } from 'react-icons/io'
 import { SignInData, useAuth } from '../contexts/AuthContext'
+import { themeAtom } from '../store/typingTestAtoms'
 function Login() {
   const { signIn, signInWithGoogle } = useAuth()
   const {
@@ -13,6 +15,8 @@ function Login() {
 
   const [error, setError] = useState<string | null>(null)
 
+  const [theme] = useAtom(themeAtom)
+
   return (
     <form onSubmit={handleSubmit(data => signIn(data as SignInData).catch(error => setError(error)))}>
       {error && <Text color="red.200">{error}</Text>}
@@ -21,16 +25,33 @@ function Login() {
           <Text fontSize="sm">login</Text>
           <Text fontSize="sm">forgot password?</Text>
         </Flex>
-        <Input {...register('email', { required: 'required' })} type="email" placeholder="email" />
+        <Input
+          _placeholder={{ color: `${theme}.200` }}
+          {...register('email', { required: 'required' })}
+          type="email"
+          placeholder="email"
+        />
         {errors.email && (
           <Text color="red.200" fontSize="xs">
             {errors.email.message}
           </Text>
         )}
-        <Input {...register('password', { required: 'required' })} type="password" placeholder="password" />
-        <Button type="submit">login</Button>
+        <Input
+          _placeholder={{ color: `${theme}.200` }}
+          {...register('password', { required: 'required' })}
+          type="password"
+          placeholder="password"
+        />
+        <Button type="submit" bg={`${theme}.200`}>
+          login
+        </Button>
         <Text textAlign="center">or</Text>
-        <IconButton onClick={signInWithGoogle} aria-label="google sign in method" icon={<IoLogoGoogle />}></IconButton>
+        <IconButton
+          bg={`${theme}.200`}
+          onClick={signInWithGoogle}
+          aria-label="google sign in method"
+          icon={<IoLogoGoogle />}
+        ></IconButton>
       </VStack>
     </form>
   )

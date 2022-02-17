@@ -1,7 +1,9 @@
 import { Button, Input, Text, VStack } from '@chakra-ui/react'
+import { useAtom } from 'jotai'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { SignUpData, useAuth } from '../contexts/AuthContext'
+import { themeAtom } from '../store/typingTestAtoms'
 
 function Register() {
   const { signUp } = useAuth()
@@ -12,26 +14,19 @@ function Register() {
   } = useForm()
   const [error, setError] = React.useState<string | null>(null)
 
- 
+  const [theme] = useAtom(themeAtom)
 
   return (
     <form
       onSubmit={handleSubmit(async data => {
-        await signUp(data as SignUpData).catch((error: string) =>
-          setError(error)
-        )
+        await signUp(data as SignUpData).catch((error: string) => setError(error))
       })}
     >
       {error && <Text color="red.200">{error}</Text>}
-      <VStack
-        spacing={2}
-        justify="space-evenly"
-        align="stretch"
-        minH="300px"
-        height="max"
-      >
+      <VStack spacing={2} justify="space-evenly" align="stretch" minH="300px" height="max">
         <Text fontSize="sm">register</Text>
         <Input
+          _placeholder={{ color: `${theme}.200` }}
           {...register('email', { required: 'required' })}
           type="email"
           placeholder="email"
@@ -42,6 +37,7 @@ function Register() {
           </Text>
         )}
         <Input
+          _placeholder={{ color: `${theme}.200` }}
           {...register('verifyEmail', { required: 'required' })}
           placeholder="verify email"
         />
@@ -51,6 +47,7 @@ function Register() {
           </Text>
         )}
         <Input
+          _placeholder={{ color: `${theme}.200` }}
           {...register('password', { required: 'required' })}
           type="password"
           placeholder="password"
@@ -61,6 +58,7 @@ function Register() {
           </Text>
         )}
         <Input
+          _placeholder={{ color: `${theme}.200` }}
           {...register('verifyPassword', { required: 'required' })}
           type="password"
           placeholder="verify password"
@@ -70,7 +68,9 @@ function Register() {
             {errors.verifyPassword.message}
           </Text>
         )}
-        <Button type="submit">register</Button>
+        <Button type="submit" bg={`${theme}.200`}>
+          register
+        </Button>
       </VStack>
     </form>
   )

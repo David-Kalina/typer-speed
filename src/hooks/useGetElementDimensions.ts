@@ -1,9 +1,13 @@
+import { useAtom } from 'jotai'
 import { useEffect, useState } from 'react'
+import { fontSizeAtom } from '../store/typingTestAtoms'
 
 export const useGetElementDimensions = (className: string) => {
   const [wordHeight, setWordHeight] = useState(0)
 
   const element = document.querySelector(className)
+
+  const [fontSize] = useAtom(fontSizeAtom)
 
   useEffect(() => {
     if (element) {
@@ -17,7 +21,7 @@ export const useGetElementDimensions = (className: string) => {
     return () => {
       setWordHeight(0)
     }
-  }, [element, setWordHeight])
+  }, [element, setWordHeight, fontSize])
 
   return wordHeight
 }

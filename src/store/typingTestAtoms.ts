@@ -14,8 +14,6 @@ export const fontSizeAtom = atom<number>(2)
 
 export const loadingAtom = atom<boolean>(true)
 
-export const testTime = atom<number>(15)
-
 export const elapsedTimeAtom = atom<number>(0)
 
 export const testStartedAtom = atom<boolean>(false)
@@ -27,7 +25,7 @@ export const setTestStartedAtom = atom(
 
 export const testFinishedAtom = atom<boolean>(false)
 
-export const testTimeAtom = atomWithStorage<number>('testTime', 0)
+export const testTimeAtom = atomWithStorage<number>('testTime', 15)
 
 export const resetTypingTestAtom = atom(
   () => '',
@@ -36,7 +34,6 @@ export const resetTypingTestAtom = atom(
     set(wordIndexAtom, 0)
     set(wordsAtom, generateWords(100, 5))
     set(loadingAtom, true)
-    set(testTimeAtom, 0)
     set(testStartedAtom, false)
     set(testFinishedAtom, false)
     set(resultsAtom, [])

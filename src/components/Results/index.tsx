@@ -3,13 +3,7 @@ import { useAtom } from 'jotai'
 import React from 'react'
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { useAuth } from '../../contexts/AuthContext'
-import {
-  getAccuracyDataAtom,
-  getMostMissedCharacterAtom,
-  getMostMissedWordAtom,
-  getRecapDataAtom,
-  getWPMDataAtom
-} from '../../store/resultsAtoms'
+import { getAccuracyDataAtom, getRecapDataAtom, getWPMDataAtom } from '../../store/resultsAtoms'
 import { testFinishedAtom, themeAtom } from '../../store/typingTestAtoms'
 
 function Index() {
@@ -18,12 +12,9 @@ function Index() {
   const [recapData] = useAtom(getRecapDataAtom)
   const [averageWPM] = useAtom(getWPMDataAtom)
   const [averageAccuracy] = useAtom(getAccuracyDataAtom)
-  const [mostMissedWord] = useAtom(getMostMissedWordAtom)
-  const [mostMissedCharacter] = useAtom(getMostMissedCharacterAtom)
   const [theme] = useAtom(themeAtom)
 
   const chakraTheme = useTheme()
-
 
   // useEffect(() => {
   //   if (user && user.email) {
@@ -53,7 +44,7 @@ function Index() {
   // }, [averageAccuracy, averageWPM, recapData, user])
 
   return (
-    <Flex p="4em" flexDir="row-reverse">
+    <Flex p="4em" flexDir="row-reverse" fontSize="0.25em">
       {testFinished && recapData.length > 0 ? (
         <ResponsiveContainer width="100%" height={300} maxHeight={300}>
           <LineChart data={recapData}>
@@ -63,29 +54,24 @@ function Index() {
             <YAxis dataKey="incorrect" yAxisId="right" orientation="right" />
             <Tooltip />
             <Legend />
-            <Line
-              type="monotone"
-              yAxisId="left"
-              dataKey="wpm"
-              fill={`${chakraTheme.colors[theme][200]}`}
-              animationDuration={5000}
-            />
+            <Line type="monotone" yAxisId="left" dataKey="wpm" fill={`${chakraTheme.colors[theme][200]}`} />
             <Line
               yAxisId="right"
               type="monotone"
               dataKey="incorrect"
               stroke={`${chakraTheme.colors[theme]['incorrect']}`}
-              animationDuration={5000}
             />
           </LineChart>
         </ResponsiveContainer>
       ) : null}
 
-      <VStack align="stretch">
+      <VStack align="stretch" justify="space-between" h="100%" color={`${chakraTheme.colors[theme][200]}`}>
         <Stat>
           <StatLabel>Average WPM</StatLabel>
           <StatNumber>{averageWPM.wpm}</StatNumber>
+        </Stat>
 
+        <Stat>
           <StatLabel>Accuracy</StatLabel>
           <StatNumber>{averageAccuracy.accuracy}%</StatNumber>
         </Stat>

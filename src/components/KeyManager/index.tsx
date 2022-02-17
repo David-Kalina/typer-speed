@@ -1,11 +1,9 @@
 import { useAtom } from 'jotai'
-import { useUpdateAtom } from 'jotai/utils'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { forbiddenKeys } from '../../constants/forbiddenKeys'
 import { useKeyManager } from '../../hooks/useKeyManager'
 import { caretCutOffAtom, caretPositionAtom } from '../../store/caretAtoms'
 import { characterIndexAtom } from '../../store/characterAtoms'
-import { keyManagerAtom } from '../../store/elementAtoms'
 import { testStartedAtom } from '../../store/typingTestAtoms'
 
 function Index() {
@@ -27,7 +25,6 @@ function Index() {
       return handleSpace()
     } else {
       if (caretPosition.left > caretCutOff) return e.preventDefault()
-
       if (!testStarted) setTestStarted(true)
       return handleCharacter(e.key)
     }
