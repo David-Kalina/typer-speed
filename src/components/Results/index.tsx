@@ -2,13 +2,12 @@ import { Flex, Stat, StatLabel, StatNumber, useTheme, VStack } from '@chakra-ui/
 import { useAtom } from 'jotai'
 import React from 'react'
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
-import { useAuth } from '../../contexts/AuthContext'
 import { getAccuracyDataAtom, getRecapDataAtom, getWPMDataAtom } from '../../store/resultsAtoms'
 import { testFinishedAtom, themeAtom } from '../../store/typingTestAtoms'
 
 function Index() {
   const [testFinished] = useAtom(testFinishedAtom)
-  const { user } = useAuth()
+  // const { user } = useAuth()
   const [recapData] = useAtom(getRecapDataAtom)
   const [averageWPM] = useAtom(getWPMDataAtom)
   const [averageAccuracy] = useAtom(getAccuracyDataAtom)

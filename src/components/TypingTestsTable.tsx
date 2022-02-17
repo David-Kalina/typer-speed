@@ -2,7 +2,6 @@ import { Button, Flex, Spinner, Table, TableCaption, Tbody, Td, Th, Thead, Tr, u
 import { getDocs, limit, orderBy, query, where } from 'firebase/firestore'
 import { useAtom } from 'jotai'
 import React, { useEffect, useState } from 'react'
-import { colorMap } from '../constants/wpmColorMap'
 import { useAuth } from '../contexts/AuthContext'
 import { testsRef } from '../firebase'
 import { themeAtom } from '../store/typingTestAtoms'
