@@ -1,12 +1,14 @@
 import { Flex } from '@chakra-ui/react'
+import { useAtom } from 'jotai'
 import React from 'react'
-import { WordType } from '../../types'
-import NewWordsManager from '../NewWordsManager'
-import Word from '../Word/index'
+import { wordsAtom } from '../../store/wordAtoms'
+import Word from '../Word'
 
-function Index({ words }: { words: WordType[] }) {
-  const renderWords = words?.map(({ className, characters, id }) => {
-    return <Word id={id} key={id} className={className} characters={characters} />
+function Index() {
+  const [words] = useAtom(wordsAtom)
+
+  const renderWords = Object.values(words).map((item, idx) => {
+    return <Word id={idx} key={idx} className="word" characters={item.characters} />
   })
 
   return (
@@ -21,7 +23,6 @@ function Index({ words }: { words: WordType[] }) {
       w="100%"
     >
       {renderWords}
-      <NewWordsManager />
     </Flex>
   )
 }

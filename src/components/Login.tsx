@@ -1,8 +1,10 @@
 import { Button, Flex, IconButton, Input, Text, VStack } from '@chakra-ui/react'
+import { useAtom } from 'jotai'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { IoLogoGoogle } from 'react-icons/io'
 import { SignInData, useAuth } from '../contexts/AuthContext'
+import { themeAtom } from '../store/typingTestAtoms'
 function Login() {
   const { signIn, signInWithGoogle } = useAuth()
   const {
@@ -13,12 +15,10 @@ function Login() {
 
   const [error, setError] = useState<string | null>(null)
 
+  const [theme] = useAtom(themeAtom)
+
   return (
-    <form
-      onSubmit={handleSubmit(data =>
-        signIn(data as SignInData).catch(error => setError(error))
-      )}
-    >
+    <form onSubmit={handleSubmit(data => signIn(data as SignInData).catch(error => setError(error)))}>
       {error && <Text color="red.200">{error}</Text>}
       <VStack spacing={2} justify="space-evenly" align="stretch" h="300px">
         <Flex align="center" justify="space-between">
@@ -26,6 +26,7 @@ function Login() {
           <Text fontSize="sm">forgot password?</Text>
         </Flex>
         <Input
+          _placeholder={{ color: `${theme}.200` }}
           {...register('email', { required: 'required' })}
           type="email"
           placeholder="email"
@@ -36,13 +37,17 @@ function Login() {
           </Text>
         )}
         <Input
+          _placeholder={{ color: `${theme}.200` }}
           {...register('password', { required: 'required' })}
           type="password"
           placeholder="password"
         />
-        <Button type="submit">login</Button>
+        <Button type="submit" bg={`${theme}.200`}>
+          login
+        </Button>
         <Text textAlign="center">or</Text>
         <IconButton
+          bg={`${theme}.200`}
           onClick={signInWithGoogle}
           aria-label="google sign in method"
           icon={<IoLogoGoogle />}

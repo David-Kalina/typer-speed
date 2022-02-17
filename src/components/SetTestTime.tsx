@@ -1,18 +1,16 @@
 import { Box, HStack, Text } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React from 'react'
-import { useResetTypingTest } from '../hooks/useResetTypingTest'
-import { socketAtom, testTimeAtom } from '../store'
+import { testTimeAtom, themeAtom } from '../store/typingTestAtoms'
 
 function SetTestTime() {
-  const [socket] = useAtom(socketAtom)
   const [testTime, setTestTime] = useAtom(testTimeAtom)
-  const reset = useResetTypingTest()
+  const [theme] = useAtom(themeAtom)
+
+  console.log(testTime)
 
   const updateTestTime = (time: number) => {
-    socket.emit('testTime', time)
     setTestTime(time)
-    reset()
   }
 
   return (
@@ -23,7 +21,7 @@ function SetTestTime() {
           cursor="pointer"
           onClick={() => updateTestTime(15)}
           fontSize="sm"
-          color={testTime === 15 ? 'brand.300' : 'brand.200'}
+          bg={testTime === 15 ? `${theme}.200` : `${theme}.100`}
         >
           {15}
         </Text>
@@ -32,7 +30,7 @@ function SetTestTime() {
           cursor="pointer"
           onClick={() => updateTestTime(30)}
           fontSize="sm"
-          color={testTime === 30 ? 'brand.300' : 'brand.200'}
+          bg={testTime === 30 ? `${theme}.200` : `${theme}.100`}
         >
           {30}
         </Text>
@@ -41,7 +39,7 @@ function SetTestTime() {
           cursor="pointer"
           onClick={() => updateTestTime(60)}
           fontSize="sm"
-          color={testTime === 60 ? 'brand.300' : 'brand.200'}
+          bg={testTime === 60 ? `${theme}.200` : `${theme}.100`}
         >
           {60}
         </Text>
@@ -50,7 +48,7 @@ function SetTestTime() {
           cursor="pointer"
           onClick={() => updateTestTime(120)}
           fontSize="sm"
-          color={testTime === 120 ? 'brand.300' : 'brand.200'}
+          bg={testTime === 120 ? `${theme}.200` : `${theme}.100`}
         >
           {120}
         </Text>

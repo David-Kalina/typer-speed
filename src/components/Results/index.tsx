@@ -1,79 +1,81 @@
-import { addDoc, doc, increment, setDoc } from 'firebase/firestore'
+import { Flex, Stat, StatLabel, StatNumber, useTheme, VStack } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
-import React, { useEffect, useState } from 'react'
-import { Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
-import { useAuth } from '../../contexts/AuthContext'
-import { db, testsRef } from '../../firebase'
-import { socketAtom, testFinishedAtom } from '../../store'
+import React from 'react'
+import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import { getAccuracyDataAtom, getRecapDataAtom, getWPMDataAtom } from '../../store/resultsAtoms'
+import { testFinishedAtom, themeAtom } from '../../store/typingTestAtoms'
 
 function Index() {
   const [testFinished] = useAtom(testFinishedAtom)
-  const [socket] = useAtom(socketAtom)
-  const { user } = useAuth()
-  const [data, setData] = useState({
-    recap: [],
-    averageWPM: 0,
-    accuracy: 0,
-    testTime: 0,
-    averageAccuracy: 0,
-  })
+  // const { user } = useAuth()
+  const [recapData] = useAtom(getRecapDataAtom)
+  const [averageWPM] = useAtom(getWPMDataAtom)
+  const [averageAccuracy] = useAtom(getAccuracyDataAtom)
+  const [theme] = useAtom(themeAtom)
 
-  useEffect(() => {
-    socket.on('data', ({ recap, averageWPM, averageAccuracy, accuracy, testTime }) => {
-      setData({
-        recap,
-        averageWPM,
-        accuracy,
-        testTime,
-        averageAccuracy,
-      })
+  const chakraTheme = useTheme()
 
-      if (user && user.email) {
-        addDoc(testsRef, {
-          email: user?.email,
-          recap,
-          wpm: averageWPM,
-          accuracy: averageAccuracy,
-          seconds: testTime,
-          date: {
-            seconds: Date.now() / 1000,
-            nanoseconds: Date.now() / 1000000,
-          },
-        })
-      }
-      const statsRef = doc(db, 'stats', user?.email as string)
+  // useEffect(() => {
+  //   if (user && user.email) {
+  //     addDoc(testsRef, {
+  //       email: user?.email,
+  //       recap: recapData,
+  //       wpm: averageWPM,
+  //       accuracy: averageAccuracy,
+  //       seconds: 60,
+  //       date: {
+  //         seconds: Date.now() / 1000,
+  //         nanoseconds: Date.now() / 1000000,
+  //       },
+  //     })
+  //   }
+  //   const statsRef = doc(db, 'stats', user?.email as string)
 
-      setDoc(
-        statsRef,
-        {
-          testsTaken: increment(1),
-          testsCompleted: increment(1),
-          timeTyping: increment(testTime),
-        },
-        { merge: true }
-      )
-    })
-
-    return () => {
-      socket.off('data')
-    }
-  }, [socket, data, user?.email, user])
+  //   setDoc(
+  //     statsRef,
+  //     {
+  //       testsTaken: increment(1),
+  //       testsCompleted: increment(1),
+  //       timeTyping: increment(15),
+  //     },
+  //     { merge: true }
+  //   )
+  // }, [averageAccuracy, averageWPM, recapData, user])
 
   return (
-    <>
-      {testFinished && data.recap.length > 0 ? (
+    <Flex p="4em" flexDir="row-reverse" fontSize="0.25em">
+      {testFinished && recapData.length > 0 ? (
         <ResponsiveContainer width="100%" height={300} maxHeight={300}>
-          <LineChart data={data.recap}>
-            <XAxis dataKey="time" />
-            <YAxis dataKey="wpm" />
+          <LineChart data={recapData}>
+            <CartesianGrid stroke={`${chakraTheme.colors[theme][200]}`} strokeDasharray="3, 3" />
+            <XAxis dataKey="seconds" />
+            <YAxis dataKey="wpm" yAxisId="left" />
+            <YAxis dataKey="incorrect" yAxisId="right" orientation="right" />
             <Tooltip />
             <Legend />
-            <Line type="monotone" dataKey="wpm" stroke="#82ca9d" animationDuration={5000} />
-            <Line type="monotone" dataKey="errors" stroke="#8b0000" animationDuration={5000} />
+            <Line type="monotone" yAxisId="left" dataKey="wpm" fill={`${chakraTheme.colors[theme][200]}`} />
+            <Line
+              yAxisId="right"
+              type="monotone"
+              dataKey="incorrect"
+              stroke={`${chakraTheme.colors[theme]['incorrect']}`}
+            />
           </LineChart>
         </ResponsiveContainer>
       ) : null}
-    </>
+
+      <VStack align="stretch" justify="space-between" h="100%" color={`${chakraTheme.colors[theme][200]}`}>
+        <Stat>
+          <StatLabel>Average WPM</StatLabel>
+          <StatNumber>{averageWPM.wpm}</StatNumber>
+        </Stat>
+
+        <Stat>
+          <StatLabel>Accuracy</StatLabel>
+          <StatNumber>{averageAccuracy.accuracy}%</StatNumber>
+        </Stat>
+      </VStack>
+    </Flex>
   )
 }
 

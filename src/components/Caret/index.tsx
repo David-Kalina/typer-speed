@@ -1,27 +1,27 @@
 import { Box } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
-import React from 'react'
-import { useMountCaret } from '../../hooks/useMountCaret'
-import { caretPositionAtom, testStartedAtom } from '../../store'
+import React, { useRef } from 'react'
+import { caretPositionAtom } from '../../store/caretAtoms'
+import { testStartedAtom, themeAtom } from '../../store/typingTestAtoms'
 
 function Index({ delay }: { delay: number }) {
+  const ref = useRef<HTMLDivElement>(null)
   const [testStarted] = useAtom(testStartedAtom)
-  const ref = React.useRef<HTMLDivElement>(null)
   const [{ top, left }] = useAtom(caretPositionAtom)
-  useMountCaret(ref)
+  const [theme] = useAtom(themeAtom)
 
   return (
     <Box
       ref={ref}
       position="absolute"
-      h="1.25em"
-      top={`${top - 4}px `}
+      h="1.3em"
+      top={`calc(${top}px - 0.2em)`}
       transition={`left ${delay}ms linear`}
-      left={`${testStarted ? left : 4}px`}
+      left={`${left}px`}
       borderRadius="md"
-      width="0.1em"
+      width="0.11em"
       fontWeight="bold"
-      bg="brand.200"
+      bg={`${theme}.400`}
       className={testStarted ? 'caret' : 'blink'}
     />
   )

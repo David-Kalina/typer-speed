@@ -4,6 +4,7 @@ export interface Character {
   id: string
   wordId: number
   word: string
+  index: number
 }
 
 export interface WordType {

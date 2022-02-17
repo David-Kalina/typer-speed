@@ -1,35 +1,50 @@
 import { Text } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
-import React, { useEffect } from 'react'
-import { socketAtom, testStartedAtom, timeAtom } from '../../store'
+import React, { useEffect, useState } from 'react'
+import { getCharactersByStatusAtom } from '../../store/characterAtoms'
+import { addToResultsAtom } from '../../store/resultsAtoms'
+import { testFinishedAtom, testStartedAtom, testTimeAtom, themeAtom } from '../../store/typingTestAtoms'
 
 function Index() {
-  const [time, setTime] = useAtom(timeAtom)
-  const [socket] = useAtom(socketAtom)
-  const [testStarted] = useAtom(testStartedAtom)
+  const [duration] = useAtom(testTimeAtom)
+  const [elapsed, setElapsed] = useState(0)
+  const [testStarted, setTestStarted] = useAtom(testStartedAtom)
+  const [, getCharactersByStatus] = useAtom(getCharactersByStatusAtom)
+  const [, addToResults] = useAtom(addToResultsAtom)
+  const [, setTestFinished] = useAtom(testFinishedAtom)
+  const [theme] = useAtom(themeAtom)
 
   useEffect(() => {
-    if (testStarted) socket.emit('startTimer')
-  }, [socket, testStarted])
-
-  useEffect(() => {
-    socket.on('tick', time => {
-      setTime(time)
-    })
+    const interval = setInterval(() => {
+      if (testStarted) {
+        setElapsed(elapsed => elapsed + 1)
+        if (elapsed > 0)
+          addToResults({
+            testTime: duration,
+            seconds: elapsed,
+            correct: getCharactersByStatus({ status: 'correct' }).length,
+            incorrect: getCharactersByStatus({ status: 'incorrect' }).length,
+          })
+      }
+    }, 1000)
     return () => {
-      socket.off('timerTick')
+      clearInterval(interval)
     }
-  }, [setTime, socket])
+  }, [addToResults, duration, elapsed, getCharactersByStatus, setTestStarted, testStarted])
 
-  if (time) {
-    return (
-      <Text fontSize="1.5em" minH="1.5em" pl="0.5em" color="brand.200">
-        {time}
-      </Text>
-    )
-  } else {
-    return <Text fontSize="1.5em" minH="1.5em" pl="0.5em" color="brand.200" />
-  }
+  useEffect(() => {
+    if (elapsed > duration) {
+      setElapsed(0)
+      setTestStarted(false)
+      setTestFinished(true)
+    }
+  }, [duration, elapsed, setTestFinished, setTestStarted])
+
+  return (
+    <Text fontSize="0.5em" minH="1.5em" pl="0.5rem" color={`${theme}.300`}>
+      {duration && testStarted ? `${duration - elapsed}s` : null}
+    </Text>
+  )
 }
 
 Index.displayName = 'Countdown'

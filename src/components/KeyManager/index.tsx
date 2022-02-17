@@ -1,45 +1,32 @@
 import { useAtom } from 'jotai'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { forbiddenKeys } from '../../constants/forbiddenKeys'
-import { useNavigateCaret } from '../../hooks/useNavigateCaret'
-import { characterIndexAtom, socketAtom, testStartedAtom } from '../../store'
+import { useKeyManager } from '../../hooks/useKeyManager'
+import { caretCutOffAtom, caretPositionAtom } from '../../store/caretAtoms'
+import { characterIndexAtom } from '../../store/characterAtoms'
+import { testStartedAtom } from '../../store/typingTestAtoms'
 
 function Index() {
-  const [characterIndex, setCharacterIndex] = useAtom(characterIndexAtom)
-  const [socket] = useAtom(socketAtom)
   const [testStarted, setTestStarted] = useAtom(testStartedAtom)
-  const { moveCaretBackward, moveCaretForward, moveCaretToNextWord } = useNavigateCaret()
   const ref = React.useRef<HTMLInputElement>(null)
-
-  useEffect(() => {
-    socket.on('focus', () => {
-      ref.current?.focus()
-    })
-    return () => {
-      socket.off('focus')
-    }
-  }, [socket])
+  const { handleBackspace, handleSpace, handleCharacter } = useKeyManager()
+  const [characterIndex] = useAtom(characterIndexAtom)
+  const [caretPosition] = useAtom(caretPositionAtom)
+  const [caretCutOff] = useAtom(caretCutOffAtom)
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (forbiddenKeys.includes(e.key)) {
-      return e.stopPropagation()
-    }
+    if (forbiddenKeys.includes(e.key)) return e.stopPropagation()
+
     if (e.code === 'Backspace') {
-      if (characterIndex <= 0) return
-      socket.emit('backspace')
-      moveCaretBackward()
-      setCharacterIndex(prev => prev - 1)
+      if (characterIndex <= 0) return e.preventDefault()
+      return handleBackspace()
     } else if (e.code === 'Space') {
-      if (characterIndex > 0) {
-        socket.emit('space')
-        moveCaretToNextWord()
-        setCharacterIndex(0)
-      }
+      if (characterIndex <= 0) return e.preventDefault()
+      return handleSpace()
     } else {
+      if (caretPosition.left > caretCutOff) return e.preventDefault()
       if (!testStarted) setTestStarted(true)
-      socket.emit('key', e.key)
-      setCharacterIndex(prev => prev + 1)
-      moveCaretForward()
+      return handleCharacter(e.key)
     }
   }
 

@@ -1,8 +1,10 @@
 import { Box, Stack, Text } from '@chakra-ui/react'
 import { doc, getDoc } from 'firebase/firestore'
+import { useAtom } from 'jotai'
 import React, { useEffect, useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { db } from '../firebase'
+import { themeAtom } from '../store/typingTestAtoms'
 
 interface AccountStatData {
   email: string
@@ -15,6 +17,8 @@ interface AccountStatData {
 
 function AccountStats() {
   const { user } = useAuth()
+
+  const [theme] = useAtom(themeAtom)
 
   const [statData, setStatData] = useState<AccountStatData>({
     email: '',
@@ -38,7 +42,7 @@ function AccountStats() {
   }, [user?.email])
 
   return (
-    <Stack justify="space-between" direction={['column', 'row']} w={['80%', '80%', '100%']} wrap="wrap" color="white">
+    <Stack justify="space-between" direction={['column', 'row']} w={['80%', '80%', '100%']} wrap="wrap" color={`${theme}.300`}>
       {!loading && statData ? (
         <>
           <Box>

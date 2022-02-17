@@ -1,9 +1,7 @@
 import { Flex } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
-import { useUpdateAtom } from 'jotai/utils'
-import React, { useEffect } from 'react'
-import { useWords } from '../hooks/useWords'
-import { loadingAtom, socketAtom, testFinishedAtom } from '../store'
+import React from 'react'
+import { fontSizeAtom, testFinishedAtom } from '../store/typingTestAtoms'
 import Countdown from './Countdown'
 import KeyManager from './KeyManager'
 import NewTest from './NewTest'
@@ -12,46 +10,25 @@ import WordManager from './WordManager'
 import WordManagerWrapper from './WordManagerWrapper'
 
 function TypingTest() {
-  const [socket] = useAtom(socketAtom)
-  const setFinished = useUpdateAtom(testFinishedAtom)
-  const [loading, setLoading] = useAtom(loadingAtom)
-  const words = useWords()
-
-  useEffect(() => {
-    if (words.length) {
-      setLoading(false)
-    }
-  }, [setLoading, words])
-
-  useEffect(() => {
-    socket.emit('init')
-    setFinished(false)
-  }, [setFinished, socket])
-
-  useEffect(() => {
-    socket.on('finishTimer', () => {
-      setFinished(true)
-    })
-    return () => {
-      socket.off('finishedTimer')
-    }
-  }, [setFinished, socket])
+  const [testFinished] = useAtom(testFinishedAtom)
+  const [fontSize] = useAtom(fontSizeAtom)
 
   return (
-    <Flex flexDir="column" w="100%" className="typing-test">
-      {!loading ? (
-        <>
+    <Flex flexDir="column" w="100%" className="typing-test" fontSize={`${fontSize}em`}>
+      <>
+        {testFinished ? (
           <Results />
-          <Countdown />
-          <WordManagerWrapper>
-            <WordManager words={words} />
-          </WordManagerWrapper>
-          <NewTest />
-          <KeyManager />
-        </>
-      ) : (
-        <div>Loading...</div>
-      )}
+        ) : (
+          <>
+            <Countdown />
+            <WordManagerWrapper>
+              <WordManager />
+            </WordManagerWrapper>
+            <KeyManager />
+          </>
+        )}
+        <NewTest />
+      </>
     </Flex>
   )
 }

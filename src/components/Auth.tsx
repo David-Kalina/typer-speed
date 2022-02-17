@@ -16,7 +16,7 @@ function Auth() {
       direction={['column', 'column', 'row', 'row']}
       mx="auto"
       h="100%"
-      align={['center', 'center', 'stretch', 'stretch']}
+      align={['center', 'center', 'center', 'center']}
       justifyContent={['center', 'center', 'space-between', 'space-between']}
     >
       <Register />
