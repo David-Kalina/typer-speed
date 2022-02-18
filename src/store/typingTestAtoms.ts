@@ -6,7 +6,11 @@ import { caretElementAtom, currentCharacterElementAtom, currentWordElementAtom }
 import { resultsAtom } from './resultsAtoms'
 import { wordIndexAtom, wordsAtom } from './wordAtoms'
 
+export const traversingExtraAtom = atom(false)
+
 export const themeAtom = atomWithStorage<string>('theme', 'mountainHaze')
+
+export const settingsOpenAtom = atom(false)
 
 export const wordHeightAtom = atom<number>(0)
 

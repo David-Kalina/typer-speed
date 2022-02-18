@@ -1,10 +1,11 @@
 import { Flex, HStack, Text, useBreakpoint } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
+import { useUpdateAtom } from 'jotai/utils'
 import React from 'react'
-import { FiLogOut } from 'react-icons/fi'
+import { FiLogOut, FiSettings, FiUser } from 'react-icons/fi'
 import { Link, useLocation } from 'react-location'
 import { useAuth } from '../contexts/AuthContext'
-import { themeAtom } from '../store/typingTestAtoms'
+import { settingsOpenAtom, themeAtom } from '../store/typingTestAtoms'
 import Logo from './Logo'
 import MobileHeader from './MobileHeader'
 import SetTestTime from './SetTestTime'
@@ -18,22 +19,24 @@ function Header() {
 
   const [theme] = useAtom(themeAtom)
 
+  const setSettingsOpen = useUpdateAtom(settingsOpenAtom)
+
   if (breakpoint === 'base' || breakpoint === 'xs' || breakpoint === 'sm' || breakpoint === 'md') {
     return <MobileHeader />
   } else {
     return (
       <HStack w="100%" py="12" px={['12', '12', 0]} justifyContent="space-between" color={`${theme}.300`}>
-        <HStack spacing={6}>
+        <HStack spacing={4}>
           <Logo />
           <Link to="/"></Link>
-          {/* <Link to={user?.email ? '/account' : '/login'}>
+          <Link to={user?.email ? '/account' : '/login'}>
             <Flex align="center" cursor="pointer" pos="relative">
               <FiUser />
-              <Text ml="4px" fontSize="xs">
-                {user?.email} {!user?.email ? 'sign in' : null}
-              </Text>
             </Flex>
-          </Link> */}
+          </Link>
+          <Flex cursor="pointer" onClick={() => setSettingsOpen(true)}>
+            <FiSettings />
+          </Flex>
         </HStack>
         <HStack spacing={4}>
           <SetTestTime />

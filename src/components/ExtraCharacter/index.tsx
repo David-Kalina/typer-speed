@@ -11,10 +11,6 @@ const Index = React.memo(({ value }: Character) => {
   useEffect(() => {
     const { current } = ref
     if (current) setCurrentExtraCharacterElement(current)
-
-    return () => {
-      setCurrentExtraCharacterElement(null)
-    }
   }, [setCurrentExtraCharacterElement])
 
   return (

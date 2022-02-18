@@ -16,7 +16,7 @@ function Account() {
 
   if (user?.email) {
     return (
-      <VStack w="100%" h="100%" align="stretch" spacing={8}>
+      <VStack w="100%" minH="100vh" h="max-content" align="stretch" spacing={8}>
         <AccountStats />
         <Text textAlign="center" fontSize={['sm', 'md', 'lg', 'xl']} color={`${theme}.300`}>
           Account created {user?.metadata.creationTime}

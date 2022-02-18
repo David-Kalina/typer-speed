@@ -1,5 +1,9 @@
+import { addDoc, doc, increment, setDoc } from 'firebase/firestore'
 import { atom } from 'jotai'
 import { atomWithReset } from 'jotai/utils'
+import { db, testsRef } from '../firebase'
+import { userAtom } from './firebaseAtoms'
+import { testIdAtom } from './typingTestAtoms'
 
 interface ResultType {
   testTime: number
@@ -58,6 +62,42 @@ export const getAccuracyDataAtom = atom(get => {
   return {
     accuracy: Math.round(totalAccuracy / accuracyData.length),
   }
+})
+
+export const addToFirebaseResultAtom = atom(null, async get => {
+  const user = get(userAtom)
+  const accuracy = get(getAccuracyDataAtom)
+  const wpm = get(getWPMDataAtom)
+  const recap = get(getRecapDataAtom)
+  const seconds = get(resultsAtom).length
+  const testId = get(testIdAtom)
+
+  console.log(user)
+
+  await addDoc(testsRef, {
+    testId,
+    email: user?.email,
+    recap: recap,
+    wpm: wpm.wpm,
+    accuracy: accuracy.accuracy,
+    seconds: seconds,
+    date: {
+      seconds: Date.now() / 1000,
+      nanoseconds: Date.now() / 1000000,
+    },
+  }).catch(err => console.log(err))
+
+  const statsRef = doc(db, 'stats', user?.email as string)
+
+  await setDoc(
+    statsRef,
+    {
+      testsTaken: increment(1),
+      testsCompleted: increment(1),
+      timeTyping: increment(seconds),
+    },
+    { merge: true }
+  ).catch(err => console.log(err))
 })
 
 // export const getMostMissedWordAtom = atom(get => {

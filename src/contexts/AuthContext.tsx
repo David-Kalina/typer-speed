@@ -8,8 +8,10 @@ import {
   UserCredential,
 } from 'firebase/auth'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import { useAtom } from 'jotai'
+import React, { createContext, useContext, useEffect } from 'react'
 import { auth, db, provider } from '../firebase'
+import { userAtom } from '../store/firebaseAtoms'
 
 export interface SignUpData {
   email: string
@@ -33,19 +35,10 @@ const AuthContext = createContext<{
 
 export const useAuth = () => useContext(AuthContext)
 
-export const AuthProvider = ({
-  children,
-}: {
-  children: React.ReactNode | React.ReactNode[]
-}) => {
-  const [user, setUser] = useState<User | null>(null)
+export const AuthProvider = ({ children }: { children: React.ReactNode | React.ReactNode[] }) => {
+  const [user, setUser] = useAtom(userAtom)
 
-  const signUp = async ({
-    email,
-    password,
-    verifyEmail,
-    verifyPassword,
-  }: SignUpData) => {
+  const signUp = async ({ email, password, verifyEmail, verifyPassword }: SignUpData) => {
     if (password !== verifyPassword) {
       throw "Passwords don't match"
     }
@@ -110,7 +103,7 @@ export const AuthProvider = ({
     })
 
     return unsubscribe
-  }, [])
+  }, [setUser])
 
   const value = {
     user,

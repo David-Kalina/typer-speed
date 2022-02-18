@@ -4,11 +4,11 @@ import { Link } from 'react-location'
 
 function Index() {
   return (
-    <Link to="/">
-      <Flex align="center" cursor="pointer" fontSize="lg">
+    <Flex align="center" cursor="pointer" fontSize="lg">
+      <Link to="/">
         <Text ml="4px">Typer Speed</Text>
-      </Flex>
-    </Link>
+      </Link>
+    </Flex>
   )
 }
 

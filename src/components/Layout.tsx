@@ -8,7 +8,7 @@ import Header from './Header'
 function Layout({ children }: { children: React.ReactNode[] | React.ReactNode }) {
   const [theme] = useAtom(themeAtom)
   return (
-    <Flex mx="auto" align="start" h="100vh" bg={`${theme}.100`} flexDir="column">
+    <Flex mx="auto" align="start" minH="100vh" h="max-content" bg={`${theme}.100`} flexDir="column" p={['8', '0']}>
       <Flex
         flexDir="column"
         mx="auto"

@@ -12,6 +12,7 @@ function Index({ children }: { children: React.ReactNode | React.ReactNode[] }) 
   return (
     <Box
       ref={ref}
+      borderRadius="md"
       fontFamily="Roboto Mono"
       className="word-manager-wrapper"
       position="relative"
@@ -20,7 +21,7 @@ function Index({ children }: { children: React.ReactNode | React.ReactNode[] }) 
       w="100%"
       h="5.0625em"
     >
-      <Caret delay={75} />
+      <Caret delay={90} />
       {children}
     </Box>
   )

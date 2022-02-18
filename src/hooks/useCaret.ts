@@ -8,7 +8,7 @@ import {
   currentExtraCharacterElementAtom,
   currentWordElementAtom,
 } from '../store/elementAtoms'
-import { testIdAtom, testStartedAtom } from '../store/typingTestAtoms'
+import { testIdAtom, testStartedAtom, traversingExtraAtom } from '../store/typingTestAtoms'
 
 export const useCaret = () => {
   const [current, setCurrent] = useAtom(currentCharacterElementAtom)
@@ -17,7 +17,7 @@ export const useCaret = () => {
   const [currentWordElement, setCurrentWordElement] = useAtom(currentWordElementAtom)
   const [caret] = useAtom(caretElementAtom)
   const setPosition = useUpdateAtom(updateCaretPositionAtom)
-  const [traversingExtra, setTraversingExtra] = useState(false)
+  const [traversingExtra, setTraversingExtra] = useAtom(traversingExtraAtom)
   const [testStarted] = useAtom(testStartedAtom)
   const setCharElement = useUpdateAtom(currentCharacterElementAtom)
   const setWordElement = useUpdateAtom(currentWordElementAtom)
@@ -96,16 +96,16 @@ export const useCaret = () => {
 
   useEffect(() => {
     if (previousPosition.length <= 1) setTraversingExtra(false)
-  }, [traversingExtra, previousPosition])
+  }, [traversingExtra, previousPosition, setTraversingExtra])
 
   useEffect(() => {
     setTraversingExtra(false)
     setPreviousPosition([{ top: 0, left: 0 }])
-  }, [currentWordElement])
+  }, [currentWordElement, setTraversingExtra])
 
   useEffect(() => {
     if (currentExtra) setTraversingExtra(true)
-  }, [currentExtra])
+  }, [currentExtra, setTraversingExtra])
 
   useEffect(() => {
     if (currentExtra)

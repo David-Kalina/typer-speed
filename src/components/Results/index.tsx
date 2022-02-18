@@ -1,52 +1,48 @@
 import { Flex, Stat, StatLabel, StatNumber, useTheme, VStack } from '@chakra-ui/react'
+import { getDocs, query, where } from 'firebase/firestore'
 import { useAtom } from 'jotai'
-import React from 'react'
-import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
-import { getAccuracyDataAtom, getRecapDataAtom, getWPMDataAtom } from '../../store/resultsAtoms'
-import { testFinishedAtom, themeAtom } from '../../store/typingTestAtoms'
+import React, { useEffect, useState } from 'react'
+import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recharts'
+import { useAuth } from '../../contexts/AuthContext'
+import { testsRef } from '../../firebase'
+import { testIdAtom, themeAtom } from '../../store/typingTestAtoms'
 
 function Index() {
-  const [testFinished] = useAtom(testFinishedAtom)
-  // const { user } = useAuth()
-  const [recapData] = useAtom(getRecapDataAtom)
-  const [averageWPM] = useAtom(getWPMDataAtom)
-  const [averageAccuracy] = useAtom(getAccuracyDataAtom)
+  const { user } = useAuth()
+
   const [theme] = useAtom(themeAtom)
+
+  const [data, setData] = useState<any>({
+    recap: [],
+    averageWPM: 0,
+    accuracy: 0,
+  })
 
   const chakraTheme = useTheme()
 
-  // useEffect(() => {
-  //   if (user && user.email) {
-  //     addDoc(testsRef, {
-  //       email: user?.email,
-  //       recap: recapData,
-  //       wpm: averageWPM,
-  //       accuracy: averageAccuracy,
-  //       seconds: 60,
-  //       date: {
-  //         seconds: Date.now() / 1000,
-  //         nanoseconds: Date.now() / 1000000,
-  //       },
-  //     })
-  //   }
-  //   const statsRef = doc(db, 'stats', user?.email as string)
+  const [testId] = useAtom(testIdAtom)
 
-  //   setDoc(
-  //     statsRef,
-  //     {
-  //       testsTaken: increment(1),
-  //       testsCompleted: increment(1),
-  //       timeTyping: increment(15),
-  //     },
-  //     { merge: true }
-  //   )
-  // }, [averageAccuracy, averageWPM, recapData, user])
+  useEffect(() => {
+    const q = query(testsRef, where('email', '==', user?.email), where('testId', '==', testId))
+
+    getDocs(q)
+      .then(snapshot => {
+        const data = snapshot.docs.map(doc => doc.data())
+        console.log(data)
+        setData({
+          recap: data[0].recap,
+          averageWPM: data[0].wpm,
+          accuracy: data[0].accuracy,
+        })
+      })
+      .catch(err => console.error(err))
+  }, [testId, user?.email])
 
   return (
     <Flex p="4em" flexDir="row-reverse" fontSize="0.25em">
-      {testFinished && recapData.length > 0 ? (
+      {data.recap.length > 0 ? (
         <ResponsiveContainer width="100%" height={300} maxHeight={300}>
-          <LineChart data={recapData}>
+          <LineChart data={data?.recap}>
             <CartesianGrid stroke={`${chakraTheme.colors[theme][200]}`} strokeDasharray="3, 3" />
             <XAxis dataKey="seconds" />
             <YAxis dataKey="wpm" yAxisId="left" />
@@ -67,12 +63,12 @@ function Index() {
       <VStack align="stretch" justify="space-between" h="100%" color={`${chakraTheme.colors[theme][200]}`}>
         <Stat>
           <StatLabel>Average WPM</StatLabel>
-          <StatNumber>{averageWPM.wpm}</StatNumber>
+          <StatNumber>{data?.wpm}</StatNumber>
         </Stat>
 
         <Stat>
           <StatLabel>Accuracy</StatLabel>
-          <StatNumber>{averageAccuracy.accuracy}%</StatNumber>
+          <StatNumber>{data?.accuracy}%</StatNumber>
         </Stat>
       </VStack>
     </Flex>

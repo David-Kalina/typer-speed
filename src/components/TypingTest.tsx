@@ -6,6 +6,7 @@ import Countdown from './Countdown'
 import KeyManager from './KeyManager'
 import NewTest from './NewTest'
 import Results from './Results'
+import SettingsModal from './SettingsModal'
 import WordManager from './WordManager'
 import WordManagerWrapper from './WordManagerWrapper'
 
@@ -28,6 +29,7 @@ function TypingTest() {
           </>
         )}
         <NewTest />
+        <SettingsModal />
       </>
     </Flex>
   )
