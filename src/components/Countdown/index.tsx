@@ -3,11 +3,17 @@ import { useAtom } from 'jotai'
 import React, { useEffect, useState } from 'react'
 import { getCharactersByStatusAtom } from '../../store/characterAtoms'
 import { addToResultsAtom } from '../../store/resultsAtoms'
-import { testFinishedAtom, testStartedAtom, testTimeAtom, themeAtom } from '../../store/typingTestAtoms'
+import {
+  elapsedTimeAtom,
+  testFinishedAtom,
+  testStartedAtom,
+  testTimeAtom,
+  themeAtom,
+} from '../../store/typingTestAtoms'
 
 function Index() {
   const [duration] = useAtom(testTimeAtom)
-  const [elapsed, setElapsed] = useState(0)
+  const [elapsed, setElapsed] = useAtom(elapsedTimeAtom)
   const [testStarted, setTestStarted] = useAtom(testStartedAtom)
   const [, getCharactersByStatus] = useAtom(getCharactersByStatusAtom)
   const [, addToResults] = useAtom(addToResultsAtom)
@@ -30,7 +36,7 @@ function Index() {
     return () => {
       clearInterval(interval)
     }
-  }, [addToResults, duration, elapsed, getCharactersByStatus, setTestStarted, testStarted])
+  }, [addToResults, duration, elapsed, getCharactersByStatus, setElapsed, setTestStarted, testStarted])
 
   useEffect(() => {
     if (elapsed > duration) {
@@ -38,7 +44,7 @@ function Index() {
       setTestStarted(false)
       setTestFinished(true)
     }
-  }, [duration, elapsed, setTestFinished, setTestStarted])
+  }, [duration, elapsed, setElapsed, setTestFinished, setTestStarted])
 
   return (
     <Text fontSize="0.5em" minH="1.5em" pl="0.5rem" color={`${theme}.300`}>

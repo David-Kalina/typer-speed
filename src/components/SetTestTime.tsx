@@ -1,23 +1,24 @@
 import { Box, HStack, Text } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React from 'react'
-import { testTimeAtom, themeAtom } from '../store/typingTestAtoms'
+import { resetTypingTestAtom, testTimeAtom, themeAtom } from '../store/typingTestAtoms'
 
 function SetTestTime() {
   const [testTime, setTestTime] = useAtom(testTimeAtom)
   const [theme] = useAtom(themeAtom)
-
-  console.log(testTime)
+  const [, reset] = useAtom(resetTypingTestAtom)
 
   const updateTestTime = (time: number) => {
     setTestTime(time)
+    reset()
   }
 
   return (
     <Box textAlign="center">
       <HStack>
         <Text
-          p="1"
+          p="0.5em"
+          borderRadius="md"
           cursor="pointer"
           onClick={() => updateTestTime(15)}
           fontSize="sm"
@@ -26,7 +27,8 @@ function SetTestTime() {
           {15}
         </Text>
         <Text
-          p="1"
+          p="0.5em"
+          borderRadius="md"
           cursor="pointer"
           onClick={() => updateTestTime(30)}
           fontSize="sm"
@@ -35,7 +37,8 @@ function SetTestTime() {
           {30}
         </Text>
         <Text
-          p="1"
+          p="0.5em"
+          borderRadius="md"
           cursor="pointer"
           onClick={() => updateTestTime(60)}
           fontSize="sm"
@@ -44,7 +47,8 @@ function SetTestTime() {
           {60}
         </Text>
         <Text
-          p="1"
+          p="0.5em"
+          borderRadius="md"
           cursor="pointer"
           onClick={() => updateTestTime(120)}
           fontSize="sm"

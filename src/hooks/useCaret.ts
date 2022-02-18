@@ -2,14 +2,13 @@ import { useAtom } from 'jotai'
 import { useUpdateAtom } from 'jotai/utils'
 import { useEffect, useState } from 'react'
 import { updateCaretPositionAtom } from '../store/caretAtoms'
-
 import {
-  currentWordElementAtom,
-  currentExtraCharacterElementAtom,
   caretElementAtom,
   currentCharacterElementAtom,
+  currentExtraCharacterElementAtom,
+  currentWordElementAtom,
 } from '../store/elementAtoms'
-import { testStartedAtom } from '../store/typingTestAtoms'
+import { testIdAtom, testStartedAtom } from '../store/typingTestAtoms'
 
 export const useCaret = () => {
   const [current, setCurrent] = useAtom(currentCharacterElementAtom)
@@ -23,6 +22,7 @@ export const useCaret = () => {
   const setCharElement = useUpdateAtom(currentCharacterElementAtom)
   const setWordElement = useUpdateAtom(currentWordElementAtom)
   const setCaretElement = useUpdateAtom(caretElementAtom)
+  const [testId] = useAtom(testIdAtom)
   const [previousPosition, setPreviousPosition] = useState<
     {
       top: number
@@ -146,7 +146,10 @@ export const useCaret = () => {
   //   }
   // }, [current, current?.offsetLeft, current?.offsetTop, setPosition, testStarted])
 
+  //  * Mounts Caret and initializes it. Gets a reference to current word and first character.
+
   useEffect(() => {
+    console.log('Mounting Caret')
     const caret = document.querySelector('.blink') as HTMLDivElement
     if (caret && !testStarted) {
       const word = caret.nextElementSibling?.firstElementChild as HTMLDivElement
@@ -156,7 +159,7 @@ export const useCaret = () => {
       setCharElement(character)
       setPosition({ top: character.offsetTop, left: character.offsetLeft })
     }
-  }, [setCaretElement, setCharElement, setPosition, setWordElement, testStarted])
+  }, [setCaretElement, setCharElement, setPosition, setWordElement, testStarted, testId])
 
   return { forward, backward, newWord }
 }

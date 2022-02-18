@@ -1,10 +1,10 @@
 import { useAtom } from 'jotai'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { forbiddenKeys } from '../../constants/forbiddenKeys'
 import { useKeyManager } from '../../hooks/useKeyManager'
 import { caretCutOffAtom, caretPositionAtom } from '../../store/caretAtoms'
 import { characterIndexAtom } from '../../store/characterAtoms'
-import { testStartedAtom } from '../../store/typingTestAtoms'
+import { testIdAtom, testStartedAtom } from '../../store/typingTestAtoms'
 
 function Index() {
   const [testStarted, setTestStarted] = useAtom(testStartedAtom)
@@ -13,6 +13,7 @@ function Index() {
   const [characterIndex] = useAtom(characterIndexAtom)
   const [caretPosition] = useAtom(caretPositionAtom)
   const [caretCutOff] = useAtom(caretCutOffAtom)
+  const [testId] = useAtom(testIdAtom)
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (forbiddenKeys.includes(e.key)) return e.stopPropagation()
@@ -29,6 +30,10 @@ function Index() {
       return handleCharacter(e.key)
     }
   }
+
+  useEffect(() => {
+    ref.current?.focus()
+  }, [testId])
 
   return (
     <input

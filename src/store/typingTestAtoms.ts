@@ -18,6 +18,10 @@ export const elapsedTimeAtom = atom<number>(0)
 
 export const testStartedAtom = atom<boolean>(false)
 
+export const testIdAtom = atom<string>(`${Date.now()}`)
+
+export const resetAtom = atom(false)
+
 export const setTestStartedAtom = atom(
   get => get(testStartedAtom),
   (get, set) => set(testStartedAtom, true)
@@ -26,6 +30,8 @@ export const setTestStartedAtom = atom(
 export const testFinishedAtom = atom<boolean>(false)
 
 export const testTimeAtom = atomWithStorage<number>('testTime', 15)
+
+export const elapsed = atom<number>(0)
 
 export const resetTypingTestAtom = atom(
   () => '',
@@ -41,5 +47,6 @@ export const resetTypingTestAtom = atom(
     set(currentCharacterElementAtom, null)
     set(currentWordElementAtom, null)
     set(caretElementAtom, null)
+    set(testIdAtom, `${Date.now()}`)
   }
 )
