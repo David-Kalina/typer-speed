@@ -1,4 +1,3 @@
-import { useBreakpoint } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import { useUpdateAtom } from 'jotai/utils'
 import React, { useEffect } from 'react'
@@ -19,7 +18,6 @@ function Index() {
   const [testId] = useAtom(testIdAtom)
   const [settingsOpen] = useAtom(settingsOpenAtom)
   const setRef = useUpdateAtom(keyManagerAtom)
-  const breakpoint = useBreakpoint()
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (forbiddenKeys.includes(e.key)) return e.stopPropagation()
@@ -46,27 +44,14 @@ function Index() {
   }, [testId, settingsOpen])
 
   return (
-    <>
-      {breakpoint !== 'base' && breakpoint !== 'sm' ? (
-        <input
-          ref={ref}
-          className="key-manager"
-          autoFocus
-          inputMode="text"
-          onKeyDown={e => onKeyDown(e)}
-          style={{ height: 0, width: 0, display: 'inline', opacity: 0, position: 'absolute', top: 0, left: 0 }}
-        />
-      ) : (
-        <input
-          ref={ref}
-          className="key-manager"
-          autoFocus
-          inputMode="text"
-          onKeyDown={e => onKeyDown(e)}
-          style={{ display: 'inline', opacity: 1, backgroundColor: 'inherit' }}
-        />
-      )}
-    </>
+    <input
+      ref={ref}
+      className="key-manager"
+      autoFocus
+      inputMode="text"
+      onKeyDown={e => onKeyDown(e)}
+      style={{ height: 0, width: 0, display: 'inline', opacity: 0, position: 'absolute', top: 0, left: 0 }}
+    />
   )
 }
 
