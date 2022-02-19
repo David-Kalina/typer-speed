@@ -55,7 +55,7 @@ function Index() {
           autoFocus
           inputMode="text"
           onKeyDown={e => onKeyDown(e)}
-          style={{ display: 'inline', opacity: 1, position: 'absolute', top: 0, left: 0 }}
+          style={{ display: 'inline', opacity: 1 }}
         />
       )}
     </>
