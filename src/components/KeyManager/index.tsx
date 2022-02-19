@@ -1,10 +1,12 @@
 import { useBreakpoint } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
+import { useUpdateAtom } from 'jotai/utils'
 import React, { useEffect } from 'react'
 import { forbiddenKeys } from '../../constants/forbiddenKeys'
 import { useKeyManager } from '../../hooks/useKeyManager'
 import { caretCutOffAtom, caretPositionAtom } from '../../store/caretAtoms'
 import { characterIndexAtom } from '../../store/characterAtoms'
+import { keyManagerAtom } from '../../store/elementAtoms'
 import { settingsOpenAtom, testIdAtom, testStartedAtom } from '../../store/typingTestAtoms'
 
 function Index() {
@@ -16,6 +18,7 @@ function Index() {
   const [caretCutOff] = useAtom(caretCutOffAtom)
   const [testId] = useAtom(testIdAtom)
   const [settingsOpen] = useAtom(settingsOpenAtom)
+  const setRef = useUpdateAtom(keyManagerAtom)
   const breakpoint = useBreakpoint()
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -33,6 +36,10 @@ function Index() {
       return handleCharacter(e.key)
     }
   }
+
+  useEffect(() => {
+    setRef(ref.current)
+  }, [setRef])
 
   useEffect(() => {
     ref.current?.focus()
