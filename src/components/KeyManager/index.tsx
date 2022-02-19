@@ -40,6 +40,7 @@ function Index() {
       ref={ref}
       className="key-manager"
       autoFocus
+      inputMode="text"
       onKeyDown={e => onKeyDown(e)}
       style={{ height: 0, width: 0, display: 'inline', opacity: 0, position: 'absolute', top: 0, left: 0 }}
     />
