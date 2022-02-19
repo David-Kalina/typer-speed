@@ -2,6 +2,7 @@ import { Text } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React, { useEffect } from 'react'
 import { getCharactersByStatusAtom } from '../../store/characterAtoms'
+import { userAtom } from '../../store/firebaseAtoms'
 import { addToFirebaseResultAtom, addToResultsAtom } from '../../store/resultsAtoms'
 import {
   elapsedTimeAtom,
@@ -20,6 +21,7 @@ function Index() {
   const [, setTestFinished] = useAtom(testFinishedAtom)
   const [, setFirebaseResults] = useAtom(addToFirebaseResultAtom)
   const [theme] = useAtom(themeAtom)
+  const [user] = useAtom(userAtom)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -44,9 +46,9 @@ function Index() {
       setElapsed(0)
       setTestStarted(false)
       setTestFinished(true)
-      setFirebaseResults()
+      user ? setFirebaseResults() : null
     }
-  }, [duration, elapsed, setElapsed, setFirebaseResults, setTestFinished, setTestStarted])
+  }, [duration, elapsed, setElapsed, setFirebaseResults, setTestFinished, setTestStarted, user])
 
   return (
     <Text fontSize="0.5em" minH="1.5em" pl="0.5rem" color={`${theme}.300`}>

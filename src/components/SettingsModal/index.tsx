@@ -60,43 +60,7 @@ function Index() {
               borderBottom={currentBody === 2 ? '1px solid grey' : 'none'}
               borderRadius="none"
             >
-              time
-            </Button>
-            <Button
-              _focus={{ borderX: 'none', borderTop: 'none' }}
-              _hover={{ bg: 'inherit', borderBottom: '1px solid grey' }}
-              flex={1}
-              bg={`${theme}.100`}
-              onClick={() => setCurrentBody(3)}
-              size="sm"
-              borderBottom={currentBody === 3 ? '1px solid grey' : 'none'}
-              borderRadius="none"
-            >
               theme
-            </Button>
-            <Button
-              _focus={{ borderX: 'none', borderTop: 'none' }}
-              _hover={{ bg: 'inherit', borderBottom: '1px solid grey' }}
-              flex={1}
-              bg={`${theme}.100`}
-              onClick={() => setCurrentBody(4)}
-              size="sm"
-              borderBottom={currentBody === 4 ? '1px solid grey' : 'none'}
-              borderRadius="none"
-            >
-              words
-            </Button>
-            <Button
-              _focus={{ borderX: 'none', borderTop: 'none' }}
-              _hover={{ bg: 'inherit', borderBottom: '1px solid grey' }}
-              flex={1}
-              bg={`${theme}.100`}
-              onClick={() => setCurrentBody(5)}
-              size="sm"
-              borderBottom={currentBody === 5 ? '1px solid grey' : 'none'}
-              borderRadius="none"
-            >
-              account
             </Button>
             <IconButton
               aria-label="close"

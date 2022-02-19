@@ -1,13 +1,11 @@
 import { Flex, HStack, Link, Text, useBreakpoint, VStack } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React from 'react'
-import { FiServer } from 'react-icons/fi'
-import { GoBrowser } from 'react-icons/go'
+import { GoLogoGithub } from 'react-icons/go'
 import { themeAtom } from '../store/typingTestAtoms'
 
 function Footer() {
   const breakpoint = useBreakpoint()
-
   const [theme] = useAtom(themeAtom)
 
   if (breakpoint === 'md' || breakpoint === 'lg' || breakpoint === 'xl' || breakpoint === '2xl') {
@@ -19,14 +17,8 @@ function Footer() {
           isExternal
         >
           <Flex align="center">
-            <GoBrowser />
-            <Text ml="4px">client github</Text>
-          </Flex>
-        </Link>
-        <Link cursor="pointer" href="https://github.com/David-Kalina/typing-speed-test-server" isExternal>
-          <Flex align="center">
-            <FiServer />
-            <Text ml="4px">server github</Text>
+            <GoLogoGithub />
+            <Text ml="4px">github</Text>
           </Flex>
         </Link>
       </HStack>
@@ -40,14 +32,8 @@ function Footer() {
           isExternal
         >
           <Flex align="center">
-            <GoBrowser />
-            <Text ml="4px">client github</Text>
-          </Flex>
-        </Link>
-        <Link cursor="pointer" href="https://github.com/David-Kalina/typing-speed-test-server" isExternal>
-          <Flex align="center" color="white">
-            <FiServer />
-            <Text ml="4px">server github</Text>
+            <GoLogoGithub />
+            <Text ml="4px">github</Text>
           </Flex>
         </Link>
       </VStack>

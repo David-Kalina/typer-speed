@@ -12,15 +12,10 @@ import SetTestTime from './SetTestTime'
 
 function Header() {
   const { user, signOutUser } = useAuth()
-
   const { current } = useLocation()
-
   const breakpoint = useBreakpoint()
-
   const [theme] = useAtom(themeAtom)
-
   const setSettingsOpen = useUpdateAtom(settingsOpenAtom)
-
   if (breakpoint === 'base' || breakpoint === 'xs' || breakpoint === 'sm' || breakpoint === 'md') {
     return <MobileHeader />
   } else {

@@ -4,7 +4,6 @@ import React, { useRef } from 'react'
 import { useResize } from '../../hooks/useResize'
 import { useScroll } from '../../hooks/useScroll'
 import { caretSettingsAtom } from '../../store/caretAtoms'
-import { fontFamilyAtom } from '../../store/typingTestAtoms'
 import Caret from '../Caret'
 
 function Index({ children }: { children: React.ReactNode | React.ReactNode[] }) {

@@ -2,25 +2,15 @@ import { Box, Stack, Text } from '@chakra-ui/react'
 import { doc, getDoc } from 'firebase/firestore'
 import { useAtom } from 'jotai'
 import React, { useEffect, useState } from 'react'
+import { accountStats } from '../constants/accountStats'
 import { useAuth } from '../contexts/AuthContext'
 import { db } from '../firebase'
 import { themeAtom } from '../store/typingTestAtoms'
 
-interface AccountStatData {
-  email: string
-  averageWPM: number
-  averageAccuracy: number
-  testsTaken: number
-  testsCompleted: number
-  timeTyping: number
-}
-
 function AccountStats() {
   const { user } = useAuth()
-
   const [theme] = useAtom(themeAtom)
-
-  const [statData, setStatData] = useState<AccountStatData>({
+  const [statData, setStatData] = useState<any>({
     email: '',
     averageWPM: 0,
     averageAccuracy: 0,
@@ -36,10 +26,17 @@ function AccountStats() {
 
     getDoc(statRef)
       .then(snapshot => {
-        setStatData(snapshot.data() as AccountStatData)
+        setStatData(snapshot.data())
       })
       .then(() => setLoading(false))
   }, [user?.email])
+
+  const renderStats = Object.values(accountStats).map(({ key, name }) => (
+    <Box key={key}>
+      <Text>{name}</Text>
+      <Text fontSize={['5xl']}>{statData[key]}</Text>
+    </Box>
+  ))
 
   return (
     <Stack
@@ -49,25 +46,7 @@ function AccountStats() {
       wrap="wrap"
       color={`${theme}.textLight`}
     >
-      {!loading && statData ? (
-        <>
-          <Box>
-            <Text>tests taken</Text>
-            <Text fontSize={['5xl']}>{statData.testsTaken}</Text>
-          </Box>
-          <Box>
-            <Text>tests completed</Text>
-            <Text fontSize={['5xl']}>{statData.testsCompleted}</Text>
-          </Box>
-          <Box>
-            <Text>time typing</Text>
-            <Text fontSize={['5xl']}>{statData.timeTyping}s</Text>
-          </Box>
-        </>
-      ) : (
-        <Text>Loading...</Text>
-      )}
-      )
+      {!loading && statData ? <>{renderStats}</> : <Text>Loading...</Text>})
     </Stack>
   )
 }

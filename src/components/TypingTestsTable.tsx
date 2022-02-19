@@ -11,20 +11,19 @@ import {
   TableCaption,
   Tbody,
   Td,
-  Th,
-  Thead,
   Tr,
   useBreakpoint,
 } from '@chakra-ui/react'
 import { getDocs, limit, orderBy, query, where } from 'firebase/firestore'
 import { useAtom } from 'jotai'
 import React, { useEffect, useState } from 'react'
-import { ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Legend, Line, Tooltip } from 'recharts'
-import { useAuth } from '../contexts/AuthContext'
 import { testsRef } from '../firebase'
 import { useToggle } from '../hooks/useToggle'
 import { userAtom } from '../store/firebaseAtoms'
 import { themeAtom } from '../store/typingTestAtoms'
+import ResultsChart from './ResultsChart'
+import TableFilters from './TableFilters'
+import TableHeads from './TableHeads'
 
 interface TypingTestData {
   email: string
@@ -40,30 +39,21 @@ interface TypingTestData {
     seconds: number
     incorrect: number
   }[]
+  testId: string
 }
 
 function TypingTestsTable() {
   const [user] = useAtom(userAtom)
-
+  const [theme] = useAtom(themeAtom)
+  const breakpoint = useBreakpoint()
   const [tableData, setTableData] = useState<TypingTestData[]>([])
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState('date')
-  const breakpoint = useBreakpoint()
-  const [theme] = useAtom(themeAtom)
-
-  const [recapData, setRecapData] = useState<
-    {
-      wpm: number
-      seconds: number
-      incorrect: number
-    }[]
-  >([])
-
+  const [testId, setTestId] = useState('')
   const [toggleChart, setToggleChart] = useToggle(false)
 
   const toggleFilter = (filter: string) => {
     setFilter(filter)
-    console.log(tableData)
   }
 
   useEffect(() => {
@@ -90,7 +80,7 @@ function TypingTestsTable() {
           bg={`${theme}.400`}
           onClick={() => {
             setToggleChart(true)
-            setRecapData(test.recap)
+            setTestId(test.testId)
           }}
         >
           view chart
@@ -102,39 +92,7 @@ function TypingTestsTable() {
   return (
     <>
       <Flex flexDir="column" justify="center" h="100%">
-        <Flex alignSelf="flex-end">
-          <Button
-            fontSize="sm"
-            _focus={{ border: 'none' }}
-            onClick={() => toggleFilter('wpm')}
-            borderRightRadius="none"
-            color={filter !== `wpm` ? `black` : `${theme}.textLight`}
-            bg={filter !== 'wpm' ? `${theme}.100` : `${theme}.300`}
-          >
-            WPM
-          </Button>
-          <Button
-            fontSize="sm"
-            _focus={{ border: 'none' }}
-            onClick={() => toggleFilter('date')}
-            borderLeftRadius="none"
-            borderRightRadius="none"
-            color={filter !== `date` ? `black` : `${theme}.textLight`}
-            bg={filter !== 'date' ? `${theme}.300` : `${theme}.300`}
-          >
-            Date
-          </Button>
-          <Button
-            fontSize="sm"
-            _focus={{ border: 'none' }}
-            onClick={() => toggleFilter('accuracy')}
-            borderLeftRadius="none"
-            color={filter !== `accuracy` ? `black` : `${theme}.textLight`}
-            bg={filter !== 'accuracy' ? `${theme}.100` : `${theme}.300`}
-          >
-            Acc
-          </Button>
-        </Flex>
+        <TableFilters tableFilter={filter} toggleFilter={toggleFilter} />
 
         {!loading && tableRows ? (
           <Table
@@ -145,15 +103,7 @@ function TypingTestsTable() {
             <TableCaption textAlign="left" p={0} placement="top" mb="2" color={`${theme}.text`}>
               Recent Typing Tests
             </TableCaption>
-            <Thead>
-              <Tr>
-                <Th color={`${theme}.text`}>time</Th>
-                <Th color={`${theme}.text`}>wpm</Th>
-                <Th color={`${theme}.text`}>accuracy</Th>
-                <Th color={`${theme}.text`}>date</Th>
-                <Th color={`${theme}.text`}>recap</Th>
-              </Tr>
-            </Thead>
+            <TableHeads />
             <Tbody>{tableRows}</Tbody>
           </Table>
         ) : (
@@ -165,18 +115,7 @@ function TypingTestsTable() {
           <ModalCloseButton color={`${theme}.text`} />
           <ModalHeader color={`${theme}.text`}>Recap</ModalHeader>
           <ModalBody p="5em">
-            <ResponsiveContainer width="100%" height={300} maxHeight={300}>
-              <LineChart data={recapData}>
-                <CartesianGrid stroke={`${[theme]}.text`} strokeDasharray="3, 3" />
-                <XAxis dataKey="seconds" />
-                <YAxis dataKey="wpm" yAxisId="left" />
-                <YAxis dataKey="incorrect" yAxisId="right" orientation="right" />
-                <Tooltip />
-                <Legend />
-                <Line type="monotone" yAxisId="left" dataKey="wpm" fill={`${[theme]}.text`} />
-                <Line yAxisId="right" type="monotone" dataKey="incorrect" stroke={`${theme}.text`} />
-              </LineChart>
-            </ResponsiveContainer>
+            <ResultsChart testId={testId} />
           </ModalBody>
         </ModalContent>
       </Modal>

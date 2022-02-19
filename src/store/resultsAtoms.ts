@@ -72,8 +72,6 @@ export const addToFirebaseResultAtom = atom(null, async get => {
   const seconds = get(resultsAtom).length
   const testId = get(testIdAtom)
 
-  console.log(user)
-
   await addDoc(testsRef, {
     testId,
     email: user?.email,
@@ -98,6 +96,22 @@ export const addToFirebaseResultAtom = atom(null, async get => {
     },
     { merge: true }
   ).catch(err => console.log(err))
+})
+
+export const getResultsAtom = atom(get => {
+  const accuracy = get(getAccuracyDataAtom).accuracy
+  const wpm = get(getWPMDataAtom).wpm
+  const recap = get(getRecapDataAtom)
+  const seconds = get(resultsAtom).length
+  const testId = get(testIdAtom)
+
+  return {
+    testId,
+    recap,
+    wpm,
+    accuracy,
+    seconds,
+  }
 })
 
 // export const getMostMissedWordAtom = atom(get => {

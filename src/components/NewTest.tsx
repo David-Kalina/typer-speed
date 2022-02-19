@@ -8,17 +8,13 @@ const NewTest: React.FC = () => {
   const [, reset] = useAtom(resetTypingTestAtom)
   const [theme] = useAtom(themeAtom)
 
-  const resetTest = () => {
-    reset()
-  }
-
   return (
     <Flex>
       <Icon
         cursor="pointer"
         as={VscDebugRestart}
         fontSize="0.7em"
-        onClick={resetTest}
+        onClick={reset}
         mt="1rem"
         mx="auto"
         color={`${theme}.textLight`}
