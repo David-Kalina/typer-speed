@@ -5,7 +5,7 @@ import { forbiddenKeys } from '../../constants/forbiddenKeys'
 import { useKeyManager } from '../../hooks/useKeyManager'
 import { caretCutOffAtom, caretPositionAtom } from '../../store/caretAtoms'
 import { characterIndexAtom } from '../../store/characterAtoms'
-import { testIdAtom, testStartedAtom } from '../../store/typingTestAtoms'
+import { settingsOpenAtom, testIdAtom, testStartedAtom } from '../../store/typingTestAtoms'
 
 function Index() {
   const [testStarted, setTestStarted] = useAtom(testStartedAtom)
@@ -15,6 +15,7 @@ function Index() {
   const [caretPosition] = useAtom(caretPositionAtom)
   const [caretCutOff] = useAtom(caretCutOffAtom)
   const [testId] = useAtom(testIdAtom)
+  const [settingsOpen] = useAtom(settingsOpenAtom)
   const breakpoint = useBreakpoint()
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -35,7 +36,7 @@ function Index() {
 
   useEffect(() => {
     ref.current?.focus()
-  }, [testId])
+  }, [testId, settingsOpen])
 
   return (
     <>
