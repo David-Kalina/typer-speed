@@ -70,12 +70,21 @@ function TypingTestsTable() {
 
   const tableRows = tableData?.map((test, idx) => (
     <Tr key={idx} fontWeight="bold">
-      <Td color={`${theme}.text`}>{test.seconds}s</Td>
-      <Td color={`${theme}.text`}>{test.wpm}</Td>
-      <Td color={`${theme}.text`}>{test.accuracy}%</Td>
-      <Td color={`${theme}.text`}>{new Date(test.date.seconds * 1000).toLocaleDateString('en-US')}</Td>
+      <Td fontSize={['xs', 'sm', 'md', 'lg']} color={`${theme}.text`}>
+        {test.seconds}s
+      </Td>
+      <Td fontSize={['xs', 'sm', 'md', 'lg']} color={`${theme}.text`}>
+        {test.wpm}
+      </Td>
+      <Td fontSize={['xs', 'sm', 'md', 'lg']} color={`${theme}.text`}>
+        {test.accuracy}%
+      </Td>
+      <Td fontSize={['xs', 'sm', 'md', 'lg']} color={`${theme}.text`}>
+        {new Date(test.date.seconds * 1000).toLocaleDateString('en-US')}
+      </Td>
       <Td>
         <Button
+          fontSize={['xs', 'sm', 'md', 'lg']}
           color="white"
           bg={`${theme}.400`}
           onClick={() => {

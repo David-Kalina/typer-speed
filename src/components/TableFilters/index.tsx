@@ -17,6 +17,7 @@ function Index({ toggleFilter, tableFilter }: TableFiltersProps) {
       <Button
         key={filter}
         fontSize="sm"
+        size="sm"
         _focus={{ border: 'none' }}
         onClick={() => toggleFilter(filter)}
         borderLeftRadius="none"

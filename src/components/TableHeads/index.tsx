@@ -9,7 +9,7 @@ function Index() {
   const [theme] = useAtom(themeAtom)
 
   const renderTableHeads = Object.values(tableHeads).map(tableHead => (
-    <Th key={tableHead} color={`${theme}.text`}>
+    <Th fontSize={['xs', 'sm', 'md', 'lg']} key={tableHead} color={`${theme}.text`}>
       {tableHead}
     </Th>
   ))
