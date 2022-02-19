@@ -25,50 +25,31 @@ function Register() {
       {error && <Text color="red.200">{error}</Text>}
       <VStack spacing={2} justify="space-evenly" align="stretch" minH="300px" height="max">
         <Text fontSize="sm">register</Text>
-        <Input
-          _placeholder={{ color: `${theme}.200` }}
-          {...register('email', { required: 'required' })}
-          type="email"
-          placeholder="email"
-        />
+        <Input {...register('email', { required: 'required' })} type="email" placeholder="email" />
         {errors.email && (
           <Text color="red.200" fontSize="xs">
             {errors.email.message}
           </Text>
         )}
-        <Input
-          _placeholder={{ color: `${theme}.200` }}
-          {...register('verifyEmail', { required: 'required' })}
-          placeholder="verify email"
-        />
+        <Input {...register('verifyEmail', { required: 'required' })} placeholder="verify email" />
         {errors.verifyEmail && (
           <Text color="red.200" fontSize="xs">
             {errors.verifyEmail.message}
           </Text>
         )}
-        <Input
-          _placeholder={{ color: `${theme}.200` }}
-          {...register('password', { required: 'required' })}
-          type="password"
-          placeholder="password"
-        />
+        <Input {...register('password', { required: 'required' })} type="password" placeholder="password" />
         {errors.verifyPassword && (
           <Text color="red.200" fontSize="xs">
             {errors.verifyPassword.message}
           </Text>
         )}
         <Input
-          _placeholder={{ color: `${theme}.200` }}
           {...register('verifyPassword', { required: 'required' })}
           type="password"
           placeholder="verify password"
         />
-        {errors.verifyPassword && (
-          <Text color="red.200" fontSize="xs">
-            {errors.verifyPassword.message}
-          </Text>
-        )}
-        <Button type="submit" bg={`${theme}.200`}>
+        {errors.verifyPassword && <Text fontSize="xs">{errors.verifyPassword.message}</Text>}
+        <Button type="submit" bg={`${theme}.300`} color={`${theme}.textDark`}>
           register
         </Button>
       </VStack>

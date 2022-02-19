@@ -14,7 +14,6 @@ import { useAtom } from 'jotai'
 import React from 'react'
 import { caretSettingsAtom } from '../../store/caretAtoms'
 import { themeAtom } from '../../store/typingTestAtoms'
-import SettingsCaret from '../SettingsCaret'
 
 function CaretBody() {
   const [caretSettings, setCaretSettings] = useAtom(caretSettingsAtom)
@@ -81,16 +80,6 @@ function CaretBody() {
             </FormControl>
           </Stack>
         </Box>
-        <Box flex={1} />
-        <Flex align="center" justify="center" flex={3} borderRadius="sm" border="2px solid white">
-          <SettingsCaret
-            color={caretSettings.color}
-            height={caretSettings.height}
-            width={caretSettings.width}
-            opacity={caretSettings.opacity}
-            delay={100}
-          />
-        </Flex>
       </Flex>
     </>
   )

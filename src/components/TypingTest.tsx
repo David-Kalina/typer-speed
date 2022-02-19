@@ -26,7 +26,7 @@ function TypingTest() {
   }, [fontSize, time, theme, reset, pathname])
 
   return (
-    <Flex flexDir="column" w="100%" className="typing-test" fontSize={`${fontSize}em`}>
+    <Flex flexDir="column" w="100%" className="typing-test" fontSize={`${fontSize}em`} mt={['2em', 0]}>
       <>
         {testFinished ? (
           <Results />

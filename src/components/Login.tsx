@@ -25,29 +25,16 @@ function Login() {
           <Text fontSize="sm">login</Text>
           <Text fontSize="sm">forgot password?</Text>
         </Flex>
-        <Input
-          _placeholder={{ color: `${theme}.200` }}
-          {...register('email', { required: 'required' })}
-          type="email"
-          placeholder="email"
-        />
-        {errors.email && (
-          <Text color="red.200" fontSize="xs">
-            {errors.email.message}
-          </Text>
-        )}
-        <Input
-          _placeholder={{ color: `${theme}.200` }}
-          {...register('password', { required: 'required' })}
-          type="password"
-          placeholder="password"
-        />
-        <Button type="submit" bg={`${theme}.200`}>
+        <Input {...register('email', { required: 'required' })} type="email" placeholder="email" />
+        {errors.email && <Text fontSize="xs">{errors.email.message}</Text>}
+        <Input {...register('password', { required: 'required' })} type="password" placeholder="password" />
+        <Button color={`${theme}.textDark`} type="submit" bg={`${theme}.300`}>
           login
         </Button>
         <Text textAlign="center">or</Text>
         <IconButton
-          bg={`${theme}.200`}
+          bg={`${theme}.300`}
+          color={`${theme}.textDark`}
           onClick={signInWithGoogle}
           aria-label="google sign in method"
           icon={<IoLogoGoogle />}

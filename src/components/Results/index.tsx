@@ -9,7 +9,7 @@ function Index() {
   const [testId] = useAtom(testIdAtom)
 
   return (
-    <Flex p="4em" flexDir="row-reverse" fontSize="0.4em">
+    <Flex p={[0, '4em']} flexDir={['column', 'row-reverse']} fontSize="0.4em">
       <ResultsChart testId={testId} />
       <ResultsText testId={testId} />
     </Flex>
