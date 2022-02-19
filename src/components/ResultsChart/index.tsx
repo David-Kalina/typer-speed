@@ -31,10 +31,6 @@ function Index({ testId }: { testId: string }) {
       .then(() => setLoading(false))
   }, [testId, user?.email])
 
-  useEffect(() => {
-    console.log(data)
-  }, [data])
-
   return (
     <Flex flex={1}>
       {!loading && data ? (
