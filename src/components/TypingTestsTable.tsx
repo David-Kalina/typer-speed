@@ -92,7 +92,9 @@ function TypingTestsTable() {
   return (
     <>
       <Flex flexDir="column" justify="center" h="100%">
-        <TableFilters tableFilter={filter} toggleFilter={toggleFilter} />
+        <Flex w="100%" justify="flex-end">
+          <TableFilters tableFilter={filter} toggleFilter={toggleFilter} />
+        </Flex>
 
         {!loading && tableRows ? (
           <Table
@@ -112,8 +114,8 @@ function TypingTestsTable() {
       </Flex>
       <Modal isOpen={toggleChart} onClose={() => setToggleChart(false)} size="5xl" isCentered>
         <ModalContent bg={`${theme}.100`} border={`1px solid gray`}>
-          <ModalCloseButton color={`${theme}.text`} />
-          <ModalHeader color={`${theme}.text`}>Recap</ModalHeader>
+          <ModalCloseButton _focus={{ border: 'none' }} color={`${theme}.textLight`} />
+          <ModalHeader color={`${theme}.textLight`}>Recap</ModalHeader>
           <ModalBody p="5em">
             <ResultsChart testId={testId} />
           </ModalBody>

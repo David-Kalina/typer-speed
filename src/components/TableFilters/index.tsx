@@ -21,10 +21,10 @@ function Index({ toggleFilter, tableFilter }: TableFiltersProps) {
         onClick={() => toggleFilter(filter)}
         borderLeftRadius="none"
         borderRightRadius="none"
-        color={filter !== tableFilter ? `black` : `${theme}.textLight`}
-        bg={filter !== tableFilter ? `${theme}.300` : `${theme}.300`}
+        color={filter !== tableFilter ? `textLight` : `${theme}.textDark`}
+        bg={filter !== tableFilter ? `${theme}.100` : `${theme}.400`}
       >
-        Date
+        {filter}
       </Button>
     )
   })

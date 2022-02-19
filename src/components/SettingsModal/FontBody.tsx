@@ -1,16 +1,14 @@
-import { Box, Button, Flex, HStack, Icon, IconButton, Text, useTheme, VStack } from '@chakra-ui/react'
+import { Box, Flex, Icon, Text, VStack } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React from 'react'
-import { fontFamilyAtom, fontSizeAtom, themeAtom } from '../../store/typingTestAtoms'
+import { FaFont } from 'react-icons/fa'
 import { fonts, fontSizes } from '../../constants/fonts'
-import { FaFont, FaStar } from 'react-icons/fa'
+import { fontFamilyAtom, fontSizeAtom } from '../../store/typingTestAtoms'
 
 function FontBody() {
   const [fontSize, setFontSize] = useAtom(fontSizeAtom)
 
   const [fontFamily, setFontFamily] = useAtom(fontFamilyAtom)
-
-  const [theme] = useAtom(themeAtom)
 
   const renderFonts = Object.values(fonts).map(font => (
     <Flex cursor="pointer" key={font} align="center" onClick={() => setFontFamily(font)}>

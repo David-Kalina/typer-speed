@@ -3,6 +3,7 @@ import { atomWithStorage } from 'jotai/utils'
 import { generateWords } from '../utils/generateWords'
 import { characterIndexAtom } from './characterAtoms'
 import { caretElementAtom, currentCharacterElementAtom, currentWordElementAtom } from './elementAtoms'
+import { userAtom } from './firebaseAtoms'
 import { resultsAtom } from './resultsAtoms'
 import { wordIndexAtom, wordsAtom } from './wordAtoms'
 
@@ -24,7 +25,7 @@ export const elapsedTimeAtom = atom<number>(0)
 
 export const testStartedAtom = atom<boolean>(false)
 
-export const testIdAtom = atom<string>(`${Date.now()}`)
+export const testIdAtom = atom(`${Math.random()}-${Math.random()}-${Date.now()}`)
 
 export const resetAtom = atom(false)
 
@@ -42,6 +43,7 @@ export const elapsed = atom<number>(0)
 export const resetTypingTestAtom = atom(
   () => '',
   (get, set) => {
+    const user = get(userAtom)
     set(characterIndexAtom, 0)
     set(wordIndexAtom, 0)
     set(wordsAtom, generateWords(100, 5))
@@ -53,6 +55,6 @@ export const resetTypingTestAtom = atom(
     set(currentCharacterElementAtom, null)
     set(currentWordElementAtom, null)
     set(caretElementAtom, null)
-    set(testIdAtom, `${Date.now()}`)
+    set(testIdAtom, user?.email ? `${user.email}-${Date.now()}` : `${Math.random()}-${Math.random()}-${Date.now()}`)
   }
 )

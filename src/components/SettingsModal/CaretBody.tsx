@@ -1,6 +1,5 @@
 import {
   Box,
-  color,
   Flex,
   FormControl,
   FormLabel,
