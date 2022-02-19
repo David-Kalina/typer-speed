@@ -1,16 +1,14 @@
 import { Box, HStack, Text } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React from 'react'
-import { resetTypingTestAtom, testTimeAtom, themeAtom } from '../store/typingTestAtoms'
+import { testTimeAtom, themeAtom } from '../store/typingTestAtoms'
 
 function SetTestTime() {
   const [testTime, setTestTime] = useAtom(testTimeAtom)
   const [theme] = useAtom(themeAtom)
-  const [, reset] = useAtom(resetTypingTestAtom)
 
   const updateTestTime = (time: number) => {
     setTestTime(time)
-    reset()
   }
 
   return (
@@ -21,8 +19,8 @@ function SetTestTime() {
           borderRadius="md"
           cursor="pointer"
           onClick={() => updateTestTime(15)}
-          fontSize="sm"
-          bg={testTime === 15 ? `${theme}.200` : `${theme}.100`}
+          fontSize="lg"
+          color={testTime === 15 ? `${theme}.text` : `${theme}.200`}
         >
           {15}
         </Text>
@@ -31,8 +29,8 @@ function SetTestTime() {
           borderRadius="md"
           cursor="pointer"
           onClick={() => updateTestTime(30)}
-          fontSize="sm"
-          bg={testTime === 30 ? `${theme}.200` : `${theme}.100`}
+          fontSize="lg"
+          color={testTime === 30 ? `${theme}.text` : `${theme}.200`}
         >
           {30}
         </Text>
@@ -41,8 +39,8 @@ function SetTestTime() {
           borderRadius="md"
           cursor="pointer"
           onClick={() => updateTestTime(60)}
-          fontSize="sm"
-          bg={testTime === 60 ? `${theme}.200` : `${theme}.100`}
+          fontSize="lg"
+          color={testTime === 60 ? `${theme}.text` : `${theme}.200`}
         >
           {60}
         </Text>
@@ -51,8 +49,8 @@ function SetTestTime() {
           borderRadius="md"
           cursor="pointer"
           onClick={() => updateTestTime(120)}
-          fontSize="sm"
-          bg={testTime === 120 ? `${theme}.200` : `${theme}.100`}
+          fontSize="lg"
+          color={testTime === 120 ? `${theme}.text` : `${theme}.200`}
         >
           {120}
         </Text>

@@ -1,17 +1,10 @@
-import { Box, keyframes } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React from 'react'
 import { themeAtom } from '../../store/typingTestAtoms'
+import { CaretProps } from '../Caret'
 
-interface IndexProps {
-  delay: number
-  color: string
-  height: number
-  width: number
-  opacity: number
-}
-
-function Index({ delay, color, height, width, opacity }: IndexProps) {
+function Index({ color, height, width, opacity }: CaretProps) {
   const [theme] = useAtom(themeAtom)
   return (
     <Box

@@ -1,92 +1,99 @@
 import {
-  ModalBody,
-  Flex,
   Box,
-  Stack,
+  color,
+  Flex,
   FormControl,
   FormLabel,
   Input,
   Slider,
-  SliderTrack,
   SliderFilledTrack,
   SliderThumb,
-  color,
+  SliderTrack,
+  Stack,
 } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import { useAtom } from 'jotai'
+import React from 'react'
+import { caretSettingsAtom } from '../../store/caretAtoms'
+import { themeAtom } from '../../store/typingTestAtoms'
 import SettingsCaret from '../SettingsCaret'
 
 function CaretBody() {
-  const [color, setColor] = useState('#000000')
-  const [delay, setDelay] = useState(0)
-  const [height, setHeight] = useState(4)
-  const [width, setWidth] = useState(6)
-  const [opacity, setOpacity] = useState(1)
+  const [caretSettings, setCaretSettings] = useAtom(caretSettingsAtom)
+
+  const [theme] = useAtom(themeAtom)
 
   return (
-    <ModalBody minH="325px" pb="16" fontSize="sm">
-      <Flex h="325px">
+    <>
+      <Flex h="300px">
         <Box flex={1}>
           <Stack fontSize="xs">
             <FormControl id="color">
-              <FormLabel htmlFor="color">color</FormLabel>
-              <Input name="color" type="color" onChange={e => setColor(e.target.value)} />
+              <FormLabel fontSize="sm" htmlFor="color">
+                color
+              </FormLabel>
+
+              <Input
+                w="20px"
+                h="20px"
+                appearance="none"
+                name="color"
+                bgColor={'inherit' || caretSettings.color}
+                type="color"
+                border="none"
+                defaultValue={'white' || caretSettings.color}
+                onChange={e => setCaretSettings({ ...caretSettings, color: e.target.value })}
+              />
             </FormControl>
-            <FormControl id="height">
-              <FormLabel htmlFor="height">height</FormLabel>
+            <FormControl>
+              <FormLabel fontSize="sm" htmlFor="color">
+                smoothness
+              </FormLabel>
               <Slider
                 step={0.1}
-                onChange={(val: number) => setHeight(val)}
-                max={10}
-                min={1}
-                defaultValue={4}
-                name="height"
+                onChange={(val: number) => setCaretSettings({ ...caretSettings, delay: val })}
+                max={100}
+                min={0}
+                defaultValue={caretSettings.delay}
+                name="delay"
               >
-                <SliderTrack>
-                  <SliderFilledTrack />
+                <SliderTrack bg={`${theme}.400`}>
+                  <SliderFilledTrack bg={`${theme}.200`} />
                 </SliderTrack>
-                <SliderThumb />
+                <SliderThumb borderRadius="sm" />
               </Slider>
             </FormControl>
-            <FormControl id="width">
-              <FormLabel htmlFor="width">width</FormLabel>
+            <FormControl>
+              <FormLabel fontSize="sm" htmlFor="color">
+                opacity
+              </FormLabel>
               <Slider
                 step={0.1}
-                onChange={(val: number) => setWidth(val)}
-                max={30}
-                min={1}
-                defaultValue={6}
-                name="width"
-              >
-                <SliderTrack>
-                  <SliderFilledTrack />
-                </SliderTrack>
-                <SliderThumb />
-              </Slider>
-            </FormControl>
-            <FormControl id="opacity">
-              <FormLabel htmlFor="opacity">opacity</FormLabel>
-              <Slider
-                step={0.1}
-                onChange={(val: number) => setOpacity(val)}
+                onChange={(val: number) => setCaretSettings({ ...caretSettings, opacity: val })}
                 max={1}
                 min={0}
-                defaultValue={1}
+                defaultValue={caretSettings.opacity}
                 name="width"
               >
-                <SliderTrack>
-                  <SliderFilledTrack />
+                <SliderTrack bg={`${theme}.400`}>
+                  <SliderFilledTrack bg={`${theme}.200`} />
                 </SliderTrack>
-                <SliderThumb />
+                <SliderThumb borderRadius="sm" />
               </Slider>
             </FormControl>
           </Stack>
         </Box>
         <Box flex={1} />
-        <Flex align="center" justify="center" flex={1} borderRadius="md" border="2px solid white">
-          <SettingsCaret color={color} delay={delay} height={height} width={width} opacity={opacity} />
+        <Flex align="center" justify="center" flex={3} borderRadius="sm" border="2px solid white">
+          <SettingsCaret
+            color={caretSettings.color}
+            height={caretSettings.height}
+            width={caretSettings.width}
+            opacity={caretSettings.opacity}
+            delay={100}
+          />
         </Flex>
       </Flex>
-    </ModalBody>
+    </>
   )
 }
 

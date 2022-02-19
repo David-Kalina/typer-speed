@@ -25,7 +25,7 @@ function Header() {
     return <MobileHeader />
   } else {
     return (
-      <HStack w="100%" py="12" px={['12', '12', 0]} justifyContent="space-between" color={`${theme}.300`}>
+      <HStack w="100%" py="12" px={['12', '12', 0]} justifyContent="space-between" color={`${theme}.textLight`}>
         <HStack spacing={4}>
           <Logo />
           <Link to="/"></Link>

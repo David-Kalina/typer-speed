@@ -42,7 +42,13 @@ function AccountStats() {
   }, [user?.email])
 
   return (
-    <Stack justify="space-between" direction={['column', 'row']} w={['80%', '80%', '100%']} wrap="wrap" color={`${theme}.300`}>
+    <Stack
+      justify="space-between"
+      direction={['column', 'row']}
+      w={['80%', '80%', '100%']}
+      wrap="wrap"
+      color={`${theme}.textLight`}
+    >
       {!loading && statData ? (
         <>
           <Box>

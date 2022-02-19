@@ -4,7 +4,15 @@ import React, { useRef } from 'react'
 import { caretPositionAtom } from '../../store/caretAtoms'
 import { testStartedAtom, themeAtom } from '../../store/typingTestAtoms'
 
-function Index({ delay }: { delay: number }) {
+export interface CaretProps {
+  delay: number
+  color: string
+  height: number
+  width: number
+  opacity: number
+}
+
+function Index({ delay, color, height, width, opacity }: CaretProps) {
   const ref = useRef<HTMLDivElement>(null)
   const [testStarted] = useAtom(testStartedAtom)
   const [{ top, left }] = useAtom(caretPositionAtom)
@@ -14,14 +22,15 @@ function Index({ delay }: { delay: number }) {
     <Box
       ref={ref}
       position="absolute"
-      h="1.3em"
+      h={`${height || 1.3}em`}
       top={`calc(${top}px - 0.2em)`}
       transition={`left ${delay}ms linear`}
       left={`${left}px`}
       borderRadius="md"
-      width="0.11em"
+      width={`${width || 0.11}em`}
       fontWeight="bold"
-      bg={`${theme}.400`}
+      opacity={opacity || 1}
+      bg={color || `${theme}.400`}
       className={testStarted ? 'caret' : 'blink'}
     />
   )

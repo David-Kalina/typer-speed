@@ -1,11 +1,15 @@
 import { Box } from '@chakra-ui/react'
+import { useAtom } from 'jotai'
 import React, { useRef } from 'react'
 import { useResize } from '../../hooks/useResize'
 import { useScroll } from '../../hooks/useScroll'
+import { caretSettingsAtom } from '../../store/caretAtoms'
+import { fontFamilyAtom } from '../../store/typingTestAtoms'
 import Caret from '../Caret'
 
 function Index({ children }: { children: React.ReactNode | React.ReactNode[] }) {
   const ref = useRef<HTMLDivElement>(null)
+  const [{ delay, color, height, width, opacity }] = useAtom(caretSettingsAtom)
   useScroll(ref)
   useResize(ref)
 
@@ -13,7 +17,6 @@ function Index({ children }: { children: React.ReactNode | React.ReactNode[] }) 
     <Box
       ref={ref}
       borderRadius="md"
-      fontFamily="Roboto Mono"
       className="word-manager-wrapper"
       position="relative"
       boxSizing="border-box"
@@ -21,7 +24,7 @@ function Index({ children }: { children: React.ReactNode | React.ReactNode[] }) 
       w="100%"
       h="5.0625em"
     >
-      <Caret delay={90} />
+      <Caret delay={delay} height={height} width={width} opacity={opacity} color={color} />
       {children}
     </Box>
   )

@@ -1,6 +1,7 @@
-import { Button, HStack, Modal, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay } from '@chakra-ui/react'
+import { Button, HStack, IconButton, Modal, ModalBody, ModalContent, ModalHeader, ModalOverlay } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React, { useState } from 'react'
+import { IoMdClose } from 'react-icons/io'
 import { settingsOpenAtom, themeAtom } from '../../store/typingTestAtoms'
 import CaretBody from './CaretBody'
 import FontBody from './FontBody'
@@ -22,61 +23,97 @@ function Index() {
   return (
     <Modal isOpen={settingsOpen} onClose={() => setSettingsOpen(false)} isCentered size="4xl">
       <ModalOverlay />
-      <ModalContent bg={`${theme}.200`}>
-        <ModalHeader>
-          <HStack spacing={0}>
+      <ModalContent bg={`${theme}.100`} color={`${theme}.200`} border="1px solid grey">
+        <ModalHeader p="1" mb="5">
+          <HStack spacing={0} w="100%" h="100%">
             <Button
+              _focus={{ borderX: 'none', borderTop: 'none' }}
+              _hover={{ bg: 'inherit', borderBottom: '1px solid grey' }}
+              flex={1}
+              bg={`${theme}.100`}
               onClick={() => setCurrentBody(0)}
               size="sm"
-              borderRightRadius="none"
-              variant={currentBody === 0 ? 'solid' : 'outline'}
+              borderBottom={currentBody === 0 ? '1px solid grey' : 'none'}
+              borderRadius="none"
             >
               caret
             </Button>
             <Button
+              _focus={{ borderX: 'none', borderTop: 'none' }}
+              _hover={{ bg: 'inherit', borderBottom: '1px solid grey' }}
+              flex={1}
+              bg={`${theme}.100`}
               onClick={() => setCurrentBody(1)}
               size="sm"
+              borderBottom={currentBody === 1 ? '1px solid grey' : 'none'}
               borderRadius="none"
-              variant={currentBody === 1 ? 'solid' : 'outline'}
             >
               font
             </Button>
             <Button
+              _focus={{ borderX: 'none', borderTop: 'none' }}
+              _hover={{ bg: 'inherit', borderBottom: '1px solid grey' }}
+              flex={1}
+              bg={`${theme}.100`}
               onClick={() => setCurrentBody(2)}
               size="sm"
+              borderBottom={currentBody === 2 ? '1px solid grey' : 'none'}
               borderRadius="none"
-              variant={currentBody === 2 ? 'solid' : 'outline'}
             >
               time
             </Button>
             <Button
+              _focus={{ borderX: 'none', borderTop: 'none' }}
+              _hover={{ bg: 'inherit', borderBottom: '1px solid grey' }}
+              flex={1}
+              bg={`${theme}.100`}
               onClick={() => setCurrentBody(3)}
               size="sm"
+              borderBottom={currentBody === 3 ? '1px solid grey' : 'none'}
               borderRadius="none"
-              variant={currentBody === 3 ? 'solid' : 'outline'}
             >
               theme
             </Button>
             <Button
+              _focus={{ borderX: 'none', borderTop: 'none' }}
+              _hover={{ bg: 'inherit', borderBottom: '1px solid grey' }}
+              flex={1}
+              bg={`${theme}.100`}
               onClick={() => setCurrentBody(4)}
               size="sm"
+              borderBottom={currentBody === 4 ? '1px solid grey' : 'none'}
               borderRadius="none"
-              variant={currentBody === 4 ? 'solid' : 'outline'}
             >
               words
             </Button>
             <Button
-              onClick={() => setCurrentBody(4)}
+              _focus={{ borderX: 'none', borderTop: 'none' }}
+              _hover={{ bg: 'inherit', borderBottom: '1px solid grey' }}
+              flex={1}
+              bg={`${theme}.100`}
+              onClick={() => setCurrentBody(5)}
               size="sm"
-              borderLeftRadius="none"
-              variant={currentBody === 5 ? 'solid' : 'outline'}
+              borderBottom={currentBody === 5 ? '1px solid grey' : 'none'}
+              borderRadius="none"
             >
               account
             </Button>
+            <IconButton
+              aria-label="close"
+              _focus={{ borderX: 'none', borderTop: 'none' }}
+              _hover={{ bg: 'inherit', borderBottom: '1px solid grey' }}
+              flex={1}
+              bg={`${theme}.100`}
+              size="sm"
+              icon={<IoMdClose />}
+              borderRadius="none"
+              onClick={() => setSettingsOpen(false)}
+            />
           </HStack>
         </ModalHeader>
-        <ModalCloseButton />
-        {bodies[currentBody]}
+        <ModalBody w="80%" mx="auto" p="4">
+          {bodies[currentBody]}
+        </ModalBody>
       </ModalContent>
     </Modal>
   )

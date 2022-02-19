@@ -80,12 +80,14 @@ function TypingTestsTable() {
 
   const tableRows = tableData?.map((test, idx) => (
     <Tr key={idx} fontWeight="bold">
-      <Td>{test.seconds}s</Td>
-      <Td>{test.wpm}</Td>
-      <Td>{test.accuracy}%</Td>
-      <Td>{new Date(test.date.seconds * 1000).toLocaleDateString('en-US')}</Td>
+      <Td color={`${theme}.text`}>{test.seconds}s</Td>
+      <Td color={`${theme}.text`}>{test.wpm}</Td>
+      <Td color={`${theme}.text`}>{test.accuracy}%</Td>
+      <Td color={`${theme}.text`}>{new Date(test.date.seconds * 1000).toLocaleDateString('en-US')}</Td>
       <Td>
         <Button
+          color="white"
+          bg={`${theme}.400`}
           onClick={() => {
             setToggleChart(true)
             setRecapData(test.recap)
@@ -106,7 +108,8 @@ function TypingTestsTable() {
             _focus={{ border: 'none' }}
             onClick={() => toggleFilter('wpm')}
             borderRightRadius="none"
-            variant={filter !== 'wpm' ? 'ghost' : undefined}
+            color={filter !== `wpm` ? `black` : `${theme}.textLight`}
+            bg={filter !== 'wpm' ? `${theme}.100` : `${theme}.300`}
           >
             WPM
           </Button>
@@ -116,7 +119,8 @@ function TypingTestsTable() {
             onClick={() => toggleFilter('date')}
             borderLeftRadius="none"
             borderRightRadius="none"
-            variant={filter !== 'date' ? 'ghost' : undefined}
+            color={filter !== `date` ? `black` : `${theme}.textLight`}
+            bg={filter !== 'date' ? `${theme}.300` : `${theme}.300`}
           >
             Date
           </Button>
@@ -125,7 +129,8 @@ function TypingTestsTable() {
             _focus={{ border: 'none' }}
             onClick={() => toggleFilter('accuracy')}
             borderLeftRadius="none"
-            variant={filter !== 'accuracy' ? 'ghost' : undefined}
+            color={filter !== `accuracy` ? `black` : `${theme}.textLight`}
+            bg={filter !== 'accuracy' ? `${theme}.100` : `${theme}.300`}
           >
             Acc
           </Button>
@@ -135,18 +140,18 @@ function TypingTestsTable() {
           <Table
             size={breakpoint === 'base' || breakpoint === 'sm' ? 'sm' : 'lg'}
             variant="simple"
-            color={`${theme}.300`}
+            color={`${theme}.200`}
           >
-            <TableCaption textAlign="left" p={0} placement="top" mb="2">
+            <TableCaption textAlign="left" p={0} placement="top" mb="2" color={`${theme}.text`}>
               Recent Typing Tests
             </TableCaption>
             <Thead>
               <Tr>
-                <Th>time</Th>
-                <Th>wpm</Th>
-                <Th>accuracy</Th>
-                <Th>date</Th>
-                <Th>recap</Th>
+                <Th color={`${theme}.text`}>time</Th>
+                <Th color={`${theme}.text`}>wpm</Th>
+                <Th color={`${theme}.text`}>accuracy</Th>
+                <Th color={`${theme}.text`}>date</Th>
+                <Th color={`${theme}.text`}>recap</Th>
               </Tr>
             </Thead>
             <Tbody>{tableRows}</Tbody>
@@ -156,19 +161,20 @@ function TypingTestsTable() {
         )}
       </Flex>
       <Modal isOpen={toggleChart} onClose={() => setToggleChart(false)} size="5xl" isCentered>
-        <ModalContent>
-          <ModalCloseButton />
+        <ModalContent bg={`${theme}.100`} border={`1px solid gray`}>
+          <ModalCloseButton color={`${theme}.text`} />
+          <ModalHeader color={`${theme}.text`}>Recap</ModalHeader>
           <ModalBody p="5em">
             <ResponsiveContainer width="100%" height={300} maxHeight={300}>
               <LineChart data={recapData}>
-                <CartesianGrid stroke={`${[theme][200]}`} strokeDasharray="3, 3" />
+                <CartesianGrid stroke={`${[theme]}.text`} strokeDasharray="3, 3" />
                 <XAxis dataKey="seconds" />
                 <YAxis dataKey="wpm" yAxisId="left" />
                 <YAxis dataKey="incorrect" yAxisId="right" orientation="right" />
                 <Tooltip />
                 <Legend />
-                <Line type="monotone" yAxisId="left" dataKey="wpm" fill={`${[theme][200]}`} />
-                <Line yAxisId="right" type="monotone" dataKey="incorrect" stroke={`${theme}.200`} />
+                <Line type="monotone" yAxisId="left" dataKey="wpm" fill={`${[theme]}.text`} />
+                <Line yAxisId="right" type="monotone" dataKey="incorrect" stroke={`${theme}.text`} />
               </LineChart>
             </ResponsiveContainer>
           </ModalBody>

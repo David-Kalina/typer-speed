@@ -21,7 +21,7 @@ const NewTest: React.FC = () => {
         onClick={resetTest}
         mt="1rem"
         mx="auto"
-        color={`${theme}.200`}
+        color={`${theme}.textLight`}
       />
     </Flex>
   )

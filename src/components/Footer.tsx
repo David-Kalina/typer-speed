@@ -12,7 +12,7 @@ function Footer() {
 
   if (breakpoint === 'md' || breakpoint === 'lg' || breakpoint === 'xl' || breakpoint === '2xl') {
     return (
-      <HStack w="100%" p="12" justifyContent="space-between" fontSize="sm" color={`${theme}.200`}>
+      <HStack w="100%" p="12" justifyContent="space-between" fontSize="sm" color={`${theme}.textLight`}>
         <Link
           cursor="pointer"
           href="https://github.com/David-Kalina/typing-speed-test-with-socket.io-client"
