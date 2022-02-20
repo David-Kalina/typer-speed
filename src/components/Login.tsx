@@ -22,16 +22,27 @@ function Login() {
       {error && <Text color="red.200">{error}</Text>}
       <VStack spacing={2} justify="space-evenly" align="stretch" h="300px">
         <Flex align="center" justify="space-between">
-          <Text fontSize="sm">login</Text>
-          <Text fontSize="sm">forgot password?</Text>
+          <Text fontSize="sm" textColor="white">
+            login
+          </Text>
+          <Text fontSize="sm" textColor="white">
+            forgot password?
+          </Text>
         </Flex>
-        <Input {...register('email', { required: 'required' })} type="email" placeholder="email" />
+        <Input {...register('email', { required: 'required' })} textColor="white" type="email" placeholder="email" />
         {errors.email && <Text fontSize="xs">{errors.email.message}</Text>}
-        <Input {...register('password', { required: 'required' })} type="password" placeholder="password" />
+        <Input
+          {...register('password', { required: 'required' })}
+          textColor="white"
+          type="password"
+          placeholder="password"
+        />
         <Button color={`${theme}.textDark`} type="submit" bg={`${theme}.300`}>
           login
         </Button>
-        <Text textAlign="center">or</Text>
+        <Text textAlign="center" textColor="white">
+          or
+        </Text>
         <IconButton
           bg={`${theme}.300`}
           color={`${theme}.textDark`}

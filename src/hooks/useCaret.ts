@@ -150,7 +150,7 @@ export const useCaret = () => {
 
   useEffect(() => {
     const caret = document.querySelector('.blink') as HTMLDivElement
-    if (caret && !testStarted) {
+    if (caret) {
       const word = caret.nextElementSibling?.firstElementChild as HTMLDivElement
       const character = word?.firstElementChild as HTMLDivElement
       setCaretElement(caret)
@@ -158,7 +158,7 @@ export const useCaret = () => {
       setCharElement(character)
       setPosition({ top: character.offsetTop, left: character.offsetLeft })
     }
-  }, [setCaretElement, setCharElement, setPosition, setWordElement, testStarted, testId])
+  }, [setCaretElement, setCharElement, setPosition, setWordElement, testId])
 
   return { forward, backward, newWord }
 }

@@ -24,14 +24,16 @@ function Register() {
     >
       {error && <Text color="red.200">{error}</Text>}
       <VStack spacing={2} justify="space-evenly" align="stretch" minH="300px" height="max">
-        <Text fontSize="sm">register</Text>
-        <Input {...register('email', { required: 'required' })} type="email" placeholder="email" />
+        <Text fontSize="sm" textColor="white">
+          register
+        </Text>
+        <Input {...register('email', { required: 'required' })} textColor="white" type="email" placeholder="email" />
         {errors.email && (
           <Text color="red.200" fontSize="xs">
             {errors.email.message}
           </Text>
         )}
-        <Input {...register('verifyEmail', { required: 'required' })} placeholder="verify email" />
+        <Input {...register('verifyEmail', { required: 'required' })} textColor="white" placeholder="verify email" />
         {errors.verifyEmail && (
           <Text color="red.200" fontSize="xs">
             {errors.verifyEmail.message}

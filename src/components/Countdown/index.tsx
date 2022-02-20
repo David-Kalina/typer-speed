@@ -6,6 +6,7 @@ import { userAtom } from '../../store/firebaseAtoms'
 import { addToFirebaseResultAtom, addToResultsAtom } from '../../store/resultsAtoms'
 import {
   elapsedTimeAtom,
+  pauseTestAtom,
   testFinishedAtom,
   testStartedAtom,
   testTimeAtom,
@@ -16,6 +17,7 @@ function Index() {
   const [duration] = useAtom(testTimeAtom)
   const [elapsed, setElapsed] = useAtom(elapsedTimeAtom)
   const [testStarted, setTestStarted] = useAtom(testStartedAtom)
+  const [testPaused] = useAtom(pauseTestAtom)
   const [, getCharactersByStatus] = useAtom(getCharactersByStatusAtom)
   const [, addToResults] = useAtom(addToResultsAtom)
   const [, setTestFinished] = useAtom(testFinishedAtom)
@@ -25,7 +27,7 @@ function Index() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (testStarted) {
+      if (testStarted && !testPaused) {
         setElapsed(elapsed => elapsed + 1)
         if (elapsed > 0)
           addToResults({
@@ -41,7 +43,7 @@ function Index() {
     return () => {
       clearInterval(interval)
     }
-  }, [addToResults, duration, elapsed, getCharactersByStatus, setElapsed, setTestStarted, testStarted])
+  }, [addToResults, duration, elapsed, getCharactersByStatus, setElapsed, setTestStarted, testPaused, testStarted])
 
   useEffect(() => {
     if (elapsed > duration) {

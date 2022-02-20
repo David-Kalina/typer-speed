@@ -75,7 +75,7 @@ export const addToFirebaseResultAtom = atom(null, async get => {
   const accuracy = get(getAccuracyDataAtom)
   const wpm = get(getWPMDataAtom)
   const recap = get(getRecapDataAtom)
-  const seconds = get(resultsAtom).length
+  const seconds = get(resultsAtom).length + 1
   const testId = get(testIdAtom)
 
   await addDoc(testsRef, {

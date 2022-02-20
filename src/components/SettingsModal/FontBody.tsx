@@ -37,7 +37,7 @@ function FontBody() {
         </Box>
         <Box flex={1} h="inherit">
           <Text>Font Family</Text>
-          <VStack mt="2" align="stretch" overflow="scroll" h="90%" pr="3">
+          <VStack mt="2" align="stretch" overflowY="scroll" overflowX="hidden" h="90%" pr="3">
             {renderFonts}
           </VStack>
         </Box>

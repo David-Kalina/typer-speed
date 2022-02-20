@@ -10,7 +10,7 @@ import TypingTestsTable from './TypingTestsTable'
 
 function Account() {
   const { user } = useAuth()
-  useRedirect(!user?.email, '/')
+  useRedirect(user?.email === undefined, '/')
   const [theme] = useAtom(themeAtom)
 
   if (user?.email) {

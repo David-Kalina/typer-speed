@@ -40,6 +40,8 @@ export const testTimeAtom = atomWithStorage<number>('testTime', 15)
 
 export const elapsed = atom<number>(0)
 
+export const pauseTestAtom = atom(false)
+
 export const resetTypingTestAtom = atom(
   () => '',
   (get, set) => {
@@ -55,6 +57,7 @@ export const resetTypingTestAtom = atom(
     set(currentCharacterElementAtom, null)
     set(currentWordElementAtom, null)
     set(caretElementAtom, null)
+    set(pauseTestAtom, false)
     set(testIdAtom, user?.email ? `${user.email}-${Date.now()}` : `${Math.random()}-${Math.random()}-${Date.now()}`)
   }
 )

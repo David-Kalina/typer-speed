@@ -6,10 +6,11 @@ import { useKeyManager } from '../../hooks/useKeyManager'
 import { caretCutOffAtom, caretPositionAtom } from '../../store/caretAtoms'
 import { characterIndexAtom } from '../../store/characterAtoms'
 import { keyManagerAtom } from '../../store/elementAtoms'
-import { settingsOpenAtom, testIdAtom, testStartedAtom } from '../../store/typingTestAtoms'
+import { pauseTestAtom, settingsOpenAtom, testIdAtom, testStartedAtom } from '../../store/typingTestAtoms'
 
 function Index() {
   const [testStarted, setTestStarted] = useAtom(testStartedAtom)
+  const [, setTestPaused] = useAtom(pauseTestAtom)
   const ref = React.useRef<HTMLInputElement>(null)
   const { handleBackspace, handleSpace, handleCharacter } = useKeyManager()
   const [characterIndex] = useAtom(characterIndexAtom)
@@ -46,6 +47,8 @@ function Index() {
   return (
     <input
       ref={ref}
+      onBlur={() => setTestPaused(true)}
+      onFocus={() => setTestPaused(false)}
       className="key-manager"
       autoFocus
       inputMode="text"
