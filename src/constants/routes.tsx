@@ -3,31 +3,48 @@ import { DefaultGenerics, Route } from 'react-location'
 import Account from '../components/Account'
 import Login from '../components/Auth'
 import Layout from '../components/Layout'
+import Space from '../components/Space'
 import TypingTest from '../components/TypingTest'
 
 export const routes: Route<DefaultGenerics>[] = [
   {
     path: '/',
     element: (
-      <Layout>
-        <TypingTest />
-      </Layout>
+      <Space>
+        <Layout>
+          <TypingTest />
+        </Layout>
+      </Space>
     ),
   },
   {
     path: '/login',
     element: (
-      <Layout>
-        <Login />
-      </Layout>
+      <Space>
+        <Layout>
+          <Login />
+        </Layout>
+      </Space>
     ),
   },
   {
     path: '/account',
     element: (
-      <Layout>
-        <Account />
-      </Layout>
+      <Space>
+        <Layout>
+          <Account />
+        </Layout>
+      </Space>
+    ),
+  },
+  {
+    path: '/space',
+    element: (
+      <Space>
+        <Layout>
+          <TypingTest />
+        </Layout>
+      </Space>
     ),
   },
 ]
