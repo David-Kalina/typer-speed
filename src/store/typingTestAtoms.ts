@@ -9,7 +9,7 @@ import { wordIndexAtom, wordsAtom } from './wordAtoms'
 
 export const traversingExtraAtom = atom(false)
 
-export const themeAtom = atomWithStorage<string>('theme', 'makeShiftLumber')
+export const themeAtom = atomWithStorage<string>('theme', 'typerSpeed')
 
 export const settingsOpenAtom = atom(false)
 

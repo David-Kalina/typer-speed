@@ -78,4 +78,18 @@ export const themes = {
     textLight: '#ADB3BC',
     textDark: '#050606',
   },
+  typerSpeed: {
+    100: 'transparent',
+    200: '#FDFDFD',
+    300: '#D8D7D5',
+    400: '#ADB3BC',
+    default: '#ADB3BC',
+    correct: '#FDFDFD',
+    incorrect: '#e60343',
+    missed: '#ADB3BC',
+    gradient: 'linear-gradient(to right, #050606, #FDFDFD, #D8D7D5, #ADB3BC)',
+    name: 'Typer Speed',
+    textLight: '#ADB3BC',
+    textDark: '#050606',
+  },
 }
