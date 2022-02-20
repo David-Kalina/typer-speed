@@ -11,7 +11,7 @@ const Index = React.memo(({ value, status }: Character) => {
     <Box
       display="inline-block"
       color={`${theme}.${status}`}
-      borderBottom={status === 'missed' ? '.05em solid red' : '.05em solid transparent'}
+      borderBottom={status === 'missed' ? `.05em solid darkred` : '.05em solid transparent'}
       lineHeight="1em"
       boxSizing="border-box"
     >
