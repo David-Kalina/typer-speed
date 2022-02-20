@@ -4,7 +4,7 @@ export class Character {
     public id: string,
     public wordId: number,
     public word: string,
-    public status: 'correct' | 'incorrect' | 'skipped' | 'extra' | 'default'
+    public status: 'correct' | 'incorrect' | 'missed' | 'extra' | 'default'
   ) {
     this.value = value
     this.id = id

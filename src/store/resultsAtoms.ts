@@ -10,6 +10,8 @@ interface ResultType {
   seconds: number
   correct: number
   incorrect: number
+  missed: number
+  extra: number
   // wordsMissed: string[]
   // charactersMissed: string[]
 }
@@ -35,12 +37,14 @@ export const getRecapDataAtom = atom(get => {
 export const getWPMDataAtom = atom(get => {
   const results = get(resultsAtom)
 
-  const wpmData = results.map((item: { seconds: number; correct: number; incorrect: any }) => {
-    return {
-      seconds: item.seconds,
-      wpm: Math.round(item.correct / 4.7 / (item.seconds / 60)),
+  const wpmData = results.map(
+    (item: { seconds: number; correct: number; incorrect: any; missed: number; extra: number }) => {
+      return {
+        seconds: item.seconds,
+        wpm: Math.round(item.correct / 4.7 / (item.seconds / 60)),
+      }
     }
-  })
+  )
 
   const totalWPM = wpmData.reduce((acc, item) => acc + item.wpm, 0)
   return {
@@ -51,12 +55,14 @@ export const getWPMDataAtom = atom(get => {
 export const getAccuracyDataAtom = atom(get => {
   const results = get(resultsAtom)
 
-  const accuracyData = results.map((item: { seconds: number; correct: number; incorrect: any }) => {
-    return {
-      seconds: item.seconds,
-      accuracy: Math.round((item.correct / (item.correct + item.incorrect)) * 100),
+  const accuracyData = results.map(
+    (item: { seconds: number; correct: number; incorrect: number; missed: number; extra: number }) => {
+      return {
+        seconds: item.seconds,
+        accuracy: Math.round((item.correct / (item.correct + item.incorrect + item.extra + item.missed)) * 100),
+      }
     }
-  })
+  )
 
   const totalAccuracy = accuracyData.reduce((acc, item) => acc + item.accuracy, 0)
   return {

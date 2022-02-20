@@ -33,6 +33,8 @@ function Index() {
             seconds: elapsed,
             correct: getCharactersByStatus({ status: 'correct' }).length,
             incorrect: getCharactersByStatus({ status: 'incorrect' }).length,
+            missed: getCharactersByStatus({ status: 'missed' }).length,
+            extra: getCharactersByStatus({ status: 'extra' }).length,
           })
       }
     }, 1000)

@@ -2,7 +2,17 @@ import { Flex, Spinner, useTheme } from '@chakra-ui/react'
 import { getDocs, query, where } from 'firebase/firestore'
 import { useAtom } from 'jotai'
 import React, { useEffect, useState } from 'react'
-import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import {
+  CartesianGrid,
+  ComposedChart,
+  Legend,
+  Line,
+  ResponsiveContainer,
+  Scatter,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts'
 import { testsRef } from '../../firebase'
 import { userAtom } from '../../store/firebaseAtoms'
 import { getResultsAtom } from '../../store/resultsAtoms'
@@ -35,7 +45,7 @@ function Index({ testId }: { testId: string }) {
     <Flex flex={1}>
       {!loading && data ? (
         <ResponsiveContainer width="100%" height={300} maxHeight={300}>
-          <LineChart data={user?.email ? data : recap}>
+          <ComposedChart data={user?.email ? data : recap}>
             <CartesianGrid stroke={`${chakraTheme.colors[theme][200]}`} strokeDasharray="5, 5" />
             <XAxis dataKey="seconds" />
             <YAxis dataKey="wpm" yAxisId="left" />
@@ -43,13 +53,14 @@ function Index({ testId }: { testId: string }) {
             <Tooltip />
             <Legend />
             <Line type="monotone" yAxisId="left" dataKey="wpm" fill={`${chakraTheme.colors[theme]['correct']}`} />
-            <Line
+            <Scatter
+              shape="cross"
+              name="incorrect"
               yAxisId="right"
-              type="monotone"
               dataKey="incorrect"
               stroke={`${chakraTheme.colors[theme]['incorrect']}`}
             />
-          </LineChart>
+          </ComposedChart>
         </ResponsiveContainer>
       ) : (
         <Flex justifyContent="center" alignItems="center" height="100%" width="100%">
