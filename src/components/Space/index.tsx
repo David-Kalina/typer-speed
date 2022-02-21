@@ -22,7 +22,7 @@ function Space({ children }: { children?: React.ReactNode | React.ReactNode[] })
 
   return (
     <Box bg="black" position="fixed" top={0} left={0} width="100vw" height="100vh" overflow="hidden">
-      <Canvas camera={camera}>
+      <Canvas camera={camera} dpr={window.devicePixelRatio}>
         <Track />
         <Physics gravity={[0, 0, 0]}>
           <Suspense fallback={null}>
