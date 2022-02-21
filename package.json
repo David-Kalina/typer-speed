@@ -53,6 +53,7 @@
   "devDependencies": {
     "@types/random-words": "^1.1.2",
     "@types/react": "^17.0.38",
+    "@types/three": "^0.137.0",
     "@typescript-eslint/eslint-plugin": "^5.10.2",
     "@typescript-eslint/parser": "^5.10.2",
     "eslint-plugin-react": "^7.28.0",

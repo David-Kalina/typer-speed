@@ -39,12 +39,6 @@ export const routes: Route<DefaultGenerics>[] = [
   },
   {
     path: '/space',
-    element: (
-      <Space>
-        <Layout>
-          <TypingTest />
-        </Layout>
-      </Space>
-    ),
+    element: <Space />,
   },
 ]

@@ -1,5 +1,6 @@
 import { Text } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
+import { useUpdateAtom } from 'jotai/utils'
 import React, { useEffect } from 'react'
 import { getCharactersByStatusAtom } from '../../store/characterAtoms'
 import { userAtom } from '../../store/firebaseAtoms'
