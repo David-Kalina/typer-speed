@@ -2,11 +2,11 @@ import { atom } from 'jotai'
 import * as THREE from 'three'
 import { Curves } from 'three/examples/jsm/curves/CurveExtras'
 
-const curve = new Curves.CinquefoilKnot()
+const curve = new Curves.VivianiCurve()
 
 let guid = 1
 
-export const trackAtom = atom(new THREE.TubeBufferGeometry(curve, 100, 1, 8, true))
+export const trackAtom = atom(new THREE.TubeBufferGeometry(curve, 200, 1, 8, true))
 
 export const clockAtom = atom(new THREE.Clock())
 
@@ -21,7 +21,7 @@ export const updateCameraAtom = atom(
     const camera = get(cameraAtom)
 
     const time = clock.getElapsedTime()
-    const loopTime = 100
+    const loopTime = 300
     const t = (time % loopTime) / loopTime
     const t2 = ((time + 0.1) % loopTime) / loopTime
 

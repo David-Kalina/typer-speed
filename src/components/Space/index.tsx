@@ -1,6 +1,6 @@
 import { Box } from '@chakra-ui/react'
 import { Physics } from '@react-three/cannon'
-import { Stars } from '@react-three/drei'
+import { OrbitControls, Stars } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import { useAtom } from 'jotai'
 import React, { Suspense } from 'react'
