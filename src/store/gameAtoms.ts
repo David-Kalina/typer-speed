@@ -2,11 +2,11 @@ import { atom } from 'jotai'
 import * as THREE from 'three'
 import { Curves } from 'three/examples/jsm/curves/CurveExtras'
 
-const curve = new Curves.KnotCurve()
+const curve = new Curves.CinquefoilKnot()
 
 let guid = 1
 
-export const trackAtom = atom(new THREE.TubeBufferGeometry(curve, 200, 1, 8, true))
+export const trackAtom = atom(new THREE.TubeBufferGeometry(curve, 100, 1, 8, true))
 
 export const clockAtom = atom(new THREE.Clock())
 
@@ -43,7 +43,7 @@ function randomData(
   return new Array(count).fill(0).map(() => {
     const t = Math.random()
     const pos = track.parameters.path.getPointAt(t)
-    pos.multiplyScalar(1.5)
+    pos.multiplyScalar(1.4)
     const offset = pos
       .clone()
       .add(
@@ -69,4 +69,6 @@ function randomData(
   })
 }
 
-export const asteroidsAtom = atom(get => randomData(23, get(trackAtom), 100, 0.1, 0.1))
+export const asteroidsAtom = atom(get => randomData(8, get(trackAtom), 1, 0.1, 0.1))
+
+export const frigatesAtom = atom(get => randomData(1, get(trackAtom), 0.5, 0.1, 0.1))

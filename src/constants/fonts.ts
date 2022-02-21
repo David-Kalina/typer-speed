@@ -10,6 +10,7 @@ export const fonts = {
   8: 'Cousine',
   9: 'Cantarell',
   10: 'Cardo',
+  11: 'Space Mono',
 }
 
 export const fontSizes = {

@@ -18,15 +18,15 @@ export default function Planet(props) {
 
   const [ref] = useSphere(() => ({
     mass: 1,
-    angularVelocity: [Math.random() * 2 - 1, Math.random() * 2 - 1, Math.random() * 2 - 1],
+    angularVelocity: [Math.random() * 0.2, Math.random() * 0.2, Math.random() * 0.2],
   }))
 
   return (
-    <group ref={group} {...props} dispose={null}>
+    <group ref={group} {...props} dispose={null} position={[-1000, -100, -100]}>
       <group rotation={[-Math.PI / 2, 0, 0]}>
         <group rotation={[Math.PI / 2, 0, 0]}>
           <group position={props.position}>
-            <mesh ref={ref} scale={1} geometry={nodes.Object_20.geometry} material={materials.Planet_barren} />
+            <mesh ref={ref} scale={100} geometry={nodes.Object_20.geometry} material={materials.Planet_barren} />
           </group>
         </group>
       </group>

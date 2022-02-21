@@ -83,7 +83,7 @@ export const themes = {
     200: '#FDFDFD',
     300: '#D8D7D5',
     400: '#ADB3BC',
-    default: '#ADB3BC',
+    default: '#00fff8',
     correct: '#FDFDFD',
     incorrect: '#e60343',
     missed: '#ADB3BC',
