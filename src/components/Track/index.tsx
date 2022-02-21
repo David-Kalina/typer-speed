@@ -2,7 +2,7 @@ import { useFrame } from '@react-three/fiber'
 import { useAtom } from 'jotai'
 import React from 'react'
 import * as THREE from 'three'
-import { cameraAtom, clockAtom, trackAtom, updateCameraAtom } from '../../store/gameAtoms'
+import { trackAtom, updateCameraAtom } from '../../store/gameAtoms'
 
 function Track() {
   const [track] = useAtom(trackAtom)

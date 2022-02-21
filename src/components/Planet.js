@@ -7,14 +7,14 @@ source: https://sketchfab.com/3d-models/various-planets-73c6c24e7c40409cafc6adac
 title: Various Planets
 */
 
-import React, { useRef } from 'react'
-import { useGLTF, useAnimations } from '@react-three/drei'
 import { useSphere } from '@react-three/cannon'
+import { useGLTF } from '@react-three/drei'
+import React, { useRef } from 'react'
 
 export default function Planet(props) {
   const group = useRef()
-  const { nodes, materials, animations } = useGLTF('/various_planets/scene.gltf')
-  const { actions } = useAnimations(animations, group)
+  const { nodes, materials } = useGLTF('/various_planets/scene.gltf')
+  // const { actions } = useAnimations(animations, group)
 
   const [ref] = useSphere(() => ({
     mass: 1,

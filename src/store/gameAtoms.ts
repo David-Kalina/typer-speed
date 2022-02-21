@@ -13,7 +13,7 @@ export const cameraAtom = atom(new THREE.PerspectiveCamera(60, window.innerWidth
 
 export const updateCameraAtom = atom(
   () => '',
-  (get, set, update) => {
+  get => {
     const clock = get(clockAtom)
     const camera = get(cameraAtom)
 
