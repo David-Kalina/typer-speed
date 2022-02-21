@@ -7,7 +7,7 @@ import Header from './Header'
 import SettingsModal from './SettingsModal'
 
 function Layout({ children }: { children: React.ReactNode[] | React.ReactNode }) {
-  const [theme] = useAtom(themeAtom)
+  // const [theme] = useAtom(themeAtom)
   const [fontFamily] = useAtom(fontFamilyAtom)
   return (
     <Flex mx="auto" align="start" minH="100vh" h="max-content" bg={'transparent'} flexDir="column" p={['8', '0']}>
