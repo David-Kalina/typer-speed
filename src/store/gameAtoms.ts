@@ -3,6 +3,9 @@ import * as THREE from 'three'
 import { Curves } from 'three/examples/jsm/curves/CurveExtras'
 
 const curve = new Curves.KnotCurve()
+
+let guid = 1
+
 export const trackAtom = atom(new THREE.TubeBufferGeometry(curve, 200, 1, 8, true))
 
 export const clockAtom = atom(new THREE.Clock())
@@ -29,3 +32,41 @@ export const updateCameraAtom = atom(
     camera.lookAt(pos2)
   }
 )
+
+function randomData(
+  count: number,
+  track: THREE.TubeGeometry,
+  radius: number,
+  size: number,
+  scale: number | (() => number)
+) {
+  return new Array(count).fill(0).map(() => {
+    const t = Math.random()
+    const pos = track.parameters.path.getPointAt(t)
+    pos.multiplyScalar(1.5)
+    const offset = pos
+      .clone()
+      .add(
+        new THREE.Vector3(
+          -radius + Math.random() * radius * 2,
+          -radius + Math.random() * radius * 2,
+          -radius + Math.random() * radius * 2
+        )
+      )
+    const speed = 0.1 + Math.random()
+    return {
+      guid: guid++,
+      scale: typeof scale === 'function' ? scale() : scale,
+      size,
+      offset,
+      pos,
+      speed,
+      radius,
+      t,
+      hit: new THREE.Vector3(),
+      distance: 10,
+    }
+  })
+}
+
+export const asteroidsAtom = atom(get => randomData(23, get(trackAtom), 100, 0.1, 0.1))

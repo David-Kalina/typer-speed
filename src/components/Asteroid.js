@@ -7,28 +7,48 @@ source: https://sketchfab.com/models/b044c4def4f244138906aa78d52aa2fa
 title: Asteroid
 */
 
-import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
-import { useSphere } from '@react-three/cannon'
+import { useFrame } from '@react-three/fiber'
+import { useAtom } from 'jotai'
+import React, { useRef } from 'react'
+import { asteroidsAtom, clockAtom } from '../store/gameAtoms'
 
-export default function Model(props) {
-  const group = useRef()
-  const { nodes, materials } = useGLTF('/asteroid/scene.gltf')
+export default function Asteroids() {
+  const gltf = useGLTF('/asteroid/scene.gltf')
+  const asteroids = useAtom(asteroidsAtom)
 
-  const [ref] = useSphere(() => ({
-    mass: 1,
-    angularVelocity: [Math.random() * 2 - 1, Math.random() * 2 - 1, Math.random() * 2 - 1],
-  }))
+  const render = asteroids[0].map(data => <Rock {...gltf} key={data.guid} data={data} />)
 
-  return (
-    <group ref={group} {...props} dispose={null}>
-      <group rotation={props.rotation}>
-        <group position={props.position}>
-          <mesh ref={ref} geometry={nodes.mesh_0.geometry} scale={0.005} material={materials.Default} />
-        </group>
-      </group>
-    </group>
-  )
+  return <>{render}</>
 }
 
-useGLTF.preload('/asteroid/scene.gltf')
+const Rock = React.memo(({ nodes, materials, data }) => {
+  const ref = useRef()
+  const [clock] = useAtom(clockAtom)
+  useFrame(() => {
+    const r = Math.cos((clock.getElapsedTime() / 2) * data.speed) * Math.PI
+    ref.current.rotation.set(r, r, r)
+  })
+  return (
+    // <group ref={ref} position={data.offset} scale={[data.scale, data.scale, data.scale]}>
+    //   <group
+    //     position={[-0.016298329457640648, -0.012838120572268963, 0.24073271453380585]}
+    //     rotation={[3.0093872578726644, 0.27444228385461117, -0.22745113653772078]}
+    //     scale={[20, 20, 20]}
+    //   >
+    //     <mesh geometry={nodes.mesh_0.geometry} material={materials.Default} />
+    //   </group>
+    // </group>
+
+    <mesh
+      ref={ref}
+      position={data?.offset}
+      rotation={[3.0093872578726644, 0.27444228385461117, -0.22745113653772078]}
+      geometry={nodes.mesh_0.geometry}
+      material={materials.Default}
+      scale={[0.05, 0.05, 0.05]}
+    />
+  )
+})
+
+Rock.displayName = 'Rock'
