@@ -18,7 +18,7 @@ function Layout({ children }: { children: React.ReactNode[] | React.ReactNode })
         minH="100vh"
         w="100%"
         fontFamily={fontFamily}
-        justify={['start', 'start', 'space-between', 'space-between']}
+        justify="space-between"
         align="center"
         maxW="1000px"
       >
