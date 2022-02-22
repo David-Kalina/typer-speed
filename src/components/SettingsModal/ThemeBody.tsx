@@ -1,27 +1,63 @@
-import { Button, SimpleGrid } from '@chakra-ui/react'
+import { Box, Flex, FormControl, FormLabel, Icon, Input, Text, VStack } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import { useUpdateAtom } from 'jotai/utils'
 import React from 'react'
-import { setThemesAtom, themeAtom, themesAtom } from '../../store/themeAtoms'
+import { IoMdColorPalette } from 'react-icons/io'
+import { fontFamilyAtom, setThemesAtom, themeAtom, themesAtom } from '../../store/themeAtoms'
 
 function ThemeBody() {
   const [theme] = useAtom(themeAtom)
+  const [font] = useAtom(fontFamilyAtom)
   const setTheme = useUpdateAtom(setThemesAtom)
   const [themes] = useAtom(themesAtom)
 
   const renderThemes = Object.entries(themes).map(([key, value]) => {
     return (
-      <Button bg={`${theme}.300`} key={key} m="0.45em">
-        {value.name}
-      </Button>
+      <Flex cursor="pointer" key={key} align="center" onClick={() => setTheme({ name: key, value })}>
+        <Icon as={IoMdColorPalette} size="1.5em" color={theme.name === value.name ? 'orange' : 'unset'} />
+        <Text ml="6px" fontSize="lg" fontFamily={font}>
+          {value.name}
+        </Text>
+      </Flex>
     )
   })
 
+  const renderCustomThemeOptions = Object.entries(theme).map(([key, value]) => (
+    <FormControl key={key}>
+      <FormLabel htmlFor="font-family">{key}</FormLabel>
+      <Input
+        id={key}
+        name={key}
+        defaultValue={value}
+        type="color"
+        onChange={e => {
+          setTheme({ name: 'custom', value: { ...theme, [key]: e.target.value } })
+        }}
+      />
+    </FormControl>
+  ))
+
   return (
     <>
-      <SimpleGrid minChildWidth="200px" h="300px" columns={3}>
-        {renderThemes}
-      </SimpleGrid>
+      <Flex h="300px">
+        <Box flex={2} h="inherit">
+          <Text>Themes</Text>
+          <VStack mt="2" align="stretch" overflowY="scroll" overflowX="hidden" h="90%" pr="3">
+            {renderThemes}
+          </VStack>
+        </Box>
+        <Box flex={1} />
+        <Box flex={2} h="inherit">
+          {theme.name === 'Custom' ? (
+            <>
+              <Text>Custom</Text>
+              <VStack mt="2" align="stretch" overflowY="scroll" overflowX="hidden" h="90%" pr="3">
+                {renderCustomThemeOptions}
+              </VStack>
+            </>
+          ) : null}
+        </Box>
+      </Flex>
     </>
   )
 }

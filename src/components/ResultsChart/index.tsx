@@ -1,4 +1,4 @@
-import { Flex, Spinner, useTheme } from '@chakra-ui/react'
+import { Flex, Spinner } from '@chakra-ui/react'
 import { getDocs, query, where } from 'firebase/firestore'
 import { useAtom } from 'jotai'
 import React, { useEffect, useState } from 'react'
@@ -11,7 +11,7 @@ import {
   Scatter,
   Tooltip,
   XAxis,
-  YAxis,
+  YAxis
 } from 'recharts'
 import { testsRef } from '../../firebase'
 import { userAtom } from '../../store/firebaseAtoms'
@@ -45,14 +45,14 @@ function Index({ testId }: { testId: string }) {
       {!loading && data ? (
         <ResponsiveContainer width="100%" height={300} maxHeight={300}>
           <ComposedChart data={user?.email ? data : recap}>
-            <CartesianGrid strokeDasharray="5, 5" />
-            <XAxis dataKey="seconds" />
-            <YAxis dataKey="wpm" yAxisId="left" />
-            <YAxis dataKey="incorrect" yAxisId="right" orientation="right" />
+            <CartesianGrid strokeDasharray="8, 8" />
+            <XAxis dataKey="seconds" stroke={theme.default} />
+            <YAxis dataKey="wpm" yAxisId="left" stroke={theme.correct} />
+            <YAxis dataKey="incorrect" yAxisId="right" stroke={theme.incorrect} orientation="right" />
             <Tooltip />
             <Legend />
-            <Line type="monotone" yAxisId="left" dataKey="wpm" />
-            <Scatter shape="cross" name="incorrect" yAxisId="right" dataKey="incorrect" />
+            <Line type="monotone" yAxisId="left" dataKey="wpm" stroke={theme.correct} />
+            <Scatter shape="cross" name="incorrect" yAxisId="right" dataKey="incorrect" stroke={theme.incorrect} />
           </ComposedChart>
         </ResponsiveContainer>
       ) : (

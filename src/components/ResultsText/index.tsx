@@ -40,7 +40,7 @@ function Index({ testId }: { testId: string }) {
   return (
     <>
       {!loading ? (
-        <VStack align="stretch" justify="space-between" h="100%" p={['4em', 0]}>
+        <VStack align="stretch" justify="space-between" h="100%" p={['4em', 0]} color={theme.textLight}>
           <Stat>
             <StatLabel>Average WPM</StatLabel>
             <StatNumber>{user?.email ? data?.averageWPM : wpm}</StatNumber>

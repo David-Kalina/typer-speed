@@ -14,10 +14,10 @@ import { useAtom } from 'jotai'
 import React from 'react'
 import { caretSettingsAtom } from '../../store/caretAtoms'
 import { themeAtom } from '../../store/themeAtoms'
+import SettingsCaret from '../SettingsCaret'
 
 function CaretBody() {
   const [caretSettings, setCaretSettings] = useAtom(caretSettingsAtom)
-
   const [theme] = useAtom(themeAtom)
 
   return (
@@ -29,10 +29,7 @@ function CaretBody() {
               <FormLabel fontSize="sm" htmlFor="color">
                 color
               </FormLabel>
-
               <Input
-                w="20px"
-                h="20px"
                 appearance="none"
                 name="color"
                 bgColor={'inherit' || caretSettings.color}
@@ -54,8 +51,8 @@ function CaretBody() {
                 defaultValue={caretSettings.delay}
                 name="delay"
               >
-                <SliderTrack bg={`${theme}.400`}>
-                  <SliderFilledTrack bg={`${theme}.200`} />
+                <SliderTrack bg={theme.default}>
+                  <SliderFilledTrack bg={theme.correct} />
                 </SliderTrack>
                 <SliderThumb borderRadius="sm" />
               </Slider>
@@ -72,14 +69,24 @@ function CaretBody() {
                 defaultValue={caretSettings.opacity}
                 name="width"
               >
-                <SliderTrack bg={`${theme}.400`}>
-                  <SliderFilledTrack bg={`${theme}.200`} />
+                <SliderTrack bg={theme.default}>
+                  <SliderFilledTrack bg={theme.correct} />
                 </SliderTrack>
                 <SliderThumb borderRadius="sm" />
               </Slider>
             </FormControl>
           </Stack>
         </Box>
+        <Box flex={1} />
+        <Flex align="center" justify="center" flex={2} border={`1px solid ${theme.textLight}`}>
+          <SettingsCaret
+            delay={caretSettings.delay}
+            opacity={caretSettings.opacity}
+            color={caretSettings.color}
+            height={caretSettings.height}
+            width={caretSettings.width}
+          />
+        </Flex>
       </Flex>
     </>
   )

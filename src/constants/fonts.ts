@@ -19,34 +19,3 @@ export const fontSizes = {
   3: 'large',
   4: 'huge',
 }
-
-type CharacterOptions = {
-  [key: number]: {
-    name: 'default' | 'correct' | 'incorrect' | 'missed'
-    type: 'text' | 'color'
-    label: string
-  }
-}
-
-export const characterOptions: CharacterOptions = {
-  1: {
-    name: 'default',
-    type: 'color',
-    label: 'Default Character',
-  },
-  2: {
-    name: 'correct',
-    type: 'color',
-    label: 'Correct Character',
-  },
-  3: {
-    name: 'incorrect',
-    type: 'color',
-    label: 'Incorrect Character',
-  },
-  4: {
-    name: 'missed',
-    type: 'color',
-    label: 'Missed Character',
-  },
-}
