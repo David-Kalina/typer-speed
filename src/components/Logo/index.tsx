@@ -1,4 +1,4 @@
-import { Flex, Text } from '@chakra-ui/react'
+import { Flex, Image } from '@chakra-ui/react'
 import { useUpdateAtom } from 'jotai/utils'
 import React from 'react'
 import { Link } from 'react-location'
@@ -17,7 +17,7 @@ function Index() {
       }}
     >
       <Link to="/">
-        <Text ml="4px">Typer Speed</Text>
+        <Image src="/typerSpeedLogo.png" w="200px" />
       </Link>
     </Flex>
   )
