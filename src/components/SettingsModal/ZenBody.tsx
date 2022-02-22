@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React from 'react'
-import { loopTimeAtom } from '../../store/gameAtoms'
+import { loopTimeAtom } from '../../../../../space-thingy/gameAtoms'
 import { themeAtom } from '../../store/themeAtoms'
 
 function ZenBody() {
