@@ -14,7 +14,7 @@ function Track() {
 
   return (
     <mesh scale={[1, 1, 1]} geometry={track}>
-      <meshBasicMaterial side={THREE.DoubleSide} color="white" opacity={0} wireframe />
+      <meshBasicMaterial side={THREE.DoubleSide} color="white" wireframe />
     </mesh>
   )
 }

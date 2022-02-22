@@ -10,9 +10,9 @@ export const trackAtom = atom(new THREE.TubeBufferGeometry(curve, 200, 1, 8, tru
 
 export const clockAtom = atom(new THREE.Clock())
 
-export const fovAtom = atom(75)
-
 export const cameraAtom = atom(new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000))
+
+export const loopTimeAtom = atom(300)
 
 export const updateCameraAtom = atom(
   () => '',
@@ -21,7 +21,7 @@ export const updateCameraAtom = atom(
     const camera = get(cameraAtom)
 
     const time = clock.getElapsedTime()
-    const loopTime = 300
+    const loopTime = get(loopTimeAtom)
     const t = (time % loopTime) / loopTime
     const t2 = ((time + 0.1) % loopTime) / loopTime
 

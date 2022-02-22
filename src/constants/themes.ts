@@ -2,7 +2,6 @@ import { ThemeValues } from '../store/themeAtoms'
 
 export const typerSpeed: ThemeValues = {
   background: '#050606',
-
   default: '#ADB3BC',
   correct: '#FDFDFD',
   incorrect: '#e60343',
@@ -29,4 +28,9 @@ export const custom: ThemeValues = {
   buttonDark: '#FDFDFD',
   modal: '#050606',
   extra: '#ADB3BC',
+}
+
+export const zen: ThemeValues = {
+  ...typerSpeed,
+  background: 'transparent',
 }

@@ -10,35 +10,35 @@ export const routes: Route<DefaultGenerics>[] = [
   {
     path: '/',
     element: (
-      // <Space>
       <Layout>
         <TypingTest />
       </Layout>
-      // </Space>
     ),
   },
   {
     path: '/login',
     element: (
-      <Space>
-        <Layout>
-          <Login />
-        </Layout>
-      </Space>
+      <Layout>
+        <Login />
+      </Layout>
     ),
   },
   {
     path: '/account',
     element: (
-      <Space>
-        <Layout>
-          <Account />
-        </Layout>
-      </Space>
+      <Layout>
+        <Account />
+      </Layout>
     ),
   },
   {
-    path: '/space',
-    element: <Space />,
+    path: '/zen',
+    element: (
+      <Space>
+        <Layout>
+          <TypingTest />
+        </Layout>
+      </Space>
+    ),
   },
 ]

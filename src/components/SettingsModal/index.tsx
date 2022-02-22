@@ -2,21 +2,24 @@ import { Button, HStack, IconButton, Modal, ModalBody, ModalContent, ModalHeader
 import { useAtom } from 'jotai'
 import React, { useState } from 'react'
 import { IoMdClose } from 'react-icons/io'
+import { useLocation } from 'react-location'
 import { themeAtom } from '../../store/themeAtoms'
 import { settingsOpenAtom } from '../../store/typingTestAtoms'
 import CaretBody from './CaretBody'
 import FontBody from './FontBody'
 import ThemeBody from './ThemeBody'
+import ZenBody from './ZenBody'
 
 function Index() {
   const [theme] = useAtom(themeAtom)
 
   const [settingsOpen, setSettingsOpen] = useAtom(settingsOpenAtom)
 
-  const bodies: { [key: number]: JSX.Element } = {
+  const bodies: { [key: number]: JSX.Element | null } = {
     0: <CaretBody />,
     1: <FontBody />,
     2: <ThemeBody />,
+    3: <ZenBody />,
   }
 
   const [currentBody, setCurrentBody] = useState(0)
@@ -62,6 +65,18 @@ function Index() {
               borderRadius="none"
             >
               theme
+            </Button>
+            <Button
+              _focus={{ borderX: 'none', borderTop: 'none' }}
+              _hover={{ bg: 'inherit', borderBottom: '1px solid grey' }}
+              flex={1}
+              bg={`${theme}.100`}
+              onClick={() => setCurrentBody(3)}
+              size="sm"
+              borderBottom={currentBody === 3 ? '1px solid grey' : 'none'}
+              borderRadius="none"
+            >
+              zen
             </Button>
             <IconButton
               aria-label="close"

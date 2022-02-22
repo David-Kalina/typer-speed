@@ -55,7 +55,7 @@ function Index() {
   }, [duration, elapsed, setElapsed, setFirebaseResults, setTestFinished, setTestStarted, user])
 
   return (
-    <Text fontSize="0.5em" minH="1.5em" pl="0.5rem" color={`${theme}.300`}>
+    <Text fontSize="0.5em" minH="1.5em" pl="0.5rem" color={theme.textLight}>
       {duration && testStarted ? `${duration - elapsed}s` : null}
     </Text>
   )

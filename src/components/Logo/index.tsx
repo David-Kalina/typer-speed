@@ -6,8 +6,16 @@ import { resetTypingTestAtom } from '../../store/typingTestAtoms'
 
 function Index() {
   const reset = useUpdateAtom(resetTypingTestAtom)
+
   return (
-    <Flex align="center" cursor="pointer" fontSize="lg" onClick={reset}>
+    <Flex
+      align="center"
+      cursor="pointer"
+      fontSize="lg"
+      onClick={() => {
+        reset()
+      }}
+    >
       <Link to="/">
         <Text ml="4px">Typer Speed</Text>
       </Link>
