@@ -9,15 +9,9 @@ import { wordIndexAtom, wordsAtom } from './wordAtoms'
 
 export const traversingExtraAtom = atom(false)
 
-export const themeAtom = atomWithStorage<string>('theme', 'typerSpeed')
-
 export const settingsOpenAtom = atom(false)
 
 export const wordHeightAtom = atom<number>(0)
-
-export const fontSizeAtom = atom<number>(2)
-
-export const fontFamilyAtom = atomWithStorage<string>('fontFamily', 'Roboto Mono')
 
 export const loadingAtom = atom<boolean>(true)
 

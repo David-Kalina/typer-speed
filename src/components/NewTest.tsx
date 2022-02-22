@@ -2,7 +2,8 @@ import { Flex, Icon } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import * as React from 'react'
 import { VscDebugRestart } from 'react-icons/vsc'
-import { resetTypingTestAtom, themeAtom } from '../store/typingTestAtoms'
+import { themeAtom } from '../store/themeAtoms'
+import { resetTypingTestAtom } from '../store/typingTestAtoms'
 
 const NewTest: React.FC = () => {
   const [, reset] = useAtom(resetTypingTestAtom)
@@ -17,7 +18,7 @@ const NewTest: React.FC = () => {
         onClick={reset}
         mt="1rem"
         mx="auto"
-        color={`${theme}.textLight`}
+        color={theme.textLight}
       />
     </Flex>
   )

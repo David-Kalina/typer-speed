@@ -13,7 +13,7 @@ import {
 import { useAtom } from 'jotai'
 import React from 'react'
 import { caretSettingsAtom } from '../../store/caretAtoms'
-import { themeAtom } from '../../store/typingTestAtoms'
+import { themeAtom } from '../../store/themeAtoms'
 
 function CaretBody() {
   const [caretSettings, setCaretSettings] = useAtom(caretSettingsAtom)

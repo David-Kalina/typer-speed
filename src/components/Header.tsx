@@ -1,11 +1,12 @@
-import { Flex, HStack, Text, useBreakpoint } from '@chakra-ui/react'
+import { Button, Flex, HStack, Text, useBreakpoint } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import { useUpdateAtom } from 'jotai/utils'
 import React from 'react'
 import { FiLogOut, FiSettings, FiUser } from 'react-icons/fi'
 import { Link, useLocation } from 'react-location'
 import { useAuth } from '../contexts/AuthContext'
-import { settingsOpenAtom, themeAtom } from '../store/typingTestAtoms'
+import { themeAtom } from '../store/themeAtoms'
+import { settingsOpenAtom } from '../store/typingTestAtoms'
 import Logo from './Logo'
 import MobileHeader from './MobileHeader'
 import SetTestTime from './SetTestTime'
@@ -20,7 +21,7 @@ function Header() {
     return <MobileHeader />
   } else {
     return (
-      <HStack w="100%" py="12" px={['12', '12', 0]} justifyContent="space-between" color={`${theme}.textLight`}>
+      <HStack w="100%" py="12" px={['12', '12', 0]} justifyContent="space-between" color={theme.textLight}>
         <HStack spacing={4}>
           <Logo />
           <Link to="/"></Link>
@@ -35,6 +36,9 @@ function Header() {
         </HStack>
         <HStack spacing={4}>
           <SetTestTime />
+          <Link to="/space">
+            Enter TyperSpace
+          </Link>
           {user?.email && current.pathname === '/account' ? (
             <Flex align="center" onClick={signOutUser} cursor="pointer">
               <FiLogOut />

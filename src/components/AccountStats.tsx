@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { accountStats } from '../constants/accountStats'
 import { useAuth } from '../contexts/AuthContext'
 import { db } from '../firebase'
-import { themeAtom } from '../store/typingTestAtoms'
+import { themeAtom } from '../store/themeAtoms'
 
 function AccountStats() {
   const { user } = useAuth()

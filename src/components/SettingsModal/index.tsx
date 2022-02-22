@@ -2,7 +2,8 @@ import { Button, HStack, IconButton, Modal, ModalBody, ModalContent, ModalHeader
 import { useAtom } from 'jotai'
 import React, { useState } from 'react'
 import { IoMdClose } from 'react-icons/io'
-import { settingsOpenAtom, themeAtom } from '../../store/typingTestAtoms'
+import { themeAtom } from '../../store/themeAtoms'
+import { settingsOpenAtom } from '../../store/typingTestAtoms'
 import CaretBody from './CaretBody'
 import FontBody from './FontBody'
 import ThemeBody from './ThemeBody'
@@ -23,7 +24,7 @@ function Index() {
   return (
     <Modal isOpen={settingsOpen} onClose={() => setSettingsOpen(false)} isCentered size="4xl">
       <ModalOverlay />
-      <ModalContent bg={`${theme}.100`} color={`${theme}.200`} border="1px solid grey">
+      <ModalContent bg={theme.modal} color={theme.textLight} border="1px solid grey">
         <ModalHeader p="1" mb="5">
           <HStack spacing={0} w="100%" h="100%">
             <Button

@@ -4,13 +4,13 @@ import React, { useEffect } from 'react'
 import { getCharactersByStatusAtom } from '../../store/characterAtoms'
 import { userAtom } from '../../store/firebaseAtoms'
 import { addToFirebaseResultAtom, addToResultsAtom } from '../../store/resultsAtoms'
+import { themeAtom } from '../../store/themeAtoms'
 import {
   elapsedTimeAtom,
   pauseTestAtom,
   testFinishedAtom,
   testStartedAtom,
   testTimeAtom,
-  themeAtom
 } from '../../store/typingTestAtoms'
 
 function Index() {

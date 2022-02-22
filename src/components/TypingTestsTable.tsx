@@ -20,7 +20,7 @@ import React, { useEffect, useState } from 'react'
 import { testsRef } from '../firebase'
 import { useToggle } from '../hooks/useToggle'
 import { userAtom } from '../store/firebaseAtoms'
-import { themeAtom } from '../store/typingTestAtoms'
+import { themeAtom } from '../store/themeAtoms'
 import ResultsChart from './ResultsChart'
 import TableFilters from './TableFilters'
 import TableHeads from './TableHeads'
@@ -100,7 +100,7 @@ function TypingTestsTable() {
 
   return (
     <>
-      <Flex flexDir="column" justify="center" h="100%">
+      <Flex flexDir="column" justify="center" h="100%" color={theme.textLight}>
         <Flex w="100%" justify="flex-end">
           <TableFilters tableFilter={filter} toggleFilter={toggleFilter} />
         </Flex>
@@ -122,9 +122,9 @@ function TypingTestsTable() {
         )}
       </Flex>
       <Modal isOpen={toggleChart} onClose={() => setToggleChart(false)} size="5xl" isCentered>
-        <ModalContent bg={`${theme}.100`} border={`1px solid gray`}>
-          <ModalCloseButton _focus={{ border: 'none' }} color={`${theme}.textLight`} />
-          <ModalHeader color={`${theme}.textLight`}>Recap</ModalHeader>
+        <ModalContent bg={theme.modal} border={`1px solid gray`}>
+          <ModalCloseButton _focus={{ border: 'none' }} color={theme.textLight} />
+          <ModalHeader color={theme.textLight}>Recap</ModalHeader>
           <ModalBody p="5em">
             <ResultsChart testId={testId} />
           </ModalBody>

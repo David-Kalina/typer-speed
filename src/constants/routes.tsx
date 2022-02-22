@@ -10,11 +10,11 @@ export const routes: Route<DefaultGenerics>[] = [
   {
     path: '/',
     element: (
-      <Space>
-        <Layout>
-          <TypingTest />
-        </Layout>
-      </Space>
+      // <Space>
+      <Layout>
+        <TypingTest />
+      </Layout>
+      // </Space>
     ),
   },
   {

@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { IoLogoGoogle } from 'react-icons/io'
 import { SignInData, useAuth } from '../contexts/AuthContext'
-import { themeAtom } from '../store/typingTestAtoms'
+import { themeAtom } from '../store/themeAtoms'
 function Login() {
   const { signIn, signInWithGoogle } = useAuth()
   const {

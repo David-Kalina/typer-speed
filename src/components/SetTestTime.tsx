@@ -1,7 +1,8 @@
 import { Box, HStack, Text } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React from 'react'
-import { testTimeAtom, themeAtom } from '../store/typingTestAtoms'
+import { themeAtom } from '../store/themeAtoms'
+import { testTimeAtom } from '../store/typingTestAtoms'
 
 function SetTestTime() {
   const [testTime, setTestTime] = useAtom(testTimeAtom)
@@ -20,7 +21,7 @@ function SetTestTime() {
           cursor="pointer"
           onClick={() => updateTestTime(15)}
           fontSize="lg"
-          color={testTime === 15 ? `${theme}.text` : `${theme}.200`}
+          color={testTime === 15 ? theme.textLight : theme.textDark}
         >
           {15}
         </Text>
@@ -30,7 +31,7 @@ function SetTestTime() {
           cursor="pointer"
           onClick={() => updateTestTime(30)}
           fontSize="lg"
-          color={testTime === 30 ? `${theme}.text` : `${theme}.200`}
+          color={testTime === 30 ? theme.textLight : theme.textDark}
         >
           {30}
         </Text>
@@ -40,7 +41,7 @@ function SetTestTime() {
           cursor="pointer"
           onClick={() => updateTestTime(60)}
           fontSize="lg"
-          color={testTime === 60 ? `${theme}.text` : `${theme}.200`}
+          color={testTime === 60 ? theme.textLight : theme.textDark}
         >
           {60}
         </Text>
@@ -50,7 +51,7 @@ function SetTestTime() {
           cursor="pointer"
           onClick={() => updateTestTime(120)}
           fontSize="lg"
-          color={testTime === 120 ? `${theme}.text` : `${theme}.200`}
+          color={testTime === 120 ? theme.textLight : theme.textDark}
         >
           {120}
         </Text>

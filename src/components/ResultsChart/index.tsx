@@ -16,7 +16,7 @@ import {
 import { testsRef } from '../../firebase'
 import { userAtom } from '../../store/firebaseAtoms'
 import { getResultsAtom } from '../../store/resultsAtoms'
-import { themeAtom } from '../../store/typingTestAtoms'
+import { themeAtom } from '../../store/themeAtoms'
 
 function Index({ testId }: { testId: string }) {
   const [theme] = useAtom(themeAtom)
@@ -24,7 +24,6 @@ function Index({ testId }: { testId: string }) {
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState<any[]>([])
   const [{ recap }] = useAtom(getResultsAtom)
-  const chakraTheme = useTheme()
 
   useEffect(() => {
     if (!user?.email) {
@@ -46,20 +45,14 @@ function Index({ testId }: { testId: string }) {
       {!loading && data ? (
         <ResponsiveContainer width="100%" height={300} maxHeight={300}>
           <ComposedChart data={user?.email ? data : recap}>
-            <CartesianGrid stroke={`${chakraTheme.colors[theme][200]}`} strokeDasharray="5, 5" />
+            <CartesianGrid strokeDasharray="5, 5" />
             <XAxis dataKey="seconds" />
             <YAxis dataKey="wpm" yAxisId="left" />
             <YAxis dataKey="incorrect" yAxisId="right" orientation="right" />
             <Tooltip />
             <Legend />
-            <Line type="monotone" yAxisId="left" dataKey="wpm" fill={`${chakraTheme.colors[theme]['correct']}`} />
-            <Scatter
-              shape="cross"
-              name="incorrect"
-              yAxisId="right"
-              dataKey="incorrect"
-              stroke={`${chakraTheme.colors[theme]['incorrect']}`}
-            />
+            <Line type="monotone" yAxisId="left" dataKey="wpm" />
+            <Scatter shape="cross" name="incorrect" yAxisId="right" dataKey="incorrect" />
           </ComposedChart>
         </ResponsiveContainer>
       ) : (

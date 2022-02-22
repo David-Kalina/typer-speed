@@ -2,7 +2,8 @@ import { Box } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React, { useRef } from 'react'
 import { caretPositionAtom } from '../../store/caretAtoms'
-import { testStartedAtom, themeAtom } from '../../store/typingTestAtoms'
+import { themeAtom } from '../../store/themeAtoms'
+import { testStartedAtom } from '../../store/typingTestAtoms'
 
 export interface CaretProps {
   delay: number
@@ -30,7 +31,7 @@ function Index({ delay, color, height, width, opacity }: CaretProps) {
       width={`${width || 0.11}em`}
       fontWeight="bold"
       opacity={opacity || 1}
-      bg={color || `${theme}.400`}
+      bg={color || theme.textLight}
       className={testStarted ? 'caret' : 'blink'}
     />
   )

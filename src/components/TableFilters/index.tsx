@@ -3,7 +3,7 @@ import { useAtom } from 'jotai'
 import React from 'react'
 
 import { filters } from '../../constants/filters'
-import { themeAtom } from '../../store/typingTestAtoms'
+import { themeAtom } from '../../store/themeAtoms'
 
 interface TableFiltersProps {
   toggleFilter: (filter: string) => void

@@ -3,7 +3,7 @@ import { useAtom } from 'jotai'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { SignUpData, useAuth } from '../contexts/AuthContext'
-import { themeAtom } from '../store/typingTestAtoms'
+import { themeAtom } from '../store/themeAtoms'
 
 function Register() {
   const { signUp } = useAuth()

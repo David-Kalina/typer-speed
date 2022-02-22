@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React from 'react'
-import { themeAtom } from '../../store/typingTestAtoms'
+import { themeAtom } from '../../store/themeAtoms'
 import { CaretProps } from '../Caret'
 
 function Index({ color, height, width, opacity }: CaretProps) {

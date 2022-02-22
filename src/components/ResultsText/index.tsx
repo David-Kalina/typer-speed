@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { testsRef } from '../../firebase'
 import { userAtom } from '../../store/firebaseAtoms'
 import { getResultsAtom } from '../../store/resultsAtoms'
-import { themeAtom } from '../../store/typingTestAtoms'
+import { themeAtom } from '../../store/themeAtoms'
 
 function Index({ testId }: { testId: string }) {
   const [user] = useAtom(userAtom)
@@ -40,7 +40,7 @@ function Index({ testId }: { testId: string }) {
   return (
     <>
       {!loading ? (
-        <VStack align="stretch" justify="space-between" h="100%" color={`${chakraTheme.colors[theme][200]}`} p={["4em", 0]}>
+        <VStack align="stretch" justify="space-between" h="100%" p={['4em', 0]}>
           <Stat>
             <StatLabel>Average WPM</StatLabel>
             <StatNumber>{user?.email ? data?.averageWPM : wpm}</StatNumber>

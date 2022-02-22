@@ -1,13 +1,17 @@
 import { Stack } from '@chakra-ui/react'
+import { useAtom } from 'jotai'
 import React from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { useRedirect } from '../hooks/useRedirect'
+import { themeAtom } from '../store/themeAtoms'
 import Login from './Login'
 import Register from './Register'
 function Auth() {
   const { user } = useAuth()
 
   useRedirect(user?.email, '/')
+
+  const [theme] = useAtom(themeAtom)
 
   return (
     <Stack
@@ -16,7 +20,8 @@ function Auth() {
       direction={['column', 'column', 'row', 'row']}
       mx="auto"
       h="100%"
-      align={['center', 'center', 'center', 'center']}
+      color={theme.textLight}
+      align="center"
       justifyContent={['center', 'center', 'space-between', 'space-between']}
     >
       <Register />
