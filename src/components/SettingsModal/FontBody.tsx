@@ -1,4 +1,4 @@
-import { Box, Flex, Icon, Text, theme, VStack } from '@chakra-ui/react'
+import { Box, Flex, Icon, Text, VStack } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React from 'react'
 import { FaFont } from 'react-icons/fa'

@@ -1,20 +1,18 @@
 import {
-  Flex,
   Box,
-  VStack,
-  Text,
   Button,
+  Flex,
   Modal,
-  ModalContent,
-  useDisclosure,
-  ModalCloseButton,
   ModalBody,
-  HStack,
+  ModalCloseButton,
+  ModalContent,
   ModalHeader,
+  Text,
+  VStack,
 } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import { useUpdateAtom } from 'jotai/utils'
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-location'
 import { useAuth } from '../../contexts/AuthContext'
 import { userAtom } from '../../store/firebaseAtoms'

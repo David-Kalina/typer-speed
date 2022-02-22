@@ -1,4 +1,4 @@
-import { Spinner, Stat, StatLabel, StatNumber, useTheme, VStack } from '@chakra-ui/react'
+import { Spinner, Stat, StatLabel, StatNumber, VStack } from '@chakra-ui/react'
 import { getDocs, query, where } from 'firebase/firestore'
 import { useAtom } from 'jotai'
 import React, { useEffect, useState } from 'react'
@@ -9,7 +9,6 @@ import { themeAtom } from '../../store/themeAtoms'
 
 function Index({ testId }: { testId: string }) {
   const [user] = useAtom(userAtom)
-  const chakraTheme = useTheme()
   const [theme] = useAtom(themeAtom)
 
   const [loading, setLoading] = useState(true)
