@@ -11,6 +11,8 @@ export const traversingExtraAtom = atom(false)
 
 export const settingsOpenAtom = atom(false)
 
+export const accountDeletionModalOpen = atom(false)
+
 export const wordHeightAtom = atom<number>(0)
 
 export const loadingAtom = atom<boolean>(true)

@@ -44,14 +44,14 @@ function ThemeBody() {
     <>
       <Flex h="300px">
         <Box flex={2} h="inherit">
-          <Text>Themes</Text>
+          <Text fontWeight="bold">Themes</Text>
           <VStack mt="2" align="stretch" overflowY="scroll" overflowX="hidden" h="90%" pr="3">
             {renderThemes}
           </VStack>
         </Box>
         <Box flex={1} />
         <Box flex={2} h="inherit">
-          <Text>{theme.name} colors</Text>
+          <Text fontWeight="bold"> {theme.name} colors</Text>
           <VStack mt="2" align="stretch" overflowY="scroll" overflowX="hidden" h="90%" pr="3">
             {renderCustomThemeOptions}
           </VStack>

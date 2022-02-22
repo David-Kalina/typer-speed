@@ -28,7 +28,7 @@ function CaretBody() {
           <Stack fontSize="xs">
             <FormControl id="color">
               <FormLabel fontSize="sm" htmlFor="color">
-                color
+                Color
               </FormLabel>
               <Input
                 appearance="none"
@@ -43,7 +43,7 @@ function CaretBody() {
             <Tooltip label="Sets how fluid the caret appears. Slightly delays caret position" placement="end">
               <FormControl>
                 <FormLabel fontSize="sm" htmlFor="color">
-                  smoothness
+                  Smoothness
                 </FormLabel>
                 <Slider
                   step={0.1}
@@ -64,7 +64,7 @@ function CaretBody() {
             <Tooltip label="Sets caret transparency" placement="end">
               <FormControl>
                 <FormLabel fontSize="sm" htmlFor="color">
-                  opacity
+                  Opacity
                 </FormLabel>
                 <Slider
                   step={0.1}
