@@ -36,7 +36,7 @@ function CaretBody() {
                 bgColor={'inherit' || caretSettings.color}
                 type="color"
                 border="none"
-                defaultValue={'white' || caretSettings.color}
+                value={caretSettings.color}
                 onChange={e => setCaretSettings({ ...caretSettings, color: e.target.value })}
               />
             </FormControl>

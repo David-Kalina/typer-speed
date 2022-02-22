@@ -3,6 +3,7 @@ import { useAtom } from 'jotai'
 import { useUpdateAtom } from 'jotai/utils'
 import React from 'react'
 import { FiLogOut, FiSettings, FiUser } from 'react-icons/fi'
+import { IoMdPodium } from 'react-icons/io'
 import { Link, useLocation } from 'react-location'
 import { useAuth } from '../contexts/AuthContext'
 import { themeAtom } from '../store/themeAtoms'
@@ -32,6 +33,11 @@ function Header() {
           <Flex cursor="pointer" onClick={() => setSettingsOpen(true)}>
             <FiSettings />
           </Flex>
+          <Link to="/leaderboards">
+            <Flex cursor="pointer">
+              <IoMdPodium />
+            </Flex>
+          </Link>
         </HStack>
         <HStack spacing={4}>
           <SetTestTime />

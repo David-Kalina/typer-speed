@@ -3,6 +3,7 @@ import { DefaultGenerics, Route } from 'react-location'
 import Account from '../components/Account'
 import Login from '../components/Auth'
 import Layout from '../components/Layout'
+import LeaderBoards from '../components/LeaderBoards'
 import TypingTest from '../components/TypingTest'
 
 export const routes: Route<DefaultGenerics>[] = [
@@ -27,6 +28,14 @@ export const routes: Route<DefaultGenerics>[] = [
     element: (
       <Layout>
         <Account />
+      </Layout>
+    ),
+  },
+  {
+    path: '/leaderboards',
+    element: (
+      <Layout>
+        <LeaderBoards />
       </Layout>
     ),
   },
