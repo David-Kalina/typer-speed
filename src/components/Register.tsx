@@ -3,7 +3,7 @@ import { useAtom } from 'jotai'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { SignUpData, useAuth } from '../contexts/AuthContext'
-import { themeAtom } from '../store/typingTestAtoms'
+import { themeAtom } from '../store/themeAtoms'
 
 function Register() {
   const { signUp } = useAuth()
@@ -51,7 +51,7 @@ function Register() {
           placeholder="verify password"
         />
         {errors.verifyPassword && <Text fontSize="xs">{errors.verifyPassword.message}</Text>}
-        <Button type="submit" bg={`${theme}.300`} color={`${theme}.textDark`}>
+        <Button type="submit" bg={theme.correct} color={theme.textDark}>
           register
         </Button>
       </VStack>

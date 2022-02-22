@@ -4,7 +4,7 @@ import React from 'react'
 import { Link } from 'react-location'
 import { useAuth } from '../contexts/AuthContext'
 import { useRedirect } from '../hooks/useRedirect'
-import { themeAtom } from '../store/typingTestAtoms'
+import { themeAtom } from '../store/themeAtoms'
 import AccountStats from './AccountStats'
 import TypingTestsTable from './TypingTestsTable'
 
@@ -15,9 +15,9 @@ function Account() {
 
   if (user?.email) {
     return (
-      <VStack w="100%" minH="100vh" h="max-content" align="stretch" spacing={8}>
+      <VStack w="100%" minH="100vh" h="max-content" align="stretch" spacing={8} color={theme.textLight}>
         <AccountStats />
-        <Text textAlign="center" fontSize={['sm', 'md', 'lg', 'xl']} color={`${theme}.textLight`}>
+        <Text textAlign="center" fontSize={['sm', 'md', 'lg', 'xl']}>
           Account created {user?.metadata.creationTime}
         </Text>
         <Box>

@@ -1,8 +1,11 @@
 import { Button, HStack, IconButton, Modal, ModalBody, ModalContent, ModalHeader, ModalOverlay } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React, { useState } from 'react'
-import { IoMdClose } from 'react-icons/io'
-import { settingsOpenAtom, themeAtom } from '../../store/typingTestAtoms'
+import { FaFont, FaICursor, FaUser } from 'react-icons/fa'
+import { IoMdClose, IoMdColorPalette } from 'react-icons/io'
+import { themeAtom } from '../../store/themeAtoms'
+import { settingsOpenAtom } from '../../store/typingTestAtoms'
+import AccountBody from './AccountBody'
 import CaretBody from './CaretBody'
 import FontBody from './FontBody'
 import ThemeBody from './ThemeBody'
@@ -12,10 +15,11 @@ function Index() {
 
   const [settingsOpen, setSettingsOpen] = useAtom(settingsOpenAtom)
 
-  const bodies: { [key: number]: JSX.Element } = {
+  const bodies: { [key: number]: JSX.Element | null } = {
     0: <CaretBody />,
     1: <FontBody />,
     2: <ThemeBody />,
+    3: <AccountBody />,
   }
 
   const [currentBody, setCurrentBody] = useState(0)
@@ -23,49 +27,65 @@ function Index() {
   return (
     <Modal isOpen={settingsOpen} onClose={() => setSettingsOpen(false)} isCentered size="4xl">
       <ModalOverlay />
-      <ModalContent bg={`${theme}.100`} color={`${theme}.200`} border="1px solid grey">
+      <ModalContent bg={theme.modal} color={theme.textLight} border={`1px solid ${theme.default}`}>
         <ModalHeader p="1" mb="5">
           <HStack spacing={0} w="100%" h="100%">
             <Button
+              leftIcon={<FaICursor />}
               _focus={{ borderX: 'none', borderTop: 'none' }}
-              _hover={{ bg: 'inherit', borderBottom: '1px solid grey' }}
+              _hover={{ bg: 'inherit', borderBottom: `1px solid ${theme.default}` }}
               flex={1}
               bg={`${theme}.100`}
               onClick={() => setCurrentBody(0)}
               size="sm"
-              borderBottom={currentBody === 0 ? '1px solid grey' : 'none'}
+              borderBottom={currentBody === 0 ? `1px solid ${theme.default}` : 'none'}
               borderRadius="none"
             >
               caret
             </Button>
             <Button
+              leftIcon={<FaFont />}
               _focus={{ borderX: 'none', borderTop: 'none' }}
-              _hover={{ bg: 'inherit', borderBottom: '1px solid grey' }}
+              _hover={{ bg: 'inherit', borderBottom: `1px solid ${theme.default}` }}
               flex={1}
               bg={`${theme}.100`}
               onClick={() => setCurrentBody(1)}
               size="sm"
-              borderBottom={currentBody === 1 ? '1px solid grey' : 'none'}
+              borderBottom={currentBody === 1 ? `1px solid ${theme.default}` : 'none'}
               borderRadius="none"
             >
               font
             </Button>
             <Button
+              leftIcon={<IoMdColorPalette />}
               _focus={{ borderX: 'none', borderTop: 'none' }}
-              _hover={{ bg: 'inherit', borderBottom: '1px solid grey' }}
+              _hover={{ bg: 'inherit', borderBottom: `1px solid ${theme.default}` }}
               flex={1}
               bg={`${theme}.100`}
               onClick={() => setCurrentBody(2)}
               size="sm"
-              borderBottom={currentBody === 2 ? '1px solid grey' : 'none'}
+              borderBottom={currentBody === 2 ? `1px solid ${theme.default}` : 'none'}
               borderRadius="none"
             >
               theme
             </Button>
+            <Button
+              leftIcon={<FaUser />}
+              _focus={{ borderX: 'none', borderTop: 'none' }}
+              _hover={{ bg: 'inherit', borderBottom: `1px solid ${theme.correct}` }}
+              flex={1}
+              bg={`${theme}.100`}
+              onClick={() => setCurrentBody(3)}
+              size="sm"
+              borderBottom={currentBody === 3 ? `1px solid ${theme.correct}` : 'none'}
+              borderRadius="none"
+            >
+              account
+            </Button>
             <IconButton
               aria-label="close"
               _focus={{ borderX: 'none', borderTop: 'none' }}
-              _hover={{ bg: 'inherit', borderBottom: '1px solid grey' }}
+              _hover={{ bg: 'inherit', borderBottom: `1px solid ${theme.correct}` }}
               flex={1}
               bg={`${theme}.100`}
               size="sm"

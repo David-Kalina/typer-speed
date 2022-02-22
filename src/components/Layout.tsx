@@ -1,7 +1,8 @@
 import { Flex } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React from 'react'
-import { fontFamilyAtom, themeAtom } from '../store/typingTestAtoms'
+import { useLocation } from 'react-location'
+import { fontFamilyAtom, themeAtom } from '../store/themeAtoms'
 import Footer from './Footer'
 import Header from './Header'
 import SettingsModal from './SettingsModal'
@@ -9,8 +10,18 @@ import SettingsModal from './SettingsModal'
 function Layout({ children }: { children: React.ReactNode[] | React.ReactNode }) {
   const [theme] = useAtom(themeAtom)
   const [fontFamily] = useAtom(fontFamilyAtom)
+  const { current } = useLocation()
+
   return (
-    <Flex mx="auto" align="start" minH="100vh" h="max-content" bg={`${theme}.100`} flexDir="column" p={['8', '0']}>
+    <Flex
+      mx="auto"
+      align="start"
+      minH="100vh"
+      h="max-content"
+      bg={current.pathname.includes('zen') ? 'transparent' : theme.background}
+      flexDir="column"
+      p={['8', 0]}
+    >
       <Flex
         flexDir="column"
         mx="auto"
@@ -18,7 +29,7 @@ function Layout({ children }: { children: React.ReactNode[] | React.ReactNode })
         minH="100vh"
         w="100%"
         fontFamily={fontFamily}
-        justify={['start', 'start', 'space-between', 'space-between']}
+        justify="space-between"
         align="center"
         maxW="1000px"
       >

@@ -2,7 +2,7 @@ import { Flex, HStack, Link, Text, useBreakpoint, VStack } from '@chakra-ui/reac
 import { useAtom } from 'jotai'
 import React from 'react'
 import { IoLogoGithub } from 'react-icons/io'
-import { themeAtom } from '../store/typingTestAtoms'
+import { themeAtom } from '../store/themeAtoms'
 
 function Footer() {
   const breakpoint = useBreakpoint()
@@ -10,7 +10,7 @@ function Footer() {
 
   if (breakpoint === 'md' || breakpoint === 'lg' || breakpoint === 'xl' || breakpoint === '2xl') {
     return (
-      <HStack w="100%" p="12" justifyContent="center" fontSize="sm" color={`${theme}.textLight`}>
+      <HStack w="100%" p="12" justifyContent="center" fontSize="sm" color={theme.textLight}>
         <Link
           cursor="pointer"
           href="https://github.com/David-Kalina/typing-speed-test-with-socket.io-client"

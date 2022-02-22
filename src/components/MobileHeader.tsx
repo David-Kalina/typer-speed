@@ -7,7 +7,7 @@ import { GiHamburgerMenu, GiSpeedometer } from 'react-icons/gi'
 import { Link } from 'react-location'
 import { useAuth } from '../contexts/AuthContext'
 import { useToggle } from '../hooks/useToggle'
-import { themeAtom } from '../store/typingTestAtoms'
+import { themeAtom } from '../store/themeAtoms'
 
 function MobileHeader() {
   const { user, signOutUser } = useAuth()
@@ -35,12 +35,12 @@ function MobileHeader() {
             </Flex>
             <CloseButton onClick={() => toggle(false)} />
           </Flex>
-            <Flex align="center" cursor="pointer" h="30px" p="2" borderRadius="sm">
-              <FaKeyboard />
-              <Text fontSize="sm" ml="2">
-                Take a test
-              </Text>
-            </Flex>
+          <Flex align="center" cursor="pointer" h="30px" p="2" borderRadius="sm">
+            <FaKeyboard />
+            <Text fontSize="sm" ml="2">
+              Take a test
+            </Text>
+          </Flex>
           <Link to={user?.email ? '/account' : '/login'}>
             <Flex align="center" cursor="pointer" h="30px" p="2" borderRadius="sm" pos="relative">
               <FaUser />

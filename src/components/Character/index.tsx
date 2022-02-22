@@ -2,7 +2,7 @@ import { Box } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React from 'react'
 import { Character } from '../../classes/Character'
-import { themeAtom } from '../../store/typingTestAtoms'
+import { themeAtom } from '../../store/themeAtoms'
 
 const Index = React.memo(({ value, status }: Character) => {
   const [theme] = useAtom(themeAtom)
@@ -10,7 +10,7 @@ const Index = React.memo(({ value, status }: Character) => {
   return (
     <Box
       display="inline-block"
-      color={`${theme}.${status}`}
+      color={theme[status]}
       borderBottom={status === 'missed' ? `.05em solid darkred` : '.05em solid transparent'}
       lineHeight="1em"
       boxSizing="border-box"

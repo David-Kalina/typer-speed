@@ -34,6 +34,7 @@ export const getRecapDataAtom = atom(get => {
   })
 })
 
+
 export const getWPMDataAtom = atom(get => {
   const results = get(resultsAtom)
 

@@ -1,4 +1,4 @@
-import { Flex, Spinner, useTheme } from '@chakra-ui/react'
+import { Flex, Spinner } from '@chakra-ui/react'
 import { getDocs, query, where } from 'firebase/firestore'
 import { useAtom } from 'jotai'
 import React, { useEffect, useState } from 'react'
@@ -11,12 +11,12 @@ import {
   Scatter,
   Tooltip,
   XAxis,
-  YAxis,
+  YAxis
 } from 'recharts'
 import { testsRef } from '../../firebase'
 import { userAtom } from '../../store/firebaseAtoms'
 import { getResultsAtom } from '../../store/resultsAtoms'
-import { themeAtom } from '../../store/typingTestAtoms'
+import { themeAtom } from '../../store/themeAtoms'
 
 function Index({ testId }: { testId: string }) {
   const [theme] = useAtom(themeAtom)
@@ -24,7 +24,6 @@ function Index({ testId }: { testId: string }) {
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState<any[]>([])
   const [{ recap }] = useAtom(getResultsAtom)
-  const chakraTheme = useTheme()
 
   useEffect(() => {
     if (!user?.email) {
@@ -46,20 +45,14 @@ function Index({ testId }: { testId: string }) {
       {!loading && data ? (
         <ResponsiveContainer width="100%" height={300} maxHeight={300}>
           <ComposedChart data={user?.email ? data : recap}>
-            <CartesianGrid stroke={`${chakraTheme.colors[theme][200]}`} strokeDasharray="5, 5" />
-            <XAxis dataKey="seconds" />
-            <YAxis dataKey="wpm" yAxisId="left" />
-            <YAxis dataKey="incorrect" yAxisId="right" orientation="right" />
+            <CartesianGrid strokeDasharray="8, 8" />
+            <XAxis dataKey="seconds" stroke={theme.default} />
+            <YAxis dataKey="wpm" yAxisId="left" stroke={theme.correct} />
+            <YAxis dataKey="incorrect" yAxisId="right" stroke={theme.incorrect} orientation="right" />
             <Tooltip />
             <Legend />
-            <Line type="monotone" yAxisId="left" dataKey="wpm" fill={`${chakraTheme.colors[theme]['correct']}`} />
-            <Scatter
-              shape="cross"
-              name="incorrect"
-              yAxisId="right"
-              dataKey="incorrect"
-              stroke={`${chakraTheme.colors[theme]['incorrect']}`}
-            />
+            <Line type="monotone" yAxisId="left" dataKey="wpm" stroke={theme.correct} />
+            <Scatter shape="cross" name="incorrect" yAxisId="right" dataKey="incorrect" stroke={theme.incorrect} />
           </ComposedChart>
         </ResponsiveContainer>
       ) : (

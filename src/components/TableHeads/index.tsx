@@ -2,8 +2,8 @@ import { Th, Thead, Tr } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React from 'react'
 
-import { tableHeads } from '../../constants/tableHeads'
-import { themeAtom } from '../../store/typingTestAtoms'
+import { tableHeads } from '../../customization/tableHeads'
+import { themeAtom } from '../../store/themeAtoms'
 
 function Index() {
   const [theme] = useAtom(themeAtom)

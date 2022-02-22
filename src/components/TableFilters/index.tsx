@@ -2,8 +2,8 @@ import { Button, HStack } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React from 'react'
 
-import { filters } from '../../constants/filters'
-import { themeAtom } from '../../store/typingTestAtoms'
+import { filters } from '../../customization/filters'
+import { themeAtom } from '../../store/themeAtoms'
 
 interface TableFiltersProps {
   toggleFilter: (filter: string) => void

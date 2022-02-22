@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { IoLogoGoogle } from 'react-icons/io'
 import { SignInData, useAuth } from '../contexts/AuthContext'
-import { themeAtom } from '../store/typingTestAtoms'
+import { themeAtom } from '../store/themeAtoms'
 function Login() {
   const { signIn, signInWithGoogle } = useAuth()
   const {
@@ -37,15 +37,15 @@ function Login() {
           type="password"
           placeholder="password"
         />
-        <Button color={`${theme}.textDark`} type="submit" bg={`${theme}.300`}>
+        <Button bg={theme.correct} color={theme.textDark} type="submit">
           login
         </Button>
         <Text textAlign="center" textColor="white">
           or
         </Text>
         <IconButton
-          bg={`${theme}.300`}
-          color={`${theme}.textDark`}
+          bg={theme.correct}
+          color={theme.textDark}
           onClick={signInWithGoogle}
           aria-label="google sign in method"
           icon={<IoLogoGoogle />}

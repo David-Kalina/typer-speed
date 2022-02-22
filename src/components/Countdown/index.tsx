@@ -4,13 +4,13 @@ import React, { useEffect } from 'react'
 import { getCharactersByStatusAtom } from '../../store/characterAtoms'
 import { userAtom } from '../../store/firebaseAtoms'
 import { addToFirebaseResultAtom, addToResultsAtom } from '../../store/resultsAtoms'
+import { themeAtom } from '../../store/themeAtoms'
 import {
   elapsedTimeAtom,
   pauseTestAtom,
   testFinishedAtom,
   testStartedAtom,
   testTimeAtom,
-  themeAtom,
 } from '../../store/typingTestAtoms'
 
 function Index() {
@@ -55,7 +55,7 @@ function Index() {
   }, [duration, elapsed, setElapsed, setFirebaseResults, setTestFinished, setTestStarted, user])
 
   return (
-    <Text fontSize="0.5em" minH="1.5em" pl="0.5rem" color={`${theme}.300`}>
+    <Text fontSize="0.5em" minH="1.5em" pl="0.5rem" color={theme.textLight}>
       {duration && testStarted ? `${duration - elapsed}s` : null}
     </Text>
   )
