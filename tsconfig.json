@@ -17,5 +17,5 @@
     "jsx": "react-jsx",
     "types": ["node"]
   },
-  "include": ["src", "../../space-thingy/Asteroid.js", "../../space-thingy/Track"]
+  "include": ["src", "../../space-thingy/Asteroid.js", "../../space-thingy/Track", "../../space-thingy/gameAtoms.ts"]
 }
