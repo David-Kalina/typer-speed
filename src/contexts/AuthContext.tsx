@@ -6,6 +6,8 @@ import {
   signOut,
   User,
   UserCredential,
+  deleteUser,
+  sendPasswordResetEmail,
 } from 'firebase/auth'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { useAtom } from 'jotai'
@@ -31,6 +33,8 @@ const AuthContext = createContext<{
   signIn: (data: SignInData) => Promise<UserCredential> | Promise<unknown>
   signInWithGoogle: () => Promise<UserCredential> | Promise<unknown>
   signOutUser: () => Promise<void>
+  deleteAccount: () => Promise<void>
+  resetPassword: () => Promise<void>
 }>(null as any)
 
 export const useAuth = () => useContext(AuthContext)
@@ -97,6 +101,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode | React.R
       .catch(error => error)
   }
 
+  const deleteAccount = async () => {
+    if (user) {
+      return await deleteUser(user)
+        .then(() => setUser(null))
+        .catch(error => error)
+    }
+    return
+  }
+
+  const resetPassword = async () => {
+    if (user) return await sendPasswordResetEmail(auth, user.email as string)
+  }
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, user => {
       setUser(user)
@@ -111,6 +128,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode | React.R
     signIn,
     signOutUser,
     signInWithGoogle,
+    deleteAccount,
+    resetPassword,
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

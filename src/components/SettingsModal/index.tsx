@@ -1,7 +1,8 @@
 import { Button, HStack, IconButton, Modal, ModalBody, ModalContent, ModalHeader, ModalOverlay } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React, { useState } from 'react'
-import { IoMdClose } from 'react-icons/io'
+import { FaFont, FaICursor, FaUser } from 'react-icons/fa'
+import { IoMdClose, IoMdColorPalette } from 'react-icons/io'
 import { themeAtom } from '../../store/themeAtoms'
 import { settingsOpenAtom } from '../../store/typingTestAtoms'
 import AccountBody from './AccountBody'
@@ -30,6 +31,7 @@ function Index() {
         <ModalHeader p="1" mb="5">
           <HStack spacing={0} w="100%" h="100%">
             <Button
+              leftIcon={<FaICursor />}
               _focus={{ borderX: 'none', borderTop: 'none' }}
               _hover={{ bg: 'inherit', borderBottom: `1px solid ${theme.default}` }}
               flex={1}
@@ -42,6 +44,7 @@ function Index() {
               caret
             </Button>
             <Button
+              leftIcon={<FaFont />}
               _focus={{ borderX: 'none', borderTop: 'none' }}
               _hover={{ bg: 'inherit', borderBottom: `1px solid ${theme.default}` }}
               flex={1}
@@ -54,6 +57,7 @@ function Index() {
               font
             </Button>
             <Button
+              leftIcon={<IoMdColorPalette />}
               _focus={{ borderX: 'none', borderTop: 'none' }}
               _hover={{ bg: 'inherit', borderBottom: `1px solid ${theme.default}` }}
               flex={1}
@@ -66,6 +70,7 @@ function Index() {
               theme
             </Button>
             <Button
+              leftIcon={<FaUser />}
               _focus={{ borderX: 'none', borderTop: 'none' }}
               _hover={{ bg: 'inherit', borderBottom: `1px solid ${theme.correct}` }}
               flex={1}
