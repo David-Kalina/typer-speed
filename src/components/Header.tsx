@@ -4,7 +4,7 @@ import { useUpdateAtom } from 'jotai/utils'
 import React from 'react'
 import { FiLogOut, FiSettings, FiUser } from 'react-icons/fi'
 import { Link, useLocation } from 'react-location'
-import { zen } from '../constants/themes'
+import { zen } from '../customization/themes'
 import { useAuth } from '../contexts/AuthContext'
 import { themeAtom } from '../store/themeAtoms'
 import { settingsOpenAtom } from '../store/typingTestAtoms'
@@ -16,7 +16,7 @@ function Header() {
   const { user, signOutUser } = useAuth()
   const { current } = useLocation()
   const breakpoint = useBreakpoint()
-  const [theme, setTheme] = useAtom(themeAtom)
+  const [theme] = useAtom(themeAtom)
   const setSettingsOpen = useUpdateAtom(settingsOpenAtom)
   if (breakpoint === 'base' || breakpoint === 'xs' || breakpoint === 'sm' || breakpoint === 'md') {
     return <MobileHeader />
@@ -36,7 +36,6 @@ function Header() {
         </HStack>
         <HStack spacing={4}>
           <SetTestTime />
-          <Link to="/zen">Zen</Link>
           {user?.email && current.pathname === '/account' ? (
             <Flex align="center" onClick={signOutUser} cursor="pointer">
               <FiLogOut />

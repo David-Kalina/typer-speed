@@ -21,7 +21,7 @@ function SetTestTime() {
           cursor="pointer"
           onClick={() => updateTestTime(15)}
           fontSize="lg"
-          color={testTime === 15 ? theme.textLight : theme.textDark}
+          color={testTime === 15 ? theme.correct : theme.default}
         >
           {15}
         </Text>
@@ -31,7 +31,7 @@ function SetTestTime() {
           cursor="pointer"
           onClick={() => updateTestTime(30)}
           fontSize="lg"
-          color={testTime === 30 ? theme.textLight : theme.textDark}
+          color={testTime === 30 ? theme.correct : theme.default}
         >
           {30}
         </Text>
@@ -41,7 +41,7 @@ function SetTestTime() {
           cursor="pointer"
           onClick={() => updateTestTime(60)}
           fontSize="lg"
-          color={testTime === 60 ? theme.textLight : theme.textDark}
+          color={testTime === 60 ? theme.correct : theme.default}
         >
           {60}
         </Text>
@@ -51,7 +51,7 @@ function SetTestTime() {
           cursor="pointer"
           onClick={() => updateTestTime(120)}
           fontSize="lg"
-          color={testTime === 120 ? theme.textLight : theme.textDark}
+          color={testTime === 120 ? theme.correct : theme.default}
         >
           {120}
         </Text>

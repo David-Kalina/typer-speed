@@ -1,5 +1,5 @@
 import { atom } from 'jotai'
-import { typerSpeed } from '../constants/themes'
+import { typerSpeed } from '../customization/themes'
 import { currentCharacterElementAtom } from './elementAtoms'
 
 export const caretPositionAtom = atom({ top: 0, left: 0 })

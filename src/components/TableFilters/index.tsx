@@ -2,7 +2,7 @@ import { Button, HStack } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React from 'react'
 
-import { filters } from '../../constants/filters'
+import { filters } from '../../customization/filters'
 import { themeAtom } from '../../store/themeAtoms'
 
 interface TableFiltersProps {

@@ -1,20 +1,23 @@
 import { atom } from 'jotai'
 import { atomWithStorage } from 'jotai/utils'
-import { typerSpeed, custom } from '../constants/themes'
+import { typerSpeed, custom } from '../customization/themes'
+
+export type ThemeValueKeys =
+  | 'name'
+  | 'background'
+  | 'textLight'
+  | 'textDark'
+  | 'buttonLight'
+  | 'buttonDark'
+  | 'modal'
+  | 'default'
+  | 'correct'
+  | 'incorrect'
+  | 'missed'
+  | 'extra'
 
 export type ThemeValues = {
-  name: string
-  background: string
-  textLight: string
-  buttonLight: string
-  buttonDark: string
-  textDark: string
-  modal: string
-  default: string
-  correct: string
-  incorrect: string
-  missed: string
-  extra: string
+  [K in ThemeValueKeys]: string
 }
 
 export interface ThemeName {

@@ -20,7 +20,7 @@ function Layout({ children }: { children: React.ReactNode[] | React.ReactNode })
       h="max-content"
       bg={current.pathname.includes('zen') ? 'transparent' : theme.background}
       flexDir="column"
-      p={['8', '0']}
+      p={['8', 0]}
     >
       <Flex
         flexDir="column"

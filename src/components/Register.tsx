@@ -51,7 +51,7 @@ function Register() {
           placeholder="verify password"
         />
         {errors.verifyPassword && <Text fontSize="xs">{errors.verifyPassword.message}</Text>}
-        <Button type="submit" bg={`${theme}.300`} color={`${theme}.textDark`}>
+        <Button type="submit" bg={theme.correct} color={theme.textDark}>
           register
         </Button>
       </VStack>

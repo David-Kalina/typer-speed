@@ -14,7 +14,7 @@ function ThemeBody() {
   const renderThemes = Object.entries(themes).map(([key, value]) => {
     return (
       <Flex cursor="pointer" key={key} align="center" onClick={() => setTheme({ name: key, value })}>
-        <Icon as={IoMdColorPalette} size="1.5em" color={theme.name === value.name ? 'orange' : 'unset'} />
+        <Icon as={IoMdColorPalette} size="1.5em" color={theme.name === value.name ? theme.correct : 'unset'} />
         <Text ml="6px" fontSize="lg" fontFamily={font}>
           {value.name}
         </Text>
@@ -22,15 +22,18 @@ function ThemeBody() {
     )
   })
 
-  const renderCustomThemeOptions = Object.entries(theme).map(([key, value]) => (
-    <FormControl key={key}>
+  const themeOptions = Object.keys(theme) as Array<keyof typeof theme>
+
+  const renderCustomThemeOptions = themeOptions.map(key => (
+    <FormControl key={key} isDisabled={theme.name !== 'Custom'}>
       <FormLabel htmlFor="font-family">{key}</FormLabel>
       <Input
         id={key}
         name={key}
-        defaultValue={value}
+        value={theme[key]}
         type="color"
         onChange={e => {
+          // TODO debounce this
           setTheme({ name: 'custom', value: { ...theme, [key]: e.target.value } })
         }}
       />
@@ -48,14 +51,10 @@ function ThemeBody() {
         </Box>
         <Box flex={1} />
         <Box flex={2} h="inherit">
-          {theme.name === 'Custom' ? (
-            <>
-              <Text>Custom</Text>
-              <VStack mt="2" align="stretch" overflowY="scroll" overflowX="hidden" h="90%" pr="3">
-                {renderCustomThemeOptions}
-              </VStack>
-            </>
-          ) : null}
+          <Text>{theme.name} colors</Text>
+          <VStack mt="2" align="stretch" overflowY="scroll" overflowX="hidden" h="90%" pr="3">
+            {renderCustomThemeOptions}
+          </VStack>
         </Box>
       </Flex>
     </>
