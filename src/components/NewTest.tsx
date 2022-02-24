@@ -1,4 +1,4 @@
-import { Flex, Icon } from '@chakra-ui/react'
+import { IconButton, Tooltip } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import * as React from 'react'
 import { VscDebugRestart } from 'react-icons/vsc'
@@ -10,17 +10,19 @@ const NewTest: React.FC = () => {
   const [theme] = useAtom(themeAtom)
 
   return (
-    <Flex>
-      <Icon
+    <Tooltip label="start over">
+      <IconButton
+        aria-label="reset-test"
+        variant="ghost"
         cursor="pointer"
-        as={VscDebugRestart}
+        icon={<VscDebugRestart />}
         fontSize="0.7em"
         onClick={reset}
         mt="1rem"
         mx="auto"
         color={theme.textLight}
       />
-    </Flex>
+    </Tooltip>
   )
 }
 
