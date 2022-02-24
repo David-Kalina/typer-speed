@@ -71,7 +71,7 @@ function TypingTestsTable() {
   const tableRows = tableData?.map((test, idx) => (
     <Tr key={idx} fontWeight="bold">
       <Td fontSize={['xs', 'sm', 'md', 'lg']} color={`${theme}.text`}>
-        {test.seconds}s
+        {test.seconds + 1}s
       </Td>
       <Td fontSize={['xs', 'sm', 'md', 'lg']} color={`${theme}.text`}>
         {test.wpm}

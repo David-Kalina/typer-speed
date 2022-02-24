@@ -7,4 +7,12 @@ export const accountStats = {
     key: 'timeTyping',
     name: 'Time Typing',
   },
+  2: {
+    key: 'startingWPM',
+    name: 'Starting WPM',
+  },
+  3: {
+    key: 'currentWPM',
+    name: 'Current WPM',
+  },
 }
