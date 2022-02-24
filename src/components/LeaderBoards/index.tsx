@@ -1,25 +1,68 @@
-import { Spinner, Table, TableCaption, Td, Th, Thead, Tr } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  Spinner,
+  Table,
+  TableCaption,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from '@chakra-ui/react'
 import { getDocs, limit, orderBy, query } from 'firebase/firestore'
 import { useAtom } from 'jotai'
 import React, { useEffect, useState } from 'react'
 import { testsRef } from '../../firebase'
+import { useToggle } from '../../hooks/useToggle'
 import { themeAtom } from '../../store/themeAtoms'
+import ResultsChart from '../ResultsChart'
 
 function LeaderBoards() {
   const [loading, setLoading] = useState(true)
   const [theme] = useAtom(themeAtom)
 
+  const [toggleChart, setToggleChart] = useToggle(false)
+  const [testId, setTestId] = useState('')
+  const [email, setEmail] = useState('')
+
   const [data, setData] = useState<any[]>([])
 
   const renderTableRows = data?.map((x, idx) => {
+    const medal = () => {
+      if (idx + 1 === 1) return 'gold'
+      if (idx + 1 === 2) return 'silver'
+      if (idx + 1 === 3) return '#804a00'
+    }
+
     return (
       <Tr key={idx}>
-        <Td>{idx + 1}</Td>
-        <Td>{x.email}</Td>
-        <Td>{x.wpm}</Td>
-        <Td>{x.seconds}</Td>
-        <Td>{x.accuracy}%</Td>
-        <Td>{new Date(x.date.seconds * 1000).toLocaleDateString('en-US')}</Td>
+        <Td fontSize="lg" pos="relative">
+          <Box pos="absolute" left="3" top="3" mt="1" w="2" h="2" bg={medal()} borderRadius="full" />
+        </Td>
+        <Td fontSize="lg">{x.email}</Td>
+        <Td fontSize="lg">{x.wpm}</Td>
+        <Td fontSize="lg">{x.seconds}</Td>
+        <Td fontSize="lg">{x.accuracy}%</Td>
+        <Td fontSize="lg">{new Date(x.date.seconds * 1000).toLocaleDateString('en-US')}</Td>
+        <Td fontSize="lg">
+          <Button
+            fontSize={['xs', 'sm', 'md', 'lg']}
+            color="white"
+            bg={`${theme}.400`}
+            onClick={() => {
+              setToggleChart(true)
+              setTestId(x.testId)
+              setEmail(x.email)
+            }}
+          >
+            view chart
+          </Button>
+        </Td>
       </Tr>
     )
   })
@@ -36,10 +79,6 @@ function LeaderBoards() {
       .catch(err => console.error(err))
   }, [])
 
-  useEffect(() => {
-    console.log(data)
-  }, [data])
-
   return (
     <>
       {!loading ? (
@@ -48,18 +87,28 @@ function LeaderBoards() {
             Leaderboards
           </TableCaption>
           <Thead>
-            <Th>Rank</Th>
-            <Th>User</Th>
-            <Th>WPM</Th>
-            <Th>Time</Th>
-            <Th>Accuracy</Th>
-            <Th>Date</Th>
+            <Th color={theme.textLight}>Rank</Th>
+            <Th color={theme.textLight}>User</Th>
+            <Th color={theme.textLight}>WPM</Th>
+            <Th color={theme.textLight}>Time</Th>
+            <Th color={theme.textLight}>Accuracy</Th>
+            <Th color={theme.textLight}>Date</Th>
+            <Th color={theme.textLight}>Recap</Th>
           </Thead>
           {renderTableRows}
         </Table>
       ) : (
         <Spinner />
       )}
+      <Modal isOpen={toggleChart} onClose={() => setToggleChart(false)} size="5xl" isCentered>
+        <ModalContent bg={theme.modal} border={`1px solid gray`} h="530px">
+          <ModalCloseButton _focus={{ border: 'none' }} color={theme.textLight} />
+          <ModalHeader color={theme.textLight}>{email}`s Recap</ModalHeader>
+          <ModalBody p="5em">
+            <ResultsChart testId={testId} />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </>
   )
 }
