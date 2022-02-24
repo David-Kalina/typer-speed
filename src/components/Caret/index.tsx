@@ -30,7 +30,7 @@ function Index({ delay, color, height, width, opacity }: CaretProps) {
       borderRadius="md"
       width={`${width || 0.11}em`}
       fontWeight="bold"
-      opacity={opacity || 1}
+      opacity={opacity}
       bg={color || theme.textLight}
       className={testStarted ? 'caret' : 'blink'}
     />
