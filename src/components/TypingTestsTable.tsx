@@ -57,7 +57,7 @@ function TypingTestsTable() {
   }
 
   useEffect(() => {
-    const q = query(testsRef, where('email', '==', user?.email), orderBy(filter), limit(10))
+    const q = query(testsRef, where('email', '==', user?.email), orderBy(filter, 'desc'), limit(10))
 
     getDocs(q)
       .then(snapshot => {
