@@ -115,7 +115,6 @@ export const useCaret = () => {
   // Debug only
 
   // useEffect(() => {
-  //   console.log(current)
   //   if (current) current.style.border = '1px solid yellow'
   //   return () => {
   //     if (current) current.style.border = 'none'

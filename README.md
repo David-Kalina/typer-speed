@@ -2,6 +2,8 @@
 
 ![Typer Speed homepage](./public/logo.png "San Juan Mountains")
 
+[![Typer Speed Demo](http://img.youtube.com/vi/nX_inqaAzOI/0.jpg)](https://youtu.be/vyl6v0vllmM "Typer Speed Demo")
+
 Typer Speed is a MonkeyType inspired web app. It features a minimalistic design, customization features, and allows users to create
 an account to track their progress. More features are in the works...
 

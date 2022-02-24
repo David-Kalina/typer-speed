@@ -1,5 +1,5 @@
 import { useAtom } from 'jotai'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { wordIndexAtom, addWordsAtom, incrementWordIndexAtom } from '../store/wordAtoms'
 import {
@@ -13,7 +13,7 @@ import {
   updateCharacterAtom,
 } from '../store/characterAtoms'
 import { useCaret } from './useCaret'
-import { setTestStartedAtom } from '../store/typingTestAtoms'
+import { setTestStartedAtom, testIdAtom } from '../store/typingTestAtoms'
 
 export const useKeyManager = () => {
   const [typedKeys, setTypedKeys] = useState('')
@@ -29,6 +29,7 @@ export const useKeyManager = () => {
   const [, addCharacters] = useAtom(addCharactersAtom)
   const [, removeCharacter] = useAtom(removeCharacterAtom)
   const [, setTestStarted] = useAtom(setTestStartedAtom)
+  const [testId] = useAtom(testIdAtom)
 
   const { forward, backward, newWord } = useCaret()
 
@@ -67,6 +68,10 @@ export const useKeyManager = () => {
     resetCharacterIndex()
     addWords(1)
   }
+
+  useEffect(() => {
+    return setTypedKeys('')
+  }, [testId])
 
   return {
     handleBackspace,
