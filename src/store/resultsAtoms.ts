@@ -34,7 +34,6 @@ export const getRecapDataAtom = atom(get => {
   })
 })
 
-
 export const getWPMDataAtom = atom(get => {
   const results = get(resultsAtom)
 
@@ -76,7 +75,7 @@ export const addToFirebaseResultAtom = atom(null, async get => {
   const accuracy = get(getAccuracyDataAtom)
   const wpm = get(getWPMDataAtom)
   const recap = get(getRecapDataAtom)
-  const seconds = get(resultsAtom).length + 1
+  const seconds = get(resultsAtom).length
   const testId = get(testIdAtom)
 
   await addDoc(testsRef, {
