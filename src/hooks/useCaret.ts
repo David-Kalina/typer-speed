@@ -148,7 +148,8 @@ export const useCaret = () => {
   //  * Mounts Caret and initializes it. Gets a reference to current word and first character.
 
   useEffect(() => {
-    const caret = document.querySelector('.blink') as HTMLDivElement
+    const caret =
+      (document.querySelector('.blink') as HTMLDivElement) || (document.querySelector('.caret') as HTMLDivElement)
     if (caret) {
       const word = caret.nextElementSibling?.firstElementChild as HTMLDivElement
       const character = word?.firstElementChild as HTMLDivElement
