@@ -1,7 +1,5 @@
 import {
-  Box,
-  Button,
-  Modal,
+  Button, Icon, Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
@@ -9,14 +7,13 @@ import {
   Spinner,
   Table,
   TableCaption,
-  Td,
-  Th,
-  Thead,
-  Tr,
+  Td, Text, Th,
+  Thead, Tr
 } from '@chakra-ui/react'
 import { getDocs, limit, orderBy, query } from 'firebase/firestore'
 import { useAtom } from 'jotai'
 import React, { useEffect, useState } from 'react'
+import { AiFillTrophy } from 'react-icons/ai'
 import { testsRef } from '../../firebase'
 import { useToggle } from '../../hooks/useToggle'
 import { themeAtom } from '../../store/themeAtoms'
@@ -34,16 +31,15 @@ function LeaderBoards() {
 
   const renderTableRows = data?.map((x, idx) => {
     const medal = () => {
-      if (idx + 1 === 1) return 'gold'
-      if (idx + 1 === 2) return 'silver'
-      if (idx + 1 === 3) return '#804a00'
+      if (idx + 1 === 1) return <Icon as={AiFillTrophy} w="6" h="6" color="goldenrod" borderRadius="full" />
+      if (idx + 1 === 2) return <Icon as={AiFillTrophy} w="6" h="6" color="silver" borderRadius="full" />
+      if (idx + 1 === 3) return <Icon as={AiFillTrophy} w="6" h="6" color="burlywood" borderRadius="full" />
+      return <Text>{idx + 1}</Text>
     }
 
     return (
       <Tr key={idx}>
-        <Td fontSize="lg" pos="relative">
-          <Box pos="absolute" left="3" top="3" mt="1" w="2" h="2" bg={medal()} borderRadius="full" />
-        </Td>
+        <Td fontSize="lg">{medal()}</Td>
         <Td fontSize="lg">{x.email}</Td>
         <Td fontSize="lg">{x.wpm}</Td>
         <Td fontSize="lg">{x.seconds}</Td>
