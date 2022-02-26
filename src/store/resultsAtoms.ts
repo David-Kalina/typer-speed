@@ -108,7 +108,7 @@ export const getResultsAtom = atom(get => {
   const accuracy = get(getAccuracyDataAtom).accuracy
   const wpm = get(getWPMDataAtom).wpm
   const recap = get(getRecapDataAtom)
-  const seconds = get(resultsAtom)[0].seconds
+  const seconds = get(resultsAtom).length
   const testId = get(testIdAtom)
 
   return {

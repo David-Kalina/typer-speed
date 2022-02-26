@@ -2,7 +2,7 @@ import { Button, HStack } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React from 'react'
 
-import { filters } from '../../customization/filters'
+import { personalFilters } from '../../customization/filters'
 import { themeAtom } from '../../store/themeAtoms'
 
 interface TableFiltersProps {
@@ -12,7 +12,7 @@ interface TableFiltersProps {
 
 function Index({ toggleFilter, tableFilter }: TableFiltersProps) {
   const [theme] = useAtom(themeAtom)
-  const renderFilters = Object.values(filters).map(filter => {
+  const renderFilters = Object.values(personalFilters).map(filter => {
     return (
       <Button
         key={filter}

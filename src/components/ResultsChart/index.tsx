@@ -11,7 +11,7 @@ import {
   Scatter,
   Tooltip,
   XAxis,
-  YAxis
+  YAxis,
 } from 'recharts'
 import { testsRef } from '../../firebase'
 import { userAtom } from '../../store/firebaseAtoms'
@@ -42,7 +42,7 @@ function Index({ testId }: { testId: string }) {
 
   return (
     <Flex flex={1}>
-      {!loading && data ? (
+      {!loading && data.length ? (
         <ResponsiveContainer width="100%" height={300} maxHeight={300}>
           <ComposedChart data={user?.email ? data : recap}>
             <CartesianGrid strokeDasharray="8, 8" />

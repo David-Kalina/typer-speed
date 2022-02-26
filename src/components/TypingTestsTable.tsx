@@ -111,7 +111,7 @@ function TypingTestsTable() {
             variant="simple"
             color={`${theme}.200`}
           >
-            <TableCaption textAlign="left" p={0} placement="top" mb="2" color={`${theme}.text`}>
+            <TableCaption textAlign="left" p={0} placement="top" mb="2" color={theme.textLight}>
               Recent Typing Tests
             </TableCaption>
             <TableHeads />

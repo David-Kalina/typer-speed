@@ -3,9 +3,12 @@ import { useAtom } from 'jotai'
 import React from 'react'
 import { Link } from 'react-location'
 import { useAuth } from '../contexts/AuthContext'
+import { leaderBoardHeaders, personalFilters, personalHeaders } from '../customization/filters'
+import { testsRef } from '../firebase'
 import { useRedirect } from '../hooks/useRedirect'
 import { themeAtom } from '../store/themeAtoms'
 import AccountStats from './AccountStats'
+import FilterableTable from './FilterableTable'
 import TypingTestsTable from './TypingTestsTable'
 
 function Account() {
@@ -21,7 +24,20 @@ function Account() {
           Account created {user?.metadata.creationTime}
         </Text>
         <Box>
-          <TypingTestsTable />
+          {/* <TypingTestsTable /> */}
+          <FilterableTable
+            personal
+            competitive={true}
+            size="lg"
+            target="email"
+            orderTarget="date"
+            orderStyle="desc"
+            filters={personalFilters}
+            headers={leaderBoardHeaders}
+            caption={'Recent Typing Tests'}
+            documentReference={testsRef}
+            targetLimit={10}
+          />
         </Box>
 
         <Flex mx="auto" w="100%" justify="center">
