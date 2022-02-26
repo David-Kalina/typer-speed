@@ -19,6 +19,7 @@ function AccountStats() {
     timeTyping: 0,
     startingWPM: 0,
     currentWPM: 0,
+    keyStrokes: 0,
   })
 
   const [loading, setLoading] = useState(true)

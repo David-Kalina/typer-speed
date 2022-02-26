@@ -15,4 +15,8 @@ export const accountStats = {
     key: 'currentWPM',
     name: 'Current WPM',
   },
+  4: {
+    key: 'keystrokes',
+    name: 'Key Strokes',
+  },
 }

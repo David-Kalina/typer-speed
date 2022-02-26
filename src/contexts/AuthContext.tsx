@@ -57,6 +57,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode | React.R
       testsTaken: 0,
       testsCompleted: 0,
       timeTyping: 0,
+      keyStrokes: 0,
     })
 
     return await createUserWithEmailAndPassword(auth, email, password)

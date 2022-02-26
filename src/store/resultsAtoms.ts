@@ -72,18 +72,18 @@ export const getAccuracyDataAtom = atom(get => {
 
 export const addToFirebaseResultAtom = atom(null, async get => {
   const user = get(userAtom)
-  const accuracy = get(getAccuracyDataAtom)
-  const wpm = get(getWPMDataAtom)
+  const accuracy = get(getAccuracyDataAtom).accuracy
+  const wpm = get(getWPMDataAtom).wpm
   const recap = get(getRecapDataAtom)
-  const seconds = get(resultsAtom).length
+  const seconds = get(resultsAtom)[0].seconds
   const testId = get(testIdAtom)
 
   await addDoc(testsRef, {
     testId,
     email: user?.email,
-    recap: recap,
-    wpm: wpm.wpm,
-    accuracy: accuracy.accuracy,
+    recap,
+    wpm,
+    accuracy,
     seconds: seconds,
     date: {
       seconds: Date.now() / 1000,
@@ -108,7 +108,7 @@ export const getResultsAtom = atom(get => {
   const accuracy = get(getAccuracyDataAtom).accuracy
   const wpm = get(getWPMDataAtom).wpm
   const recap = get(getRecapDataAtom)
-  const seconds = get(resultsAtom).length
+  const seconds = get(resultsAtom)[0].seconds
   const testId = get(testIdAtom)
 
   return {

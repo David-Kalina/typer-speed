@@ -1,5 +1,8 @@
 import {
-  Button, Icon, Modal,
+  Button,
+  Flex,
+  Icon,
+  Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
@@ -7,13 +10,17 @@ import {
   Spinner,
   Table,
   TableCaption,
-  Td, Text, Th,
-  Thead, Tr
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
 } from '@chakra-ui/react'
-import { getDocs, limit, orderBy, query } from 'firebase/firestore'
+import { getDocs, limit, orderBy, query, where } from 'firebase/firestore'
 import { useAtom } from 'jotai'
 import React, { useEffect, useState } from 'react'
 import { AiFillTrophy } from 'react-icons/ai'
+import { leaderBoardFilters } from '../../customization/filters'
 import { testsRef } from '../../firebase'
 import { useToggle } from '../../hooks/useToggle'
 import { themeAtom } from '../../store/themeAtoms'
@@ -28,6 +35,8 @@ function LeaderBoards() {
   const [email, setEmail] = useState('')
 
   const [data, setData] = useState<any[]>([])
+
+  const [tableFilter, setTableFilter] = useState(15)
 
   const renderTableRows = data?.map((x, idx) => {
     const medal = () => {
@@ -63,8 +72,26 @@ function LeaderBoards() {
     )
   })
 
+  const renderLeaderboardFilters = Object.values(leaderBoardFilters).map((filter, idx) => {
+    return (
+      <Button
+        key={filter}
+        fontSize="sm"
+        size="sm"
+        _focus={{ border: 'none' }}
+        onClick={() => setTableFilter(filter)}
+        borderLeftRadius="none"
+        borderRightRadius="none"
+        color={filter !== tableFilter ? `${theme.textLight}` : `${theme.textDark}`}
+        bg={filter !== tableFilter ? `${theme.buttonLight}` : `${theme.buttonDark}`}
+      >
+        {filter}
+      </Button>
+    )
+  })
+
   useEffect(() => {
-    const q = query(testsRef, orderBy('wpm', 'desc'), limit(10))
+    const q = query(testsRef, where('seconds', '==', tableFilter), orderBy('wpm', 'desc'), limit(10))
 
     getDocs(q)
       .then(snapshot => {
@@ -73,26 +100,39 @@ function LeaderBoards() {
       })
       .then(() => setTimeout(() => setLoading(false), 300))
       .catch(err => console.error(err))
-  }, [])
+  }, [tableFilter])
 
   return (
     <>
       {!loading ? (
-        <Table color={theme.textLight} size="lg">
-          <TableCaption placement="top" textAlign="left" fontSize="lg" color={theme.textLight}>
-            Leaderboards
-          </TableCaption>
-          <Thead>
-            <Th color={theme.textLight}>Rank</Th>
-            <Th color={theme.textLight}>User</Th>
-            <Th color={theme.textLight}>WPM</Th>
-            <Th color={theme.textLight}>Time</Th>
-            <Th color={theme.textLight}>Accuracy</Th>
-            <Th color={theme.textLight}>Date</Th>
-            <Th color={theme.textLight}>Recap</Th>
-          </Thead>
-          {renderTableRows}
-        </Table>
+        <>
+          <Flex flexDir="column" justify="center" h="100%" w="100%" color={theme.textLight}>
+            <Flex w="100%" justify="flex-end">
+              {renderLeaderboardFilters}
+            </Flex>
+          </Flex>
+          {!data.length ? (
+            <Text h="400px" color={theme.textLight}>
+              No results...be the first?
+            </Text>
+          ) : (
+            <Table color={theme.textLight} size="lg" mb="auto">
+              <TableCaption placement="top" textAlign="left" fontSize="lg" color={theme.textLight}>
+                Leaderboards
+              </TableCaption>
+              <Thead>
+                <Th color={theme.textLight}>Rank</Th>
+                <Th color={theme.textLight}>User</Th>
+                <Th color={theme.textLight}>WPM</Th>
+                <Th color={theme.textLight}>Time</Th>
+                <Th color={theme.textLight}>Accuracy</Th>
+                <Th color={theme.textLight}>Date</Th>
+                <Th color={theme.textLight}>Recap</Th>
+              </Thead>
+              {renderTableRows}
+            </Table>
+          )}
+        </>
       ) : (
         <Spinner />
       )}

@@ -1,14 +1,18 @@
+import { doc, increment, setDoc } from 'firebase/firestore'
 import { useAtom } from 'jotai'
 import { useUpdateAtom } from 'jotai/utils'
 import React, { useEffect } from 'react'
 import { forbiddenKeys } from '../../constants/forbiddenKeys'
+import { db } from '../../firebase'
 import { useKeyManager } from '../../hooks/useKeyManager'
 import { caretCutOffAtom, caretPositionAtom } from '../../store/caretAtoms'
 import { characterIndexAtom } from '../../store/characterAtoms'
 import { keyManagerAtom } from '../../store/elementAtoms'
+import { userAtom } from '../../store/firebaseAtoms'
 import { pauseTestAtom, settingsOpenAtom, testIdAtom, testStartedAtom } from '../../store/typingTestAtoms'
 
 function Index() {
+  const [user] = useAtom(userAtom)
   const [testStarted, setTestStarted] = useAtom(testStartedAtom)
   const [, setTestPaused] = useAtom(pauseTestAtom)
   const ref = React.useRef<HTMLInputElement>(null)
@@ -22,6 +26,18 @@ function Index() {
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (forbiddenKeys.includes(e.key)) return e.stopPropagation()
+
+    if (user?.email) {
+      const statsRef = doc(db, 'stats', user?.email as string)
+
+      setDoc(
+        statsRef,
+        {
+          keystrokes: increment(1),
+        },
+        { merge: true }
+      )
+    }
 
     if (e.code === 'Backspace') {
       if (characterIndex <= 0) return e.preventDefault()
