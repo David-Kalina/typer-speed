@@ -72,7 +72,7 @@ function FilterableTable({
       q = query(
         documentReference,
         where('email', '==', user?.email),
-        orderBy(orderTarget, orderStyle),
+        orderBy(tableFilter, orderStyle),
         limit(targetLimit)
       )
     } else {
@@ -117,7 +117,6 @@ function FilterableTable({
   })
 
   const renderTableRows = tableData?.map((x: any, idx: number) => {
-    console.log(x)
     const medal = () => {
       if (idx + 1 === 1) return <Icon as={AiFillTrophy} w="6" h="6" color="goldenrod" borderRadius="full" />
       if (idx + 1 === 2) return <Icon as={AiFillTrophy} w="6" h="6" color="silver" borderRadius="full" />
@@ -151,20 +150,26 @@ function FilterableTable({
 
   return (
     <Flex h="100%" minH="100vh" w="100%" flexDir="column" align="center">
+      <Flex w="100%" justify="flex-end">
+        {renderTableFilters}
+      </Flex>
       {!loading ? (
         <>
-          <Flex w="100%" justify="flex-end">
-            {renderTableFilters}
-          </Flex>
-          <Table color={theme.textLight} size={size}>
-            <TableCaption textAlign="left" px="4" placement="top" mb="2" color={theme.textLight}>
-              {caption}
-            </TableCaption>
-            <Thead>
-              <Tr>{renderTableHeads}</Tr>
-            </Thead>
-            {tableData.length ? <Tbody>{renderTableRows}</Tbody> : null}
-          </Table>
+          {!tableData.length ? (
+            <Text color={theme.textLight}>No results...be the first?</Text>
+          ) : (
+            <>
+              <Table color={theme.textLight} size={size}>
+                <TableCaption textAlign="left" px="4" placement="top" mb="2" color={theme.textLight}>
+                  {caption}
+                </TableCaption>
+                <Thead>
+                  <Tr>{renderTableHeads}</Tr>
+                </Thead>
+                <Tbody>{renderTableRows}</Tbody>
+              </Table>
+            </>
+          )}
         </>
       ) : (
         <Spinner size="xl" color={theme.textLight} />
