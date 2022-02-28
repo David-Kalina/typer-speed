@@ -1,20 +1,18 @@
-import { Box, Flex, Text, VStack } from '@chakra-ui/react'
+import { Box, Text, VStack } from '@chakra-ui/react'
 import { useAtom } from 'jotai'
 import React from 'react'
-import { Link } from 'react-location'
 import { useAuth } from '../contexts/AuthContext'
-import { leaderBoardHeaders, personalFilters, personalHeaders } from '../customization/filters'
+import { leaderBoardHeaders, personalFilters } from '../customization/filters'
 import { testsRef } from '../firebase'
 import { useRedirect } from '../hooks/useRedirect'
 import { themeAtom } from '../store/themeAtoms'
 import AccountStats from './AccountStats'
 import FilterableTable from './FilterableTable'
-import TypingTestsTable from './TypingTestsTable'
 
 function Account() {
   const { user } = useAuth()
-  useRedirect(user?.email === undefined, '/')
   const [theme] = useAtom(themeAtom)
+  useRedirect(user?.email === undefined, '/')
 
   if (user?.email) {
     return (
@@ -24,7 +22,6 @@ function Account() {
           Account created {user?.metadata.creationTime}
         </Text>
         <Box>
-          {/* <TypingTestsTable /> */}
           <FilterableTable
             personal
             competitive={true}
@@ -39,10 +36,6 @@ function Account() {
             targetLimit={10}
           />
         </Box>
-
-        <Flex mx="auto" w="100%" justify="center">
-          <Link to="/">{/* <Button onClick={reset}>Take a test</Button> */}</Link>
-        </Flex>
       </VStack>
     )
   } else {

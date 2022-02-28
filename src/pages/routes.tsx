@@ -4,7 +4,6 @@ import Account from '../components/Account'
 import Login from '../components/Auth'
 import FilterableTable from '../components/FilterableTable'
 import Layout from '../components/Layout'
-import LeaderBoards from '../components/LeaderBoards'
 import TypingTest from '../components/TypingTest'
 import { leaderBoardFilters, leaderBoardHeaders } from '../customization/filters'
 import { testsRef } from '../firebase'
@@ -36,14 +35,6 @@ export const routes: Route<DefaultGenerics>[] = [
   },
   {
     path: '/leaderboards',
-    element: (
-      <Layout>
-        <LeaderBoards />
-      </Layout>
-    ),
-  },
-  {
-    path: '/leaderboards2',
     element: (
       <Layout>
         <FilterableTable

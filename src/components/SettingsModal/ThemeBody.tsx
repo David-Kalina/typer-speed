@@ -24,21 +24,24 @@ function ThemeBody() {
 
   const themeOptions = Object.keys(theme) as Array<keyof typeof theme>
 
-  const renderCustomThemeOptions = themeOptions.map(key => (
-    <FormControl key={key} isDisabled={theme.name !== 'Custom'}>
-      <FormLabel htmlFor="font-family">{key}</FormLabel>
-      <Input
-        id={key}
-        name={key}
-        value={theme[key]}
-        type="color"
-        onChange={e => {
-          // TODO debounce this
-          setTheme({ name: 'custom', value: { ...theme, [key]: e.target.value } })
-        }}
-      />
-    </FormControl>
-  ))
+  const renderCustomThemeOptions = themeOptions.map(key => {
+    if (key !== 'name')
+      return (
+        <FormControl key={key} isDisabled={theme.name !== 'Custom'}>
+          <FormLabel htmlFor="font-family">{key}</FormLabel>
+          <Input
+            id={key}
+            name={key}
+            value={theme[key]}
+            type="color"
+            onChange={e => {
+              // TODO debounce this
+              setTheme({ name: 'custom', value: { ...theme, [key]: e.target.value } })
+            }}
+          />
+        </FormControl>
+      )
+  })
 
   return (
     <>

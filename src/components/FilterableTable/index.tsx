@@ -1,26 +1,27 @@
 import {
   Button,
-  Spinner,
-  Table,
-  TableCaption,
-  Tbody,
-  Th,
-  Thead,
-  Tr,
   Flex,
-  Td,
   Icon,
-  Text,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
   ModalHeader,
+  Spinner,
+  Table,
+  TableCaption,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
 } from '@chakra-ui/react'
-import { CollectionReference, DocumentData, getDocs, limit, orderBy, query, where } from 'firebase/firestore'
+import { CollectionReference, DocumentData, limit, orderBy, query, where } from 'firebase/firestore'
 import { useAtom } from 'jotai'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { AiFillTrophy } from 'react-icons/ai'
+import { useFetchDocs } from '../../hooks/useFetchDocs'
 import { useToggle } from '../../hooks/useToggle'
 import { userAtom } from '../../store/firebaseAtoms'
 import { themeAtom } from '../../store/themeAtoms'
@@ -59,38 +60,22 @@ function FilterableTable({
 }: FilterableTableProps) {
   const [theme] = useAtom(themeAtom)
   const [tableFilter, setTableFilter] = React.useState<any>(Object.values(filters)[0])
-  const [tableData, setTableData] = React.useState<any>([])
-  const [loading, setLoading] = React.useState(true)
   const [toggle, setToggle] = useToggle(false)
   const [testId, setTestId] = useState('')
   const [user] = useAtom(userAtom)
 
-  useEffect(() => {
-    let q
+  const q = personal
+    ? query(documentReference, where('email', '==', user?.email), orderBy(tableFilter, orderStyle), limit(targetLimit))
+    : query(documentReference, where(target, '==', tableFilter), orderBy(orderTarget, orderStyle), limit(targetLimit))
 
-    if (personal) {
-      q = query(
-        documentReference,
-        where('email', '==', user?.email),
-        orderBy(tableFilter, orderStyle),
-        limit(targetLimit)
-      )
-    } else {
-      q = query(
-        documentReference,
-        where(target, '==', tableFilter),
-        orderBy(orderTarget, orderStyle),
-        limit(targetLimit)
-      )
-    }
+  const { data, loading } = useFetchDocs(q)
 
-    getDocs(q)
-      .then(snapshot => {
-        setTableData(snapshot.docs.map(doc => doc.data()))
-      })
-      .then(() => setTimeout(() => setLoading(false), 300))
-      .catch(err => console.error(err))
-  }, [orderStyle, orderTarget, documentReference, tableFilter, target, targetLimit, personal, user?.email])
+  const medal = useCallback((idx: number) => {
+    if (idx + 1 === 1) return <Icon as={AiFillTrophy} w="6" h="6" color="goldenrod" borderRadius="full" />
+    if (idx + 1 === 2) return <Icon as={AiFillTrophy} w="6" h="6" color="silver" borderRadius="full" />
+    if (idx + 1 === 3) return <Icon as={AiFillTrophy} w="6" h="6" color="burlywood" borderRadius="full" />
+    return <Text>{idx + 1}</Text>
+  }, [])
 
   const renderTableHeads = Object.values(headers).map(header => (
     <Th fontSize={['xs', 'sm', 'md', 'lg']} key={header} color={`${theme}.text`}>
@@ -116,16 +101,10 @@ function FilterableTable({
     )
   })
 
-  const renderTableRows = tableData?.map((x: any, idx: number) => {
-    const medal = () => {
-      if (idx + 1 === 1) return <Icon as={AiFillTrophy} w="6" h="6" color="goldenrod" borderRadius="full" />
-      if (idx + 1 === 2) return <Icon as={AiFillTrophy} w="6" h="6" color="silver" borderRadius="full" />
-      if (idx + 1 === 3) return <Icon as={AiFillTrophy} w="6" h="6" color="burlywood" borderRadius="full" />
-      return <Text>{idx + 1}</Text>
-    }
+  const renderTableRows = data?.map((x: any, idx: number) => {
     return (
       <Tr key={idx}>
-        <Td fontSize="lg">{competitive ? medal() : idx}</Td>
+        <Td fontSize="lg">{competitive ? medal(idx) : idx}</Td>
         <Td fontSize="lg">{x.seconds}</Td>
         <Td fontSize="lg">{x.email}</Td>
         <Td fontSize="lg">{x.wpm}</Td>
@@ -155,7 +134,7 @@ function FilterableTable({
       </Flex>
       {!loading ? (
         <>
-          {!tableData.length ? (
+          {!data.length ? (
             <Text color={theme.textLight}>No results...be the first?</Text>
           ) : (
             <>
